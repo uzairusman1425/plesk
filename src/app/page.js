@@ -3,11 +3,33 @@
 import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
+import axios from "axios"
 import { HeartIcon, EyeSlashIcon, EyeIcon } from "@heroicons/react/24/solid"
 
 export default function SignUp() {
 
     const [showPassword, setShowPassword] = useState(false)
+    const [firstName, setFirstName] = useState("")
+    const [lastName, setLastName] = useState("")
+    const [phoneNumber, setPhoneNumber] = useState("")
+    const [organization, setOrganization] = useState("")
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [country, setCountry] = useState("")
+
+    const handleSignUp = async (e) => {
+        e.preventDefault()
+        const payload = {
+            firstName: firstName,
+            lastName: lastName,
+            phoneNumber: phoneNumber,
+            organization: organization,
+            email: email,
+            password: password,
+            country: country
+        }
+        await axios.post("/api/signup", payload)?.then((res) => {console.log(res)})?.catch((err) => {console.error(err)})
+    }
 
     return (
         <div className="h-screen w-screen flex flex-row">
@@ -38,6 +60,10 @@ export default function SignUp() {
 					        	type="text"
 					        	placeholder="First Name*"
 					        	className="w-full text-sm font-light outline-none"
+                                value={firstName}
+                                onChange={(e) => {
+                                    setFirstName(e.target.value)
+                                }}
 					        />
                         </div>
                         <div className="h-12 w-full flex items-center justify-center px-5 border rounded-md">
@@ -45,6 +71,10 @@ export default function SignUp() {
 					        	type="text"
 					        	placeholder="Last Name*"
 					        	className="w-full text-sm font-light outline-none"
+                                value={lastName}
+                                onChange={(e) => {
+                                    setLastName(e.target.value)
+                                }}
 					        />
                         </div>
                     </div>
@@ -53,6 +83,10 @@ export default function SignUp() {
 					    	type="text"
 					    	placeholder="Phone Number*"
 					    	className="w-full text-sm font-light outline-none"
+                            value={phoneNumber}
+                            onChange={(e) => {
+                                setPhoneNumber(e.target.value)
+                            }}
 					    />
                     </div>
                     <div className="h-12 w-full flex items-center justify-center px-5 border rounded-md">
@@ -60,6 +94,10 @@ export default function SignUp() {
 					    	type="text"
 					    	placeholder="Organization*"
 					    	className="w-full text-sm font-light outline-none"
+                            value={organization}
+                            onChange={(e) => {
+                                setOrganization(e.target.value)
+                            }}
 					    />
                     </div>
                     <div className="h-12 w-full flex items-center justify-center px-5 border rounded-md">
@@ -67,6 +105,10 @@ export default function SignUp() {
 					    	type="email"
 					    	placeholder="Business Email*"
 					    	className="w-full text-sm font-light outline-none"
+                            value={email}
+                            onChange={(e) => {
+                                setEmail(e.target.value)
+                            }}
 					    />
                     </div>
                     <div className="h-12 w-full flex flex-row gap-5 items-center justify-center px-5 border rounded-md">
@@ -74,6 +116,10 @@ export default function SignUp() {
 					    	type={showPassword ? "text" : "password"}
 					    	placeholder="Password*"
 					    	className="w-full text-sm font-light outline-none"
+                            value={password}
+                            onChange={(e) => {
+                                setPassword(e.target.value)
+                            }}
 					    />
                         <button onClick={() => {setShowPassword(!showPassword)}}>
                             {showPassword ? <EyeIcon className="h-5 w-5 text-gray-400" /> : <EyeSlashIcon className="h-5 w-5 text-gray-400" />}
@@ -84,13 +130,17 @@ export default function SignUp() {
 					    	type="text"
 					    	placeholder="Country*"
 					    	className="w-full text-sm font-light outline-none"
+                            value={country}
+                            onChange={(e) => {
+                                setCountry(e.target.value)
+                            }}
 					    />
                     </div>
                     <div className="flex flex-row gap-3 w-full">
                         <input type="checkbox" className="size-4" />
                         <p className="text-xs font-light">By signing up, I agree to <span className="text-primary cursor-pointer">Plesk Terms of Service</span>. I consent to Plesk processing of personal data provided above and to receive communications in connection with the product as described in the <span className="text-primary cursor-pointer">Privacy Policy</span></p>
                     </div>
-                    <button className="h-12 w-full flex items-center justify-center uppercase text-white text-md font-medium bg-primary rounded-md">
+                    <button className="h-12 w-full flex items-center justify-center uppercase text-white text-md font-medium bg-primary rounded-md" onClick={handleSignUp}>
 						sign up
 					</button>
                     <p className="text-sm font-light">Already Have An Account? <Link href={"/sign-in"} className="text-primary">Click here</Link> to log in</p>

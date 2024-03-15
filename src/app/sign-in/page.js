@@ -5,11 +5,25 @@ import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { CheckIcon } from "@heroicons/react/24/solid"
+import { signIn } from "next-auth/react"
 
 export default function SignIn() {
 	const router = useRouter()
 
 	const [checked, setChecked] = useState(false)
+	const [email, setEmail] = useState("")
+	const [password, setPassword] = useState("")
+
+	const handleLogin = async (e) => {
+		e.preventDefault()
+		try {
+			const res = await signIn("credentials", {email: email, password: password, redirect: false})
+			console.log(res)
+		}
+		catch (error) {
+			console.error(error)
+		}
+	}
 
 	return (
 		<div className="flex flex-col items-center gap-7">
@@ -20,11 +34,19 @@ export default function SignIn() {
 				type="email"
 				placeholder="Email"
 				className="h-10 w-full px-2 border rounded-md"
+				value={email}
+				onChange={(e) => {
+					setEmail(e.target.value)
+				}}
 			/>
 			<input
 				type="password"
 				placeholder="Password"
 				className="h-10 w-full px-2 border rounded-md"
+				value={password}
+				onChange={(e) => {
+					setPassword(e.target.value)
+				}}
 			/>
 			<div className="w-full flex flex-row items-center justify-between">
 				<div className="flex flex-row items-center gap-2">
@@ -44,7 +66,7 @@ export default function SignIn() {
 					Forgot Password?
 				</p>
 			</div>
-			<button className="h-10 w-full flex items-center justify-center uppercase text-white text-md font-medium bg-primary rounded-md">
+			<button className="h-10 w-full flex items-center justify-center uppercase text-white text-md font-medium bg-primary rounded-md" onClick={handleLogin}>
 				sign in
 			</button>
 			<div className="flex flex-row gap-3 items-center w-full">
