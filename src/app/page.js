@@ -4,14 +4,19 @@ import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { signIn } from "next-auth/react"
 import axios from "axios"
 import { HeartIcon, EyeSlashIcon, EyeIcon } from "@heroicons/react/24/solid"
+import { FallingLines } from "react-loader-spinner"
 
 export default function SignUp() {
 
     const router = useRouter()
 
     const [showPassword, setShowPassword] = useState(false)
+    const [agreed, setAgreed] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
+    const [error, setError] = useState("")
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
     const [phoneNumber, setPhoneNumber] = useState("")
@@ -31,14 +36,24 @@ export default function SignUp() {
             password: password,
             country: country
         }
-        await axios.post("/api/signup", payload)?.then((res) => {
-            console.log(res)
-            if(res?.status === 201) {
-                router.push("/sign-in")
-            }
-        })?.catch((err) => {
-            console.error(err)
-        })
+        if(agreed) {
+            setIsLoading(true)
+            await axios.post("/api/signup", payload)?.then((res) => {
+                console.log(res)
+                setIsLoading(false)
+                if(res?.status === 201) {
+                    router.push("/sign-in")
+                }
+            })?.catch((err) => {
+                console.log(err)
+                setError(err?.response?.data?.error)
+                setIsLoading(false)
+            })
+        }
+    }
+
+    const handleGoogleSignIn = async () => {
+        signIn("google", { callbackUrl: "/dashboard" })
     }
 
     return (
@@ -53,7 +68,7 @@ export default function SignUp() {
                 <p className="text-4xl font-bold text-primary font-sans">Create a Free Account</p>
                 <p className="text-gray-500 font-light">Setup in minutes | No Credit Card Required</p>
                 <div className="flex flex-col items-center gap-7 w-[85%] max-w-[750px] mx-16">
-                    <button className="flex flex-row gap-2 items-center justify-center h-10 w-full rounded-lg shadow-md">
+                    <button className="flex flex-row gap-2 items-center justify-center h-10 w-full rounded-lg shadow-md" onClick={handleGoogleSignIn}>
 				    	<Image
 				    		src={"/icons/google.png"}
 				    		alt="sso"
@@ -147,11 +162,21 @@ export default function SignUp() {
 					    />
                     </div>
                     <div className="flex flex-row gap-3 w-full">
-                        <input type="checkbox" className="size-4" />
+                        <input type="checkbox" className="size-4" value={agreed} onChange={(e) => {setAgreed(e.target.checked)}} />
                         <p className="text-xs font-light">By signing up, I agree to <span className="text-primary cursor-pointer">Plesk Terms of Service</span>. I consent to Plesk processing of personal data provided above and to receive communications in connection with the product as described in the <span className="text-primary cursor-pointer">Privacy Policy</span></p>
                     </div>
-                    <button className="h-12 w-full flex items-center justify-center uppercase text-white text-md font-medium bg-primary rounded-md" onClick={handleSignUp}>
-						sign up
+                    {error?.length > 0 && <p className="text-xs text-red-500">{error}</p>}
+                    <button className={`h-12 w-full flex items-center justify-center uppercase text-white text-md font-medium bg-primary rounded-md ${!agreed && "bg-opacity-50 cursor-not-allowed"}`} onClick={handleSignUp}>
+                    {isLoading ? (
+						<FallingLines
+							color="#ffffff"
+							width="50"
+							visible={true}
+							ariaLabel="falling-circles-loading"
+						/>
+					) : (
+						"sign up"
+					)}
 					</button>
                     <p className="text-sm font-light">Already Have An Account? <Link href={"/sign-in"} className="text-primary">Click here</Link> to log in</p>
                 </div>
