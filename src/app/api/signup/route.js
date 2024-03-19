@@ -4,6 +4,12 @@ import { NextResponse } from "next/server"
 import bcryptjs from "bcryptjs"
 
 export async function POST(request) {
+
+    const validateEmail = (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        return emailRegex.test(email)
+    }
+
     try {
         await connect()
         const reqBody = await request?.json()
@@ -13,6 +19,30 @@ export async function POST(request) {
 
         if(user) {
             return NextResponse.json({ error: "User already exists!" }, { status: 400 })
+        }
+        else if(firstName?.length === 0) {
+            return NextResponse.json({ error: "First Name is required!" }, { status: 400 })
+        }
+        else if(lastName?.length === 0) {
+            return NextResponse.json({ error: "Last Name is required!" }, { status: 400 })
+        }
+        else if(phoneNumber?.length === 0) {
+            return NextResponse.json({ error: "Phone Number is required!" }, { status: 400 })
+        }
+        else if(organization?.length === 0) {
+            return NextResponse.json({ error: "Organization is required!" }, { status: 400 })
+        }
+        else if(email?.length === 0) {
+            return NextResponse.json({ error: "Email is required!" }, { status: 400 })
+        }
+        else if(!validateEmail(email)) {
+            return NextResponse.json({ error: "Email is invalid!" }, { status: 400 })
+        }
+        else if(password?.length === 0) {
+            return NextResponse.json({ error: "Password is required!" }, { status: 400 })
+        }
+        else if(country?.length === 0) {
+            return NextResponse.json({ error: "Country Name is required!" }, { status: 400 })
         }
 
         const salt = await bcryptjs.genSalt(10)

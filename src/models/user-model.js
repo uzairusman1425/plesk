@@ -2,20 +2,16 @@ import mongoose from "mongoose"
 
 const userSchema = new mongoose.Schema({
     firstName: {
-        type: String,
-        required: [true, "First Name is required!"]
+        type: String
     },
     lastName: {
-        type: String,
-        required: [true, "Last Name is required!"]
+        type: String
     },
     phoneNumber: {
-        type: String,
-        required: [true, "Phone Number is required!"]
+        type: String
     },
     organization: {
-        type: String,
-        required: [true, "Organization Name is required!"]
+        type: String
     },
     email: {
         type: String,
@@ -23,12 +19,13 @@ const userSchema = new mongoose.Schema({
         unique: true
     },
     password: {
-        type: String,
-        required: [true, "Password is required!"]
+        type: String
     },
     country: {
-        type: String,
-        required: [true, "Country Name is required!"]
+        type: String
+    },
+    image: {
+        type: String
     }
 })
 

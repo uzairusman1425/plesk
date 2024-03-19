@@ -1,7 +1,13 @@
+"use client"
+
 import Image from "next/image"
+import { useSession } from "next-auth/react"
 import { ChevronUpIcon } from "@heroicons/react/24/solid"
 
 export default function Header() {
+
+    const { data } = useSession()
+
     return (
         <div className="h-20 w-full flex flex-row items-center justify-between px-10">
             <p className="font-semibold uppercase">home - <span className="text-primary">activity dashboard</span></p>
@@ -13,7 +19,7 @@ export default function Header() {
                     </div>
                     <p className="text-white">Upgrade</p>
                 </button>
-                <Image src={"/images/profile.png"} alt="profile" height={40} width={40} className="rounded-full" />
+                <Image src={data?.user?.image || "/images/profile.png"} alt="profile" height={40} width={40} className="rounded-full" />
             </div>
         </div>
     )
