@@ -52,7 +52,7 @@ export default function SignUp() {
             <div className="flex-1 flex flex-col gap-5 justify-center items-center">
                 <p className="text-4xl font-bold text-primary font-sans">Create a Free Account</p>
                 <p className="text-gray-500 font-light">Setup in minutes | No Credit Card Required</p>
-                <div className="flex flex-col items-center gap-7 w-full max-w-[750px]">
+                <div className="flex flex-col items-center gap-7 w-[85%] max-w-[750px] mx-16">
                     <button className="flex flex-row gap-2 items-center justify-center h-10 w-full rounded-lg shadow-md">
 				    	<Image
 				    		src={"/icons/google.png"}
