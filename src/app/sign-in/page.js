@@ -19,6 +19,9 @@ export default function SignIn() {
 		try {
 			const res = await signIn("credentials", {email: email, password: password, redirect: false})
 			console.log(res)
+			if(res?.status === 200) {
+				router?.push("/dashboard")
+			}
 		}
 		catch (error) {
 			console.error(error)
@@ -51,14 +54,14 @@ export default function SignIn() {
 			<div className="w-full flex flex-row items-center justify-between">
 				<div className="flex flex-row items-center gap-2">
 					<button
-						className={`h-5 w-5 rounded-full border-2 flex items-center justify-center border-primary ${
+						className={`size-5 rounded-full border-2 flex items-center justify-center border-primary ${
 							checked && "bg-primary"
 						}`}
 						onClick={() => {
 							setChecked(!checked)
 						}}
 					>
-						<CheckIcon className="h-3 w-3 text-white" />
+						<CheckIcon className="size-3 text-white" />
 					</button>
 					<p className="text-xs">Keep me logged in</p>
 				</div>

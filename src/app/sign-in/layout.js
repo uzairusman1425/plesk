@@ -10,9 +10,9 @@ export default function SignInLayout({ children }) {
 					height={200}
 					width={200}
 				/>
-				<div className="w-[500px] px-12 py-8 rounded-xl shadow-xl border">
+				<main className="w-[500px] px-12 py-8 rounded-xl shadow-xl border">
 					{children}
-				</div>
+				</main>
 				<div />
 			</div>
 			<div className="h-10 w-full bg-primary" />

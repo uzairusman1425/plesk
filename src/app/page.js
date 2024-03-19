@@ -3,10 +3,13 @@
 import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import axios from "axios"
 import { HeartIcon, EyeSlashIcon, EyeIcon } from "@heroicons/react/24/solid"
 
 export default function SignUp() {
+
+    const router = useRouter()
 
     const [showPassword, setShowPassword] = useState(false)
     const [firstName, setFirstName] = useState("")
@@ -28,7 +31,14 @@ export default function SignUp() {
             password: password,
             country: country
         }
-        await axios.post("/api/signup", payload)?.then((res) => {console.log(res)})?.catch((err) => {console.error(err)})
+        await axios.post("/api/signup", payload)?.then((res) => {
+            console.log(res)
+            if(res?.status === 201) {
+                router.push("/sign-in")
+            }
+        })?.catch((err) => {
+            console.error(err)
+        })
     }
 
     return (
