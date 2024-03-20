@@ -1,4 +1,4 @@
-/** @type {import('tailwindcss').Config} */
+/** @type {import("tailwindcss").Config} */
 module.exports = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -8,9 +8,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#39B6E8'
+        primary: "#39B6E8",
+        secondary: "#0284B8"
       }
-    },
+    }
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar")]
 };
