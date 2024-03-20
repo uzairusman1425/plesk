@@ -52,9 +52,13 @@ const authOptions = {
 			if (account.provider === "google") {
                 await connect()
 				const existingUser = await User.findOne({ email: user?.email })
-				if (!existingUser) {
+				if (existingUser) {
+                    existingUser.image = user.image
+					await existingUser.save()
+				}
+				else {
 					await User.create({
-						firstName: user.name?.split(" ")[0],
+						firstName: user.name?.split(" ")[0] || "",
 						lastName: user.name?.split(" ")[1] || "",
 						email: user?.email,
 						image: user?.image
