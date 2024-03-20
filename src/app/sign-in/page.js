@@ -21,16 +21,18 @@ export default function SignIn() {
 		e.preventDefault()
 		try {
 			setIsLoading(true)
+			setError(false)
 			const res = await signIn("credentials", {
 				email: email,
 				password: password,
-				redirect: false
+				redirect: false,
+				callbackUrl: "/dashboard"
 			})
 			console.log(res)
 			setIsLoading(false)
 			if (res?.status === 200) {
 				setError(false)
-				router?.push("/dashboard")
+				router?.push(res?.url)
 			}
 			else {
 				setError(true)
