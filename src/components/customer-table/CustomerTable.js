@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
 import PropTypes from "prop-types"
 import {
 	MagnifyingGlassIcon,
@@ -13,6 +14,8 @@ import { PlusCircleIcon } from "@heroicons/react/24/outline"
 import Image from "next/image"
 
 export default function CustomerTable({ data }) {
+
+	const router = useRouter()
 
     const [pageNumber, setPageNumber] = useState(0)
     const [paginationStart, setPaginationStart] = useState(0)
@@ -66,7 +69,7 @@ export default function CustomerTable({ data }) {
 						className="w-full outline-none"
 					/>
 				</div>
-				<button className="h-12 bg-primary rounded-lg flex flex-row items-center gap-2 px-3">
+				<button className="h-12 bg-primary rounded-lg flex flex-row items-center gap-2 px-3" onClick={() => {router.push("/dashboard/customer-management/add-employee")}}>
 					<PlusCircleIcon className="h-7 w-7 text-white" />
 					<p className="text-white text-sm font-light">
 						Add New Employee
@@ -98,7 +101,7 @@ export default function CustomerTable({ data }) {
                                     <p className="p-1 rounded bg-secondary bg-opacity-50 font-light size-fit">{item?.status}</p>
                                 </div>
                                 <div className="w-full flex flex-row items-center justify-center gap-5">
-                                    <button>
+                                    <button onClick={() => {router?.push(`/dashboard/customer-management/edit-employee/${pageNumber * itemsPerPage + 1 + key}`)}}>
                                         <Image src={"/icons/edit.png"} alt="edit" height={17.5} width={17.5} />
                                     </button>
                                     <button>
