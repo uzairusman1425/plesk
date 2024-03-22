@@ -33,7 +33,7 @@ export default function Dashboard() {
                     <div className="h-5 w-[1px] bg-gray-300" />
                     <p className="text-xs">1h 26m</p>
                     <div className="h-5 w-[1px] bg-gray-300" />
-                    <p className="text-xs text-secondary">12h 26m</p>
+                    <p className="text-xs">12h 26m</p>
                     <button className="h-8 w-44 bg-primary rounded flex flex-row items-center justify-center gap-3">
                         <Image src={"/icons/download.png"} alt="download" height={20} width={20} />
                         <p className="text-white text-xs">Download Agent</p>

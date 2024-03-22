@@ -10,7 +10,7 @@ export default function SideNav() {
     const pathName = usePathname()
 
     const handleLogout = async () => {
-        const res = await signOut({redirect: false, callbackUrl: '/' })
+        const res = await signOut({ redirect: false, callbackUrl: '/' })
         router.push(res?.url)
     }
 
@@ -30,15 +30,15 @@ export default function SideNav() {
                     <p className={`text-xs ${pathName === "/dashboard" ? "text-primary" : "text-gray-400"}`}>Dashboard</p>
                 </button>
                 <button 
-                    className={`h-10 pl-3 rounded flex flex-row gap-3 items-center ${pathName === "/dashboard/customer-management" && "bg-primary bg-opacity-35"}`}
+                    className={`h-10 pl-3 rounded flex flex-row gap-3 items-center ${pathName?.includes("/dashboard/customer-management") && "bg-primary bg-opacity-35"}`}
                     onClick={() => {
                         if(pathName !== "/dashboard/customer-management") {
                             router.push("/dashboard/customer-management")
                         }
                     }}
                 >
-                    <Image src={pathName === "/dashboard/customer-management" ? "/icons/customer-management-blue.png" : "/icons/customer-management.png"} alt="icon" height={15} width={15} />
-                    <p className={`text-xs ${pathName === "/dashboard/customer-management" ? "text-primary" : "text-gray-400"}`}>Customer Management</p>
+                    <Image src={pathName?.includes("/dashboard/customer-management") ? "/icons/customer-management-blue.png" : "/icons/customer-management.png"} alt="icon" height={15} width={15} />
+                    <p className={`text-xs ${pathName?.includes("/dashboard/customer-management") ? "text-primary" : "text-gray-400"}`}>Customer Management</p>
                 </button>
                 <button className={`h-10 pl-3 rounded flex flex-row gap-3 items-center ${pathName === "/dashboard/pc-monitoring" && "bg-primary bg-opacity-35"}`}>
                     <Image src={"/icons/pc-monitoring.png"} alt="icon" height={15} width={15} />
