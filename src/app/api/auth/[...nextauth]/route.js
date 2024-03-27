@@ -50,13 +50,12 @@ const authOptions = {
 		},
 		async signIn({ user, account }) {
 			if (account.provider === "google") {
-                await connect()
+				await connect()
 				const existingUser = await User.findOne({ email: user?.email })
 				if (existingUser) {
-                    existingUser.image = user.image
+					existingUser.image = user.image
 					await existingUser.save()
-				}
-				else {
+				} else {
 					await User.create({
 						firstName: user.name?.split(" ")[0] || "",
 						lastName: user.name?.split(" ")[1] || "",

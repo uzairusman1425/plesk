@@ -33,8 +33,7 @@ export default function SignIn() {
 			if (res?.status === 200) {
 				setError(false)
 				router?.push(res?.url)
-			}
-			else {
+			} else {
 				setError(true)
 			}
 		} catch (error) {
@@ -45,11 +44,15 @@ export default function SignIn() {
 	}
 
 	const handleGoogleSignIn = async () => {
-        signIn("google", { callbackUrl: "/dashboard" })
-    }
+		signIn("google", { callbackUrl: "/dashboard" })
+	}
 
 	return (
-		<main className={`w-[500px] px-12 py-8 rounded-xl shadow-xl border ${error && "border-red-500"}`}>
+		<main
+			className={`w-[500px] px-12 py-8 rounded-xl shadow-xl border ${
+				error && "border-red-500"
+			}`}
+		>
 			<div className="flex flex-col items-center gap-7">
 				<p className="text-xl font-semibold text-primary">
 					Sign in to your Plesk Account
@@ -127,7 +130,10 @@ export default function SignIn() {
 						/>
 						<p className="uppercase font-medium text-xs">sso</p>
 					</button>
-					<button className="flex flex-row gap-2 items-center justify-center h-10 w-48 rounded-full border border-gray-300" onClick={handleGoogleSignIn}>
+					<button
+						className="flex flex-row gap-2 items-center justify-center h-10 w-48 rounded-full border border-gray-300"
+						onClick={handleGoogleSignIn}
+					>
 						<Image
 							src={"/icons/google.png"}
 							alt="sso"
