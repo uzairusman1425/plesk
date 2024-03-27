@@ -14,49 +14,44 @@ import { PlusCircleIcon } from "@heroicons/react/24/outline"
 import Image from "next/image"
 
 export default function CustomerTable({ data }) {
-
 	const router = useRouter()
 
-    const [pageNumber, setPageNumber] = useState(0)
-    const [paginationStart, setPaginationStart] = useState(0)
-    const [paginationEnd, setPaginationEnd] = useState(0)
-    const [itemsPerPage, setItemsPerPage] = useState(10)
+	const [pageNumber, setPageNumber] = useState(0)
+	const [paginationStart, setPaginationStart] = useState(0)
+	const [paginationEnd, setPaginationEnd] = useState(0)
+	const [itemsPerPage, setItemsPerPage] = useState(10)
 
-    const chunkArray = (array, chunkSize) => {
-        const result = []
-        for (let i = 0; i < array.length; i += chunkSize) {
-            result.push(array.slice(i, i + chunkSize))
-        }
-        return result
-    }
+	const chunkArray = (array, chunkSize) => {
+		const result = []
+		for (let i = 0; i < array.length; i += chunkSize) {
+			result.push(array.slice(i, i + chunkSize))
+		}
+		return result
+	}
 
-    const paginated_data = chunkArray(data, itemsPerPage)
+	const paginated_data = chunkArray(data, itemsPerPage)
 
-    useEffect(() => {
-        if(pageNumber >= paginated_data?.length) {
-            setPageNumber(paginated_data?.length - 1)
-        }
-        if(pageNumber === 0) {
-            setPaginationStart(pageNumber)
-            setPaginationEnd(pageNumber + 4)
-        }
-        else if(pageNumber === 1) {
-            setPaginationStart(pageNumber - 1)
-            setPaginationEnd(pageNumber + 3)
-        }
-        else if(pageNumber === paginated_data?.length - 1) {
-            setPaginationStart(pageNumber - 4)
-            setPaginationEnd(pageNumber)
-        }
-        else if(pageNumber === paginated_data?.length - 2) {
-            setPaginationStart(pageNumber - 3)
-            setPaginationEnd(pageNumber + 1)
-        }
-        else {
-            setPaginationStart(pageNumber - 2)
-            setPaginationEnd(pageNumber + 2)
-        }
-    }, [pageNumber, paginated_data?.length])
+	useEffect(() => {
+		if (pageNumber >= paginated_data?.length) {
+			setPageNumber(paginated_data?.length - 1)
+		}
+		if (pageNumber === 0) {
+			setPaginationStart(pageNumber)
+			setPaginationEnd(pageNumber + 4)
+		} else if (pageNumber === 1) {
+			setPaginationStart(pageNumber - 1)
+			setPaginationEnd(pageNumber + 3)
+		} else if (pageNumber === paginated_data?.length - 1) {
+			setPaginationStart(pageNumber - 4)
+			setPaginationEnd(pageNumber)
+		} else if (pageNumber === paginated_data?.length - 2) {
+			setPaginationStart(pageNumber - 3)
+			setPaginationEnd(pageNumber + 1)
+		} else {
+			setPaginationStart(pageNumber - 2)
+			setPaginationEnd(pageNumber + 2)
+		}
+	}, [pageNumber, paginated_data?.length])
 
 	return (
 		<div className="size-[95%] border border-gray-400 rounded-xl p-5 flex flex-col justify-between">
@@ -69,7 +64,14 @@ export default function CustomerTable({ data }) {
 						className="w-full outline-none"
 					/>
 				</div>
-				<button className="h-12 bg-primary rounded-lg flex flex-row items-center gap-2 px-3" onClick={() => {router.push("/dashboard/customer-management/add-employee")}}>
+				<button
+					className="h-12 bg-primary rounded-lg flex flex-row items-center gap-2 px-3"
+					onClick={() => {
+						router.push(
+							"/dashboard/customer-management/add-employee"
+						)
+					}}
+				>
 					<PlusCircleIcon className="h-7 w-7 text-white" />
 					<p className="text-white text-sm font-light">
 						Add New Employee
@@ -77,42 +79,64 @@ export default function CustomerTable({ data }) {
 				</button>
 			</div>
 			<div className="h-[80%] w-full flex flex-col gap-8">
-                <div className="grid grid-cols-7 text-xs">
-                    <p>Customer Name</p>
-                    <p>Contact Information</p>
-                    <p>Company Name</p>
-                    <p>Designation</p>
-                    <p>Type</p>
-                    <p>Status</p>
-                    <div className="w-full text-center">
-                        <p>Action</p>
-                    </div>
-                </div>
-                <div className="flex-1 flex flex-col gap-7 overflow-y-auto scrollbar-none">
-                    {paginated_data[pageNumber]?.map((item, key) => {
-                        return (
-                            <div className="grid grid-cols-7 text-xs" key={key}>
-                                <p>{item?.name}</p>
-                                <p>{item?.contact}</p>
-                                <p>{item?.company}</p>
-                                <p>{item?.designation}</p>
-                                <p>{item?.type}</p>
-                                <div>
-                                    <p className="p-1 rounded bg-secondary bg-opacity-50 font-light size-fit">{item?.status}</p>
-                                </div>
-                                <div className="w-full flex flex-row items-center justify-center gap-5">
-                                    <button onClick={() => {router?.push(`/dashboard/customer-management/edit-employee/${pageNumber * itemsPerPage + 1 + key}`)}}>
-                                        <Image src={"/icons/edit.png"} alt="edit" height={17.5} width={17.5} />
-                                    </button>
-                                    <button>
-                                        <Image src={"/icons/delete.png"} alt="delete" height={17.5} width={17.5} />
-                                    </button>
-                                </div>
-                            </div>
-                        )
-                    })}
-                </div>
-            </div>
+				<div className="grid grid-cols-7 text-xs">
+					<p>Customer Name</p>
+					<p>Contact Information</p>
+					<p>Company Name</p>
+					<p>Designation</p>
+					<p>Type</p>
+					<p>Status</p>
+					<div className="w-full text-center">
+						<p>Action</p>
+					</div>
+				</div>
+				<div className="flex-1 flex flex-col gap-7 overflow-y-auto scrollbar-none">
+					{paginated_data[pageNumber]?.map((item, key) => {
+						return (
+							<div className="grid grid-cols-7 text-xs" key={key}>
+								<p>{item?.name}</p>
+								<p>{item?.contact}</p>
+								<p>{item?.company}</p>
+								<p>{item?.designation}</p>
+								<p>{item?.type}</p>
+								<div>
+									<p className="p-1 rounded bg-secondary bg-opacity-50 font-light size-fit">
+										{item?.status}
+									</p>
+								</div>
+								<div className="w-full flex flex-row items-center justify-center gap-5">
+									<button
+										onClick={() => {
+											router?.push(
+												`/dashboard/customer-management/edit-employee/${
+													pageNumber * itemsPerPage +
+													1 +
+													key
+												}`
+											)
+										}}
+									>
+										<Image
+											src={"/icons/edit.png"}
+											alt="edit"
+											height={17.5}
+											width={17.5}
+										/>
+									</button>
+									<button>
+										<Image
+											src={"/icons/delete.png"}
+											alt="delete"
+											height={17.5}
+											width={17.5}
+										/>
+									</button>
+								</div>
+							</div>
+						)
+					})}
+				</div>
+			</div>
 			<div className="w-full flex flex-row items-center justify-between">
 				<div className="flex flex-row items-center gap-5">
 					<p className="text-xs">Showing</p>
