@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import axios from "axios"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 
@@ -32,11 +33,46 @@ export default function AddEmployee() {
 	const [joiningDate, setJoiningDate] = useState("")
 	const [officeLocation, setOfficeLocation] = useState("")
 
-	const handleNext = () => {
+	const handleNext = async (e) => {
+		e.preventDefault()
 		if (selectedTab === "personal") {
 			setSelectedTab("professional")
 		} else {
-			router?.push("/dashboard/customer-management")
+			const payload = {
+				first_name: firstName,
+				last_name: lastName,
+				phone: phoneNumber,
+				email: personalEmail,
+				dob: DOB,
+				marital_status: maritalStatus,
+				gender: gender,
+				nationality: nationality,
+				address: address,
+				city: city,
+				state: state,
+				zip_code: ZIPCode,
+				professional_details: {
+					id: employeeID,
+					user_name: username,
+					type: employeeType,
+					email: employeeEmail,
+					department: department,
+					designation: designation,
+					working_days: workingDays,
+					joining_date: joiningDate,
+					office_location: officeLocation
+				}
+			}
+			await axios
+				.post("/api/add-employee", payload)
+				?.then((res) => {
+					console.log(res)
+					router?.push("/dashboard/customer-management")
+				})
+				?.catch((err) => {
+					console.log(err)
+					alert(err?.response?.data?.message)
+				})
 		}
 	}
 
