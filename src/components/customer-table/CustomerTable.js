@@ -13,7 +13,7 @@ import {
 import { PlusCircleIcon } from "@heroicons/react/24/outline"
 import Image from "next/image"
 
-export default function CustomerTable({ data }) {
+export default function CustomerTable({ data, setCustomerToDelete }) {
 	const router = useRouter()
 
 	const [pageNumber, setPageNumber] = useState(0)
@@ -123,7 +123,15 @@ export default function CustomerTable({ data }) {
 											width={17.5}
 										/>
 									</button>
-									<button>
+									<button
+										onClick={() => {
+											setCustomerToDelete(
+												pageNumber * itemsPerPage +
+													1 +
+													key
+											)
+										}}
+									>
 										<Image
 											src={"/icons/delete.png"}
 											alt="delete"
@@ -242,5 +250,6 @@ export default function CustomerTable({ data }) {
 }
 
 CustomerTable.propTypes = {
-	data: PropTypes.array.isRequired
+	data: PropTypes.array.isRequired,
+	setCustomerToDelete: PropTypes.func.isRequired
 }

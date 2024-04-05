@@ -1,6 +1,12 @@
+"use client"
+
+import { useState } from "react"
 import CustomerTable from "@/components/customer-table/CustomerTable"
+import CustomerDeleteConfirmationPopup from "@/components/customer-delete-confirmation-popup/CustomerDeleteConfirmationPopup"
 
 export default function CustomerManagement() {
+	const [customerToDelete, setCustomerToDelete] = useState(null)
+
 	const customers = [
 		{
 			name: "Vasilia",
@@ -534,7 +540,16 @@ export default function CustomerManagement() {
 
 	return (
 		<div className="h-full flex-1 flex items-center justify-center">
-			<CustomerTable data={customers} />
+			{customerToDelete && (
+				<CustomerDeleteConfirmationPopup
+					setCustomerToDelete={setCustomerToDelete}
+					customerToDelete={customerToDelete}
+				/>
+			)}
+			<CustomerTable
+				data={customers}
+				setCustomerToDelete={setCustomerToDelete}
+			/>
 		</div>
 	)
 }
