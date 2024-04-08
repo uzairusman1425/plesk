@@ -64,7 +64,7 @@ export default function AddEmployee() {
 				}
 			}
 			await axios
-				.post("/api/add-employee", payload)
+				.post("/api/employee", payload)
 				?.then((res) => {
 					console.log(res)
 					router?.push("/dashboard/customer-management")
