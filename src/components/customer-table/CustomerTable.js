@@ -32,7 +32,10 @@ export default function CustomerTable({ data, setCustomerToDelete }) {
 	const paginated_data = chunkArray(data, itemsPerPage)
 
 	useEffect(() => {
-		if (pageNumber >= paginated_data?.length) {
+		if (
+			pageNumber >= paginated_data?.length &&
+			paginated_data?.length > 0
+		) {
 			setPageNumber(paginated_data?.length - 1)
 		}
 		if (pageNumber === 0) {
@@ -94,14 +97,20 @@ export default function CustomerTable({ data, setCustomerToDelete }) {
 					{paginated_data[pageNumber]?.map((item, key) => {
 						return (
 							<div className="grid grid-cols-7 text-xs" key={key}>
-								<p>{item?.name}</p>
-								<p>{item?.contact}</p>
-								<p>{item?.company}</p>
-								<p>{item?.designation}</p>
-								<p>{item?.type}</p>
+								<p className="truncate pr-5">
+									{item?.first_name}
+								</p>
+								<p className="truncate pr-5">{item?.phone}</p>
+								<p className="truncate pr-5">{"Tech Hunt"}</p>
+								<p className="truncate pr-5">
+									{item?.professional_details?.designation}
+								</p>
+								<p className="truncate pr-5">
+									{item?.professional_details?.type}
+								</p>
 								<div>
 									<p className="p-1 rounded bg-secondary bg-opacity-50 font-light size-fit">
-										{item?.status}
+										{"Permanent"}
 									</p>
 								</div>
 								<div className="w-full flex flex-row items-center justify-center gap-5">
@@ -185,10 +194,15 @@ export default function CustomerTable({ data, setCustomerToDelete }) {
 					</div>
 				</div>
 				<p className="text-xs">
-					Showing {pageNumber * itemsPerPage + 1} to{" "}
-					{(pageNumber + 1) * itemsPerPage -
-						(itemsPerPage -
-							paginated_data[pageNumber]?.length)}{" "}
+					Showing{" "}
+					{paginated_data?.length > 0
+						? pageNumber * itemsPerPage + 1
+						: 0}{" "}
+					to{" "}
+					{paginated_data?.length > 0
+						? (pageNumber + 1) * itemsPerPage -
+						  (itemsPerPage - paginated_data[pageNumber]?.length)
+						: 0}{" "}
 					out of {data?.length} records
 				</p>
 				<div className="flex flex-row items-center gap-3">
