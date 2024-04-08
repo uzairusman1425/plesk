@@ -1,3 +1,4 @@
+import axios from "axios"
 import PropTypes from "prop-types"
 import { XCircleIcon } from "@heroicons/react/24/outline"
 
@@ -5,11 +6,15 @@ export default function CustomerDeleteConfirmationPopup({
 	customerToDelete,
 	setCustomerToDelete
 }) {
-	console.log(customerToDelete)
 	return (
 		<div className="fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-35 flex items-center justify-center">
 			<div className="w-[500px] rounded-3xl bg-white shadow-xl flex flex-col gap-3 items-center p-3">
-				<button className="place-self-end">
+				<button
+					className="place-self-end"
+					onClick={() => {
+						setCustomerToDelete(null)
+					}}
+				>
 					<XCircleIcon className="size-7 text-gray-300" />
 				</button>
 				<p className="text-md font-light">
@@ -27,8 +32,16 @@ export default function CustomerDeleteConfirmationPopup({
 					</button>
 					<button
 						className="bg-primary rounded-xl text-xl font-semibold text-white"
-						onClick={() => {
-							setCustomerToDelete(null)
+						onClick={async () => {
+							await axios
+								.delete(`/api/employee?id=${customerToDelete}`)
+								?.then((res) => {
+									console.log(res)
+									setCustomerToDelete(null)
+								})
+								?.catch((err) => {
+									console.error(err)
+								})
 						}}
 					>
 						Delete
@@ -40,6 +53,6 @@ export default function CustomerDeleteConfirmationPopup({
 }
 
 CustomerDeleteConfirmationPopup.propTypes = {
-	customerToDelete: PropTypes.number.isRequired,
+	customerToDelete: PropTypes.string.isRequired,
 	setCustomerToDelete: PropTypes.func.isRequired
 }

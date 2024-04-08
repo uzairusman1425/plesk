@@ -26,7 +26,6 @@ export async function POST(req) {
 				{ status: 400 }
 			)
 		}
-		console.log(phone)
 
 		if (employee) {
 			if (employee.phone === phone) {
