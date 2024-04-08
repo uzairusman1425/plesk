@@ -23,7 +23,7 @@ export default function CustomerManagement() {
 				})
 		}
 		fetchData()
-	}, [])
+	}, [customerToDelete])
 
 	return (
 		<div className="h-full flex-1 flex items-center justify-center">
