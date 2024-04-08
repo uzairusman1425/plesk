@@ -22,16 +22,15 @@ export async function POST(req) {
 
 		if (!reqBody) {
 			return NextResponse.json(
-				{ succuss: false, message: "All fields are required!" },
+				{ success: false, message: "All fields are required!" },
 				{ status: 400 }
 			)
 		}
-		console.log(phone)
 
 		if (employee) {
 			if (employee.phone === phone) {
 				return NextResponse.json(
-					{ succuss: false, message: "Phone number already exists!" },
+					{ success: false, message: "Phone number already exists!" },
 					{ status: 403 }
 				)
 			} else if (
@@ -39,7 +38,7 @@ export async function POST(req) {
 				professional_details.user_name
 			) {
 				return NextResponse.json(
-					{ succuss: false, message: "Username already exists!" },
+					{ success: false, message: "Username already exists!" },
 					{ status: 403 }
 				)
 			} else if (
@@ -48,14 +47,14 @@ export async function POST(req) {
 			) {
 				return NextResponse.json(
 					{
-						succuss: false,
+						success: false,
 						message: "Professional email already exist!"
 					},
 					{ status: 403 }
 				)
 			} else if (employee.email === email) {
 				return NextResponse.json(
-					{ succuss: false, message: "User email already exists!" },
+					{ success: false, message: "User email already exists!" },
 					{ status: 403 }
 				)
 			}
@@ -64,10 +63,10 @@ export async function POST(req) {
 		const Save_employ = new Customer(reqBody)
 		const save = await Save_employ.save()
 
-		return NextResponse.json({ succuss: true, data: save }, { status: 200 })
+		return NextResponse.json({ success: true, data: save }, { status: 200 })
 	} catch (error) {
 		return NextResponse.json(
-			{ succuss: false, message: error.message },
+			{ success: false, message: error.message },
 			{ status: 500 }
 		)
 	}
@@ -82,12 +81,12 @@ export async function GET(req) {
 			const employee = await Customer.findById(id)
 			if (!employee) {
 				return NextResponse.json(
-					{ succuss: false, message: "No employee found!" },
+					{ success: false, message: "No employee found!" },
 					{ status: 400 }
 				)
 			}
 			return NextResponse.json(
-				{ succuss: true, data: employee },
+				{ success: true, data: employee },
 				{ status: 200 }
 			)
 		}
@@ -96,18 +95,18 @@ export async function GET(req) {
 
 		if (!employee) {
 			return NextResponse.json(
-				{ succuss: false, message: "No employee found!" },
+				{ success: false, message: "No employee found!" },
 				{ status: 400 }
 			)
 		}
 
 		return NextResponse.json(
-			{ succuss: true, data: employee },
+			{ success: true, data: employee },
 			{ status: 200 }
 		)
 	} catch (error) {
 		return NextResponse.json(
-			{ succuss: false, message: error.message },
+			{ success: false, message: error.message },
 			{ status: 500 }
 		)
 	}
