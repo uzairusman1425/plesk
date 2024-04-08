@@ -1,5 +1,5 @@
 import connect from "@/database-config/dbConfig"
-import Customer from "@/models/customer-model"
+import Customer, { findOneAndDelete } from "@/models/customer-model"
 import { NextResponse } from "next/server"
 
 export async function POST(req) {
