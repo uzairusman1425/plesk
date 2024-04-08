@@ -82,7 +82,7 @@ export async function GET(req) {
 			const employee = await Customer.findById(id)
 			if (!employee) {
 				return NextResponse.json(
-					{ succuss: false, message: "No employee found" },
+					{ succuss: false, message: "No employee found!" },
 					{ status: 400 }
 				)
 			}
@@ -96,7 +96,7 @@ export async function GET(req) {
 
 		if (!employee) {
 			return NextResponse.json(
-				{ succuss: false, message: "No employee found" },
+				{ succuss: false, message: "No employee found!" },
 				{ status: 400 }
 			)
 		}
