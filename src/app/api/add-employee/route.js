@@ -51,7 +51,7 @@ export async function GET(req) {
 			return NextResponse.json({ succuss: true, data: employee }, { status: 200 });
 		}
 
-		const employee = await Customer.findOne();
+		const employee = await Customer.find();
 
 		if (!employee) {
 			return NextResponse.json({ succuss: false, message: "No employee found" }, { status: 400 });
