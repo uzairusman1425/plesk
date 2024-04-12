@@ -11,7 +11,7 @@ export default function CustomerManagement() {
 	const [customers, setCustomers] = useState([])
 
 	useEffect(() => {
-		const fetchData = async () => {
+		;(async () => {
 			await axios
 				.get("/api/employee")
 				?.then((res) => {
@@ -21,8 +21,7 @@ export default function CustomerManagement() {
 				?.catch((err) => {
 					console.error(err)
 				})
-		}
-		fetchData()
+		})()
 	}, [customerToDelete])
 
 	return (

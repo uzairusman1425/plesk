@@ -6,12 +6,12 @@ export default function Dashboard() {
 		<div className="h-full flex-1 flex flex-col px-10">
 			<div className="w-full flex flex-row items-center justify-between">
 				<div className="flex flex-row items-center gap-2">
-					<button className="flex flex-row items-center gap-1 p-1 border border-transparent hover:border-primary transition-colors ease-in-out duration-500">
+					<button className="flex flex-row items-center gap-1 p-1 border border-transparent hover:border-primary transition-colors ease-in-out duration-300">
 						<p className="text-xs">Custom Range</p>
 						<ChevronDownIcon className="h-3 w-3 text-black" />
 					</button>
 					<p className="text-xs p-2">03/13/2024 to 03/13/2024</p>
-					<button className="flex flex-row items-center gap-1 p-1 border border-transparent hover:border-primary transition-colors ease-in-out duration-500">
+					<button className="flex flex-row items-center gap-1 p-1 border border-transparent hover:border-primary transition-colors ease-in-out duration-300">
 						<Image
 							src={"/icons/all-users.png"}
 							alt="all-users"
@@ -20,7 +20,7 @@ export default function Dashboard() {
 						/>
 						<p className="text-xs">All Users</p>
 					</button>
-					<button className="flex flex-row items-center gap-1 p-1 border border-transparent hover:border-primary transition-colors ease-in-out duration-500">
+					<button className="flex flex-row items-center gap-1 p-1 border border-transparent hover:border-primary transition-colors ease-in-out duration-300">
 						<Image
 							src={"/icons/refresh.png"}
 							alt="refresh"
@@ -29,7 +29,7 @@ export default function Dashboard() {
 						/>
 						<p className="text-xs">Refresh</p>
 					</button>
-					<button className="flex flex-row items-center gap-1 p-1 border border-transparent hover:border-primary transition-colors ease-in-out duration-500">
+					<button className="flex flex-row items-center gap-1 p-1 border border-transparent hover:border-primary transition-colors ease-in-out duration-300">
 						<Image
 							src={"/icons/print.png"}
 							alt="print"
