@@ -117,11 +117,7 @@ export default function CustomerTable({ data, setCustomerToDelete }) {
 									<button
 										onClick={() => {
 											router?.push(
-												`/dashboard/customer-management/edit-employee/${
-													pageNumber * itemsPerPage +
-													1 +
-													key
-												}`
+												`/dashboard/customer-management/edit-employee/${item?._id}`
 											)
 										}}
 									>
@@ -134,11 +130,7 @@ export default function CustomerTable({ data, setCustomerToDelete }) {
 									</button>
 									<button
 										onClick={() => {
-											setCustomerToDelete(
-												pageNumber * itemsPerPage +
-													1 +
-													key
-											)
+											setCustomerToDelete(item?._id)
 										}}
 									>
 										<Image
