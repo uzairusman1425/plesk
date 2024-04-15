@@ -1,18 +1,35 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
+import axios from "axios"
 
 export default function EditEmployee({ params }) {
 	const [selectedTab, setSelectedTab] = useState("personal")
+	const [data, setData] = useState(null)
 
-	console.log(params?.slug)
+	useEffect(() => {
+		const fetchData = async () => {
+			await axios
+				.get(`/api/employee?id=${params?.slug}`)
+				?.then((res) => {
+					setData(res?.data?.data)
+					console.log(res)
+				})
+				?.catch((err) => {
+					console.error(err)
+				})
+		}
+		fetchData()
+	}, [params])
 	return (
 		<div className="h-full flex-1 flex items-center justify-center">
 			<div className="size-[95%] border border-gray-400 rounded-xl p-10 flex flex-col gap-5">
 				<div className="w-full flex flex-row items-center justify-between">
 					<div className="flex flex-col gap-2">
-						<p className="text-2xl font-semibold">Dina Coneva</p>
+						<p className="text-2xl font-semibold">
+							{`${data?.first_name} ${data?.last_name}`}
+						</p>
 						<div className="flex flex-row gap-3 items-center">
 							<Image
 								src={"/icons/designation.png"}
@@ -20,7 +37,9 @@ export default function EditEmployee({ params }) {
 								height={25}
 								width={25}
 							/>
-							<p className="font-light">Project Manager</p>
+							<p className="font-light">
+								{data?.professional_details?.designation}
+							</p>
 						</div>
 						<div className="flex flex-row gap-3 items-center">
 							<Image
@@ -29,7 +48,9 @@ export default function EditEmployee({ params }) {
 								height={25}
 								width={25}
 							/>
-							<p className="font-light">dina.c@gmail.com</p>
+							<p className="font-light">
+								{data?.professional_details?.email}
+							</p>
 						</div>
 					</div>
 					<button className="h-14 w-40 rounded-xl bg-primary flex flex-row gap-3 items-center justify-center">
@@ -113,70 +134,70 @@ export default function EditEmployee({ params }) {
 					<div className="w-full grid grid-cols-4 gap-16 mt-10">
 						<div className="flex flex-col gap-3 font-light">
 							<p className="text-xs text-gray-400">First Name</p>
-							<p className="text-sm">Dina</p>
+							<p className="text-sm">{data?.first_name}</p>
 							<div className="h-[1px] w-52 bg-gray-200" />
 						</div>
 						<div className="flex flex-col gap-3 font-light">
 							<p className="text-xs text-gray-400">Last Name</p>
-							<p className="text-sm">Coneva</p>
+							<p className="text-sm">{data?.last_name}</p>
 							<div className="h-[1px] w-52 bg-gray-200" />
 						</div>
 						<div className="flex flex-col gap-3 font-light">
 							<p className="text-xs text-gray-400">
 								Mobile Number
 							</p>
-							<p className="text-sm">(373) 666-0666</p>
+							<p className="text-sm">{data?.phone}</p>
 							<div className="h-[1px] w-52 bg-gray-200" />
 						</div>
 						<div className="flex flex-col gap-3 font-light">
 							<p className="text-xs text-gray-400">
 								Email Address
 							</p>
-							<p className="text-sm">dina.c@gmail.com</p>
+							<p className="text-sm">{data?.email}</p>
 							<div className="h-[1px] w-52 bg-gray-200" />
 						</div>
 						<div className="flex flex-col gap-3 font-light">
 							<p className="text-xs text-gray-400">
 								Date of Birth
 							</p>
-							<p className="text-sm">July 20, 1992</p>
+							<p className="text-sm">{data?.dob?.slice(0, 10)}</p>
 							<div className="h-[1px] w-52 bg-gray-200" />
 						</div>
 						<div className="flex flex-col gap-3 font-light">
 							<p className="text-xs text-gray-400">
 								Marital Status
 							</p>
-							<p className="text-sm">Married</p>
+							<p className="text-sm">{data?.marital_status}</p>
 							<div className="h-[1px] w-52 bg-gray-200" />
 						</div>
 						<div className="flex flex-col gap-3 font-light">
 							<p className="text-xs text-gray-400">Gender</p>
-							<p className="text-sm">Female</p>
+							<p className="text-sm">{data?.gender}</p>
 							<div className="h-[1px] w-52 bg-gray-200" />
 						</div>
 						<div className="flex flex-col gap-3 font-light">
 							<p className="text-xs text-gray-400">Nationality</p>
-							<p className="text-sm">Ruskiy</p>
+							<p className="text-sm">{data?.nationality}</p>
 							<div className="h-[1px] w-52 bg-gray-200" />
 						</div>
 						<div className="flex flex-col gap-3 font-light">
 							<p className="text-xs text-gray-400">Address</p>
-							<p className="text-sm">666 Hell 000</p>
+							<p className="text-sm">{data?.address}</p>
 							<div className="h-[1px] w-52 bg-gray-200" />
 						</div>
 						<div className="flex flex-col gap-3 font-light">
 							<p className="text-xs text-gray-400">City</p>
-							<p className="text-sm">Chisinau</p>
+							<p className="text-sm">{data?.city}</p>
 							<div className="h-[1px] w-52 bg-gray-200" />
 						</div>
 						<div className="flex flex-col gap-3 font-light">
 							<p className="text-xs text-gray-400">State</p>
-							<p className="text-sm">Moldova</p>
+							<p className="text-sm">{data?.state}</p>
 							<div className="h-[1px] w-52 bg-gray-200" />
 						</div>
 						<div className="flex flex-col gap-3 font-light">
 							<p className="text-xs text-gray-400">ZIP Code</p>
-							<p className="text-sm">00666</p>
+							<p className="text-sm">{data?.zip_code}</p>
 							<div className="h-[1px] w-52 bg-gray-200" />
 						</div>
 					</div>
@@ -184,57 +205,75 @@ export default function EditEmployee({ params }) {
 					<div className="w-full grid grid-cols-4 gap-16 mt-10">
 						<div className="flex flex-col gap-3 font-light">
 							<p className="text-xs text-gray-400">Employee ID</p>
-							<p className="text-sm">1234</p>
+							<p className="text-sm">
+								{data?.professional_details?.id}
+							</p>
 							<div className="h-[1px] w-52 bg-gray-200" />
 						</div>
 						<div className="flex flex-col gap-3 font-light">
 							<p className="text-xs text-gray-400">User Name</p>
-							<p className="text-sm">dina.c</p>
+							<p className="text-sm">
+								{data?.professional_details?.user_name}
+							</p>
 							<div className="h-[1px] w-52 bg-gray-200" />
 						</div>
 						<div className="flex flex-col gap-3 font-light">
 							<p className="text-xs text-gray-400">
 								Employee Type
 							</p>
-							<p className="text-sm">Agent</p>
+							<p className="text-sm">
+								{data?.professional_details?.type}
+							</p>
 							<div className="h-[1px] w-52 bg-gray-200" />
 						</div>
 						<div className="flex flex-col gap-3 font-light">
 							<p className="text-xs text-gray-400">
 								Email Address
 							</p>
-							<p className="text-sm">dina.c@gmail.com</p>
+							<p className="text-sm">
+								{data?.professional_details?.email}
+							</p>
 							<div className="h-[1px] w-52 bg-gray-200" />
 						</div>
 						<div className="flex flex-col gap-3 font-light">
 							<p className="text-xs text-gray-400">Department</p>
-							<p className="text-sm">Development</p>
+							<p className="text-sm">
+								{data?.professional_details?.department}
+							</p>
 							<div className="h-[1px] w-52 bg-gray-200" />
 						</div>
 						<div className="flex flex-col gap-3 font-light">
 							<p className="text-xs text-gray-400">Designation</p>
-							<p className="text-sm">QA Engineer</p>
+							<p className="text-sm">
+								{data?.professional_details?.designation}
+							</p>
 							<div className="h-[1px] w-52 bg-gray-200" />
 						</div>
 						<div className="flex flex-col gap-3 font-light">
 							<p className="text-xs text-gray-400">
 								Working Days
 							</p>
-							<p className="text-sm">Monday - Friday</p>
+							<p className="text-sm">
+								{data?.professional_details?.working_days}
+							</p>
 							<div className="h-[1px] w-52 bg-gray-200" />
 						</div>
 						<div className="flex flex-col gap-3 font-light">
 							<p className="text-xs text-gray-400">
 								Joining Date
 							</p>
-							<p className="text-sm">August 13, 2021</p>
+							<p className="text-sm">
+								{data?.professional_details?.joining_date}
+							</p>
 							<div className="h-[1px] w-52 bg-gray-200" />
 						</div>
 						<div className="flex flex-col gap-3 font-light">
 							<p className="text-xs text-gray-400">
 								Office Location
 							</p>
-							<p className="text-sm">666 Hell 000</p>
+							<p className="text-sm">
+								{data?.professional_details?.office_location}
+							</p>
 							<div className="h-[1px] w-52 bg-gray-200" />
 						</div>
 					</div>
