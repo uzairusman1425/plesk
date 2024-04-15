@@ -22,10 +22,6 @@ export async function POST(req) {
 		if (!reqBody) {
 			return NextResponse.json({ success: false, message: "All fields are required!" }, { status: 400 });
 		}
-<<<<<<< HEAD
-		console.log(phone);
-=======
->>>>>>> 613e029a74a568bf0299f89085b1758785ebdc23
 
 		if (employee) {
 			if (employee.phone === phone) {
@@ -115,7 +111,7 @@ export async function PATCH(req) {
 			return NextResponse.json({ message: "Customer not found!" }, { status: 404 });
 		}
 
-		customer.set(reqBody);  
+		customer.set(reqBody);
 		const updatedCustomer = await customer.save();
 
 		return NextResponse.json({ success: true, data: updatedCustomer }, { status: 200 });
