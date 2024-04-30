@@ -8,7 +8,7 @@ export default function Header() {
 	const { data } = useSession()
 
 	return (
-		<div className="h-20 w-full flex flex-row items-center justify-between px-10">
+		<div className="h-[10vh] w-full flex flex-row items-center justify-between px-10">
 			<p className="font-semibold uppercase">
 				home - <span className="text-primary">activity dashboard</span>
 			</p>
