@@ -38,7 +38,7 @@ export default function TopCategoriesChart({ topCategories }) {
 						<BarChart width={500} height={300} data={topCategories}>
 							<CartesianGrid strokeDasharray="3 3" />
 							<YAxis unit={"hrs"} />
-							<Bar dataKey="hours" barSize={10}>
+							<Bar dataKey="hours" barSize={20}>
 								{topCategories?.map((_, key) => {
 									return (
 										<Cell

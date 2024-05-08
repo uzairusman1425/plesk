@@ -10,6 +10,8 @@ import { HeartIcon, EyeSlashIcon, EyeIcon } from "@heroicons/react/24/solid"
 import { FallingLines } from "react-loader-spinner"
 
 export default function SignUp() {
+	const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+
 	const router = useRouter()
 
 	const [showPassword, setShowPassword] = useState(false)
@@ -38,7 +40,7 @@ export default function SignUp() {
 		if (agreed) {
 			setIsLoading(true)
 			await axios
-				.post("/api/signup", payload)
+				.post(`${API_BASE_URL}/api/users/register`, payload)
 				?.then((res) => {
 					console.log(res)
 					setIsLoading(false)
@@ -71,7 +73,7 @@ export default function SignUp() {
 					<HeartIcon className="h-12 w-12 text-primary" />
 				</div>
 			</div>
-			<div className="flex-1 flex flex-col gap-5 justify-center items-center">
+			<div className="flex-1 flex flex-col gap-5 items-center py-20 overflow-y-auto scrollbar-none">
 				<p className="text-4xl font-bold text-primary font-sans">
 					Create a Free Account
 				</p>

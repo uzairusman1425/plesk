@@ -6,6 +6,7 @@ import TopUsersAndGroupsCharts from "@/components/top-users-and-groups-charts/To
 import TopApplicationsChart from "@/components/top-applications-chart/TopApplicationsChart"
 import TopWebsitesChart from "@/components/top-websites-chart/TopWebsitesChart"
 import TopCategoriesChart from "@/components/top-categories-chart/TopCategoriesChart"
+import PendingClassificationsChart from "@/components/pending-classifications-chart/PendingClassificationsChart"
 
 export default function Dashboard() {
 	const productivity = [
@@ -199,8 +200,87 @@ export default function Dashboard() {
 		}
 	]
 
+	const pendingClassifications = [
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m"
+		},
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m"
+		},
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m"
+		},
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m"
+		},
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m"
+		},
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m"
+		},
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m"
+		},
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m"
+		},
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m"
+		},
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m"
+		},
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m"
+		},
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m"
+		},
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m"
+		},
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m"
+		},
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m"
+		},
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m"
+		},
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m"
+		},
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m"
+		},
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m"
+		}
+	]
+
 	return (
-		<div className="h-fit flex-1 flex flex-col gap-10 p-10">
+		<div className="h-fit flex-1 flex flex-col gap-10 px-10 pb-10 pt-5">
 			<DashboardHeader />
 			<div className="w-full grid grid-cols-2 gap-20">
 				<ProductivityChart productivity={productivity} />
@@ -210,6 +290,9 @@ export default function Dashboard() {
 				<TopApplicationsChart topApplications={topApplications} />
 				<TopWebsitesChart topWebsites={topWebsites} />
 				<TopCategoriesChart topCategories={topCategories} />
+				<PendingClassificationsChart
+					pendingClassifications={pendingClassifications}
+				/>
 			</div>
 		</div>
 	)
