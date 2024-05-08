@@ -1,7 +1,7 @@
+import axios from "axios"
 import NextAuth from "next-auth/next"
 import CredentialsProvider from "next-auth/providers/credentials"
 import GoogleProvider from "next-auth/providers/google"
-import bcryptjs from "bcryptjs"
 import User from "@/models/user-model"
 import connect from "@/database-config/dbConfig"
 
@@ -15,17 +15,26 @@ const authOptions = {
 			name: "credentials",
 			credentials: {},
 			authorize: async (credentials) => {
+				const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+
 				const { email, password } = credentials
 
 				try {
-					await connect()
-					const user = await User.findOne({ email })
-					const isVerified = await bcryptjs.compare(
-						password,
-						user?.password
-					)
+					const user = await axios
+						.post(`${API_BASE_URL}/api/users/login`, {
+							email,
+							password
+						})
+						?.then((res) => {
+							console.log(res)
+							return res?.data?.data?.user
+						})
+						?.catch((err) => {
+							console.log(err)
+							return false
+						})
 
-					if (!user || !isVerified) {
+					if (!user) {
 						return false
 					}
 

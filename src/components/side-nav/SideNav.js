@@ -27,7 +27,7 @@ export default function SideNav() {
 			/>
 			<div className="flex flex-col gap-3">
 				<button
-					className={`h-10 pl-3 rounded flex flex-row gap-3 items-center transform-gpu ease-in-out duration-300 ${
+					className={`h-10 pl-3 rounded flex flex-row gap-3 items-center transform-gpu ease-in-out duration-500 ${
 						pathName === "/dashboard" && "bg-primary bg-opacity-35"
 					}`}
 					onClick={() => {
@@ -47,7 +47,7 @@ export default function SideNav() {
 						width={15}
 					/>
 					<p
-						className={`text-xs transform-gpu ease-in-out duration-300 ${
+						className={`text-xs transform-gpu ease-in-out duration-500 ${
 							pathName === "/dashboard"
 								? "text-primary"
 								: "text-gray-400"
@@ -57,7 +57,7 @@ export default function SideNav() {
 					</p>
 				</button>
 				<button
-					className={`h-10 pl-3 rounded flex flex-row gap-3 items-center transform-gpu ease-in-out duration-300 ${
+					className={`h-10 pl-3 rounded flex flex-row gap-3 items-center transform-gpu ease-in-out duration-500 ${
 						pathName?.includes("/dashboard/customer-management") &&
 						"bg-primary bg-opacity-35"
 					}`}
@@ -78,7 +78,7 @@ export default function SideNav() {
 						width={15}
 					/>
 					<p
-						className={`text-xs transform-gpu ease-in-out duration-300 ${
+						className={`text-xs transform-gpu ease-in-out duration-500 ${
 							pathName?.includes("/dashboard/customer-management")
 								? "text-primary"
 								: "text-gray-400"
@@ -88,7 +88,7 @@ export default function SideNav() {
 					</p>
 				</button>
 				<button
-					className={`h-10 px-3 rounded flex flex-row  justify-between items-center transform-gpu ease-in-out duration-300 ${
+					className={`h-10 px-3 rounded flex flex-row  justify-between items-center transform-gpu ease-in-out duration-500 ${
 						showPCMonitoringDropdown && "bg-primary bg-opacity-35"
 					}`}
 					onClick={() => {
@@ -107,7 +107,7 @@ export default function SideNav() {
 							width={15}
 						/>
 						<p
-							className={`text-xs transform-gpu ease-in-out duration-300 ${
+							className={`text-xs transform-gpu ease-in-out duration-500 ${
 								showPCMonitoringDropdown
 									? "text-primary"
 									: "text-gray-400"
@@ -119,7 +119,7 @@ export default function SideNav() {
 					<div
 						className={`${
 							showPCMonitoringDropdown ? "rotate-180" : "rotate-0"
-						} transform-gpu ease-in-out duration-300`}
+						} transform-gpu ease-in-out duration-500`}
 					>
 						<ChevronDownIcon
 							className={`size-3 ${
@@ -159,7 +159,7 @@ export default function SideNav() {
 					</div>
 				)}
 				<button
-					className={`h-10 pl-3 rounded flex flex-row gap-3 items-center transform-gpu ease-in-out duration-300 ${
+					className={`h-10 pl-3 rounded flex flex-row gap-3 items-center transform-gpu ease-in-out duration-500 ${
 						pathName === "/dashboard/settings" &&
 						"bg-primary bg-opacity-35"
 					}`}
@@ -171,7 +171,7 @@ export default function SideNav() {
 						width={15}
 					/>
 					<p
-						className={`text-xs transform-gpu ease-in-out duration-300 ${
+						className={`text-xs transform-gpu ease-in-out duration-500 ${
 							pathName === "/dashboard/settings"
 								? "text-primary"
 								: "text-gray-400"
