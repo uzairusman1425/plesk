@@ -33,9 +33,9 @@ export default function ProductivityAreaChart({
 					</AreaChart>
 				</ResponsiveContainer>
 			</div>
-			<div className="flex flex-row items-center justify-evenly w-full">
-				<p className="text-gray-500">{name}</p>
-				<p className="py-1 px-3 rounded bg-gray-500 text-white font-semibold text-xs">
+			<div className="flex flex-row items-center gap-10 w-full">
+				<p className="text-gray- truncate">{name}</p>
+				<p className="h-7 w-20 flex items-center justify-center rounded bg-gray-500 text-white font-semibold text-xs">
 					{totalTime}
 				</p>
 			</div>

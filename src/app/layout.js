@@ -1,5 +1,5 @@
 import { Poppins } from "next/font/google"
-import AuthProvider from "@/providers/AuthProvider"
+import { ContextProvider } from "@/providers/ContextProvider"
 import "./globals.css"
 
 const poppins = Poppins({
@@ -15,9 +15,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
 	return (
 		<html lang="en">
-			<body className={poppins.className}>
-				<AuthProvider>{children}</AuthProvider>
-			</body>
+			<ContextProvider>
+				<body className={poppins.className}>{children}</body>
+			</ContextProvider>
 		</html>
 	)
 }

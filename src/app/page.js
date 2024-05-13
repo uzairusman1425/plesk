@@ -1,16 +1,20 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useContext } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { signIn } from "next-auth/react"
+import { auth, provider } from "@/firebase/firebase-config"
+import { signInWithPopup } from "firebase/auth"
 import axios from "axios"
 import { HeartIcon, EyeSlashIcon, EyeIcon } from "@heroicons/react/24/solid"
 import { FallingLines } from "react-loader-spinner"
+import { AppContext } from "@/context/context"
 
 export default function SignUp() {
 	const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+
+	const { dispatch } = useContext(AppContext)
 
 	const router = useRouter()
 
@@ -57,7 +61,33 @@ export default function SignUp() {
 	}
 
 	const handleGoogleSignIn = async () => {
-		signIn("google", { callbackUrl: "/dashboard" })
+		signInWithPopup(auth, provider)
+			?.then(async (data) => {
+				const payload = {
+					firstName: data?.user?.displayName?.split(" ")[0] || "",
+					lastName: data?.user?.displayName?.split(" ")[1] || "",
+					email: data?.user?.email,
+					image: data?.user?.photoURL
+				}
+				await axios
+					.post(`${API_BASE_URL}/api/users/googlelogin`, payload)
+					?.then((res) => {
+						console.log(res)
+						if (res?.data?.statusCode === 200) {
+							dispatch({
+								type: "SET_USER",
+								payload: res?.data?.data?.user[0]
+							})
+							router.push("/dashboard")
+						}
+					})
+					?.catch((err) => {
+						console.log(err)
+					})
+			})
+			?.catch((err) => {
+				console.log(err)
+			})
 	}
 
 	return (
