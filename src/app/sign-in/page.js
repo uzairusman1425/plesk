@@ -1,14 +1,21 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useContext } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { CheckIcon } from "@heroicons/react/24/solid"
-import { signIn } from "next-auth/react"
+import { signInWithPopup } from "firebase/auth"
+import axios from "axios"
 import { FallingLines } from "react-loader-spinner"
+import { auth, provider } from "@/firebase/firebase-config"
+import { AppContext } from "@/context/context"
 
 export default function SignIn() {
+	const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+
+	const { dispatch } = useContext(AppContext)
+
 	const router = useRouter()
 
 	const [checked, setChecked] = useState(false)
@@ -19,32 +26,58 @@ export default function SignIn() {
 
 	const handleLogin = async (e) => {
 		e.preventDefault()
-		try {
-			setIsLoading(true)
-			setError(false)
-			const res = await signIn("credentials", {
-				email: email,
-				password: password,
-				redirect: false,
-				callbackUrl: "/dashboard"
-			})
-			console.log(res)
-			setIsLoading(false)
-			if (res?.status === 200) {
-				setError(false)
-				router?.push(res?.url)
-			} else {
-				setError(true)
-			}
-		} catch (error) {
-			console.error(error)
-			setIsLoading(false)
-			setError(true)
+
+		const payload = {
+			email: email,
+			password: password
 		}
+		setIsLoading(true)
+		setError(false)
+
+		await axios
+			.post(`${API_BASE_URL}/api/users/login`, payload)
+			?.then((res) => {
+				console.log(res)
+				setIsLoading(false)
+				if (res?.data?.statusCode === 200) {
+					router.push("/dashboard")
+				}
+			})
+			?.catch((err) => {
+				console.log(err)
+				setIsLoading(false)
+				setError(true)
+			})
 	}
 
 	const handleGoogleSignIn = async () => {
-		signIn("google", { callbackUrl: "/dashboard" })
+		signInWithPopup(auth, provider)
+			?.then(async (data) => {
+				const payload = {
+					firstName: data?.user?.displayName?.split(" ")[0] || "",
+					lastName: data?.user?.displayName?.split(" ")[1] || "",
+					email: data?.user?.email,
+					image: data?.user?.photoURL
+				}
+				await axios
+					.post(`${API_BASE_URL}/api/users/googlelogin`, payload)
+					?.then((res) => {
+						console.log(res)
+						if (res?.data?.statusCode === 200) {
+							dispatch({
+								type: "SET_USER",
+								payload: res?.data?.data?.user[0]
+							})
+							router.push("/dashboard")
+						}
+					})
+					?.catch((err) => {
+						console.log(err)
+					})
+			})
+			?.catch((err) => {
+				console.log(err)
+			})
 	}
 
 	return (

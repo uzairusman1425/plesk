@@ -3,7 +3,6 @@
 import { useState } from "react"
 import Image from "next/image"
 import { usePathname, useRouter } from "next/navigation"
-import { signOut } from "next-auth/react"
 import { ChevronDownIcon, ChevronRightIcon } from "@heroicons/react/24/outline"
 
 export default function SideNav() {
@@ -13,10 +12,7 @@ export default function SideNav() {
 	const router = useRouter()
 	const pathName = usePathname()
 
-	const handleLogout = async () => {
-		const res = await signOut({ redirect: false, callbackUrl: "/" })
-		router.push(res?.url)
-	}
+	const handleLogout = async () => {}
 
 	return (
 		<div className="h-full w-56 flex flex-col gap-10 pl-5 pt-10">

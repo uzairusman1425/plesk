@@ -6,6 +6,8 @@ import CustomerTable from "@/components/customer-table/CustomerTable"
 import CustomerDeleteConfirmationPopup from "@/components/customer-delete-confirmation-popup/CustomerDeleteConfirmationPopup"
 
 export default function CustomerManagement() {
+	const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+
 	const [customerToDelete, setCustomerToDelete] = useState(null)
 
 	const [customers, setCustomers] = useState([])
@@ -13,7 +15,7 @@ export default function CustomerManagement() {
 	useEffect(() => {
 		;(async () => {
 			await axios
-				.get("/api/employee")
+				.get(`${API_BASE_URL}/api/employee/get`)
 				?.then((res) => {
 					console.log(res)
 					setCustomers(res?.data?.data)
@@ -22,7 +24,7 @@ export default function CustomerManagement() {
 					console.error(err)
 				})
 		})()
-	}, [customerToDelete])
+	}, [customerToDelete, API_BASE_URL])
 
 	return (
 		<div className="h-full flex-1 flex items-center justify-center">

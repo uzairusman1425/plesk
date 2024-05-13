@@ -1,11 +1,14 @@
 "use client"
 
+import { useContext } from "react"
 import Image from "next/image"
-import { useSession } from "next-auth/react"
 import { ChevronUpIcon } from "@heroicons/react/24/solid"
+import { AppContext } from "@/context/context"
 
 export default function Header() {
-	const { data } = useSession()
+	const { state } = useContext(AppContext)
+
+	console.log(state)
 
 	return (
 		<div className="h-[10vh] w-full flex flex-row items-center justify-between px-10">
@@ -21,7 +24,11 @@ export default function Header() {
 					<p className="text-white">Upgrade</p>
 				</button>
 				<Image
-					src={data?.user?.image || "/images/profile.png"}
+					src={
+						state?.user?.image?.length > 0
+							? state?.user?.image
+							: "/images/profile.png"
+					}
 					alt="profile"
 					height={40}
 					width={40}
