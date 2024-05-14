@@ -82,7 +82,7 @@ export default function ProductivityChart({ productivity }) {
 					Year
 				</button>
 			</div>
-			<div className="h-80 w-full">
+			<div className="size-full">
 				<ResponsiveContainer width="100%" height="100%">
 					<BarChart width={500} height={300} data={productivity}>
 						<CartesianGrid strokeDasharray="3 3" />

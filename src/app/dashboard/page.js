@@ -7,8 +7,24 @@ import TopApplicationsChart from "@/components/top-applications-chart/TopApplica
 import TopWebsitesChart from "@/components/top-websites-chart/TopWebsitesChart"
 import TopCategoriesChart from "@/components/top-categories-chart/TopCategoriesChart"
 import PendingClassificationsChart from "@/components/pending-classifications-chart/PendingClassificationsChart"
+import SystemHealthChart from "@/components/system-health-chart/SystemHealthChart"
 
 export default function Dashboard() {
+	const systemHealth = [
+		{
+			name: "Monitor system health",
+			percentage: 50
+		},
+		{
+			name: "Agent status",
+			percentage: 25
+		},
+		{
+			name: "Data collection",
+			percentage: 25
+		}
+	]
+
 	const productivity = [
 		{
 			productive: 8,
@@ -280,13 +296,16 @@ export default function Dashboard() {
 	]
 
 	return (
-		<div className="h-fit flex-1 flex flex-col gap-10 px-10 pb-10 pt-5">
+		<div className="h-fit flex-1 flex flex-col gap-20 px-10 pb-10 pt-5">
 			<DashboardHeader />
-			<div className="w-full grid grid-cols-2 gap-20">
+			<div className="w-full grid grid-cols-3 gap-10">
+				<SystemHealthChart systemHealth={systemHealth} />
 				<ProductivityChart productivity={productivity} />
 				<TopUsersAndGroupsCharts
 					topUsersAndGroups={topUsersAndGroups}
 				/>
+			</div>
+			<div className="w-full grid grid-cols-2 gap-20">
 				<TopApplicationsChart topApplications={topApplications} />
 				<TopWebsitesChart topWebsites={topWebsites} />
 				<TopCategoriesChart topCategories={topCategories} />
