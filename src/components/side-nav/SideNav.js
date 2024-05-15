@@ -1,18 +1,28 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useContext } from "react"
 import Image from "next/image"
 import { usePathname, useRouter } from "next/navigation"
 import { ChevronDownIcon, ChevronRightIcon } from "@heroicons/react/24/outline"
+import { AppContext } from "@/context/context"
 
 export default function SideNav() {
+	const { dispatch } = useContext(AppContext)
+
 	const [showPCMonitoringDropdown, setShowPCMonitoringDropdown] =
 		useState(false)
 
 	const router = useRouter()
 	const pathName = usePathname()
 
-	const handleLogout = async () => {}
+	const handleLogout = async () => {
+		localStorage?.removeItem("plesk_access_token")
+		dispatch({
+			type: "SET_USER",
+			payload: null
+		})
+		router.push("/")
+	}
 
 	return (
 		<div className="h-full w-56 flex flex-col gap-10 pl-5 pt-10">

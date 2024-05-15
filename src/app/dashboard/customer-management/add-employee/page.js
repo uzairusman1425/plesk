@@ -6,6 +6,10 @@ import Image from "next/image"
 import { useRouter } from "next/navigation"
 
 export default function AddEmployee() {
+	const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+
+	const accessToken = localStorage.getItem("plesk_access_token")
+
 	const router = useRouter()
 
 	const [selectedTab, setSelectedTab] = useState("personal")
@@ -39,32 +43,37 @@ export default function AddEmployee() {
 			setSelectedTab("professional")
 		} else {
 			const payload = {
-				first_name: firstName,
-				last_name: lastName,
+				firstName: firstName,
+				lastName: lastName,
 				phone: phoneNumber,
 				email: personalEmail,
 				dob: DOB,
-				marital_status: maritalStatus,
+				maritalStatus: maritalStatus,
 				gender: gender,
 				nationality: nationality,
 				address: address,
 				city: city,
 				state: state,
-				zip_code: ZIPCode,
+				zipCode: ZIPCode,
 				professional_details: {
 					id: employeeID,
-					user_name: username,
+					userName: username,
 					type: employeeType,
 					email: employeeEmail,
 					department: department,
 					designation: designation,
-					working_days: workingDays,
-					joining_date: joiningDate,
-					office_location: officeLocation
+					workingDays: workingDays,
+					joiningDate: joiningDate,
+					officeLocation: officeLocation
 				}
 			}
+
 			await axios
-				.post("/api/employee", payload)
+				.post(`${API_BASE_URL}/api/employee/add`, payload, {
+					headers: {
+						Authorization: `Bearer ${accessToken}`
+					}
+				})
 				?.then((res) => {
 					console.log(res)
 					router?.push("/dashboard/customer-management")
