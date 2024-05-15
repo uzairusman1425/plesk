@@ -40,6 +40,14 @@ export default function SignIn() {
 				console.log(res)
 				setIsLoading(false)
 				if (res?.data?.statusCode === 200) {
+					localStorage?.setItem(
+						"plesk_access_token",
+						res?.data?.data?.accessToken
+					)
+					dispatch({
+						type: "SET_USER",
+						payload: res?.data?.data?.user
+					})
 					router.push("/dashboard")
 				}
 			})
@@ -64,6 +72,10 @@ export default function SignIn() {
 					?.then((res) => {
 						console.log(res)
 						if (res?.data?.statusCode === 200) {
+							localStorage?.setItem(
+								"plesk_access_token",
+								res?.data?.data?.accessToken
+							)
 							dispatch({
 								type: "SET_USER",
 								payload: res?.data?.data?.user[0]

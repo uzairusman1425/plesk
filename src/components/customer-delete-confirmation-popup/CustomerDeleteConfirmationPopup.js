@@ -6,6 +6,29 @@ export default function CustomerDeleteConfirmationPopup({
 	customerToDelete,
 	setCustomerToDelete
 }) {
+	const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+
+	const accessToken = localStorage.getItem("plesk_access_token")
+
+	const handleDelete = async () => {
+		await axios
+			.delete(
+				`${API_BASE_URL}/api/employee/delete?userId=${customerToDelete}`,
+				{
+					headers: {
+						Authorization: `Bearer ${accessToken}`
+					}
+				}
+			)
+			?.then((res) => {
+				console.log(res)
+				setCustomerToDelete(null)
+			})
+			?.catch((err) => {
+				console.error(err)
+			})
+	}
+
 	return (
 		<div className="fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-35 flex items-center justify-center">
 			<div className="w-[500px] rounded-3xl bg-white shadow-xl flex flex-col gap-3 items-center p-3">
@@ -32,17 +55,7 @@ export default function CustomerDeleteConfirmationPopup({
 					</button>
 					<button
 						className="bg-primary rounded-xl text-xl font-semibold text-white"
-						onClick={async () => {
-							await axios
-								.delete(`/api/employee?id=${customerToDelete}`)
-								?.then((res) => {
-									console.log(res)
-									setCustomerToDelete(null)
-								})
-								?.catch((err) => {
-									console.error(err)
-								})
-						}}
+						onClick={handleDelete}
 					>
 						Delete
 					</button>

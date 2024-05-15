@@ -8,6 +8,8 @@ import CustomerDeleteConfirmationPopup from "@/components/customer-delete-confir
 export default function CustomerManagement() {
 	const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
+	const accessToken = localStorage.getItem("plesk_access_token")
+
 	const [customerToDelete, setCustomerToDelete] = useState(null)
 
 	const [customers, setCustomers] = useState([])
@@ -15,7 +17,11 @@ export default function CustomerManagement() {
 	useEffect(() => {
 		;(async () => {
 			await axios
-				.get(`${API_BASE_URL}/api/employee/get`)
+				.get(`${API_BASE_URL}/api/employee/get`, {
+					headers: {
+						Authorization: `Bearer ${accessToken}`
+					}
+				})
 				?.then((res) => {
 					console.log(res)
 					setCustomers(res?.data?.data)
@@ -24,7 +30,7 @@ export default function CustomerManagement() {
 					console.error(err)
 				})
 		})()
-	}, [customerToDelete, API_BASE_URL])
+	}, [customerToDelete, API_BASE_URL, accessToken])
 
 	return (
 		<div className="h-full flex-1 flex items-center justify-center">

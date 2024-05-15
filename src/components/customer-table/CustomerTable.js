@@ -96,7 +96,7 @@ export default function CustomerTable({ data, setCustomerToDelete }) {
 						return (
 							<div className="grid grid-cols-7 text-xs" key={key}>
 								<p className="truncate pr-5">
-									{item?.first_name}
+									{item?.firstName}
 								</p>
 								<p className="truncate pr-5">{item?.phone}</p>
 								<p className="truncate pr-5">{"Tech Hunt"}</p>

@@ -5,13 +5,24 @@ import Image from "next/image"
 import axios from "axios"
 
 export default function EditEmployee({ params }) {
+	const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+
+	const accessToken = localStorage.getItem("plesk_access_token")
+
 	const [selectedTab, setSelectedTab] = useState("personal")
 	const [data, setData] = useState(null)
 
 	useEffect(() => {
 		const fetchData = async () => {
 			await axios
-				.get(`/api/employee?id=${params?.slug}`)
+				.get(
+					`${API_BASE_URL}/api/employee/get?userId=${params?.slug}`,
+					{
+						headers: {
+							Authorization: `Bearer ${accessToken}`
+						}
+					}
+				)
 				?.then((res) => {
 					setData(res?.data?.data)
 					console.log(res)
@@ -21,14 +32,14 @@ export default function EditEmployee({ params }) {
 				})
 		}
 		fetchData()
-	}, [params])
+	}, [params, API_BASE_URL, accessToken])
 	return (
 		<div className="h-full flex-1 flex items-center justify-center">
 			<div className="size-[95%] border border-gray-400 rounded-xl p-10 flex flex-col gap-5">
 				<div className="w-full flex flex-row items-center justify-between">
 					<div className="flex flex-col gap-2">
 						<p className="text-2xl font-semibold">
-							{`${data?.first_name} ${data?.last_name}`}
+							{`${data?.firstName} ${data?.lastName}`}
 						</p>
 						<div className="flex flex-row gap-3 items-center">
 							<Image
@@ -134,12 +145,12 @@ export default function EditEmployee({ params }) {
 					<div className="w-full grid grid-cols-4 gap-16 mt-10">
 						<div className="flex flex-col gap-3 font-light">
 							<p className="text-xs text-gray-400">First Name</p>
-							<p className="text-sm">{data?.first_name}</p>
+							<p className="text-sm">{data?.firstName}</p>
 							<div className="h-[1px] w-52 bg-gray-200" />
 						</div>
 						<div className="flex flex-col gap-3 font-light">
 							<p className="text-xs text-gray-400">Last Name</p>
-							<p className="text-sm">{data?.last_name}</p>
+							<p className="text-sm">{data?.lastName}</p>
 							<div className="h-[1px] w-52 bg-gray-200" />
 						</div>
 						<div className="flex flex-col gap-3 font-light">
@@ -167,7 +178,7 @@ export default function EditEmployee({ params }) {
 							<p className="text-xs text-gray-400">
 								Marital Status
 							</p>
-							<p className="text-sm">{data?.marital_status}</p>
+							<p className="text-sm">{data?.maritalStatus}</p>
 							<div className="h-[1px] w-52 bg-gray-200" />
 						</div>
 						<div className="flex flex-col gap-3 font-light">
@@ -197,7 +208,7 @@ export default function EditEmployee({ params }) {
 						</div>
 						<div className="flex flex-col gap-3 font-light">
 							<p className="text-xs text-gray-400">ZIP Code</p>
-							<p className="text-sm">{data?.zip_code}</p>
+							<p className="text-sm">{data?.zipCode}</p>
 							<div className="h-[1px] w-52 bg-gray-200" />
 						</div>
 					</div>
@@ -213,7 +224,7 @@ export default function EditEmployee({ params }) {
 						<div className="flex flex-col gap-3 font-light">
 							<p className="text-xs text-gray-400">User Name</p>
 							<p className="text-sm">
-								{data?.professional_details?.user_name}
+								{data?.professional_details?.userName}
 							</p>
 							<div className="h-[1px] w-52 bg-gray-200" />
 						</div>
@@ -254,7 +265,7 @@ export default function EditEmployee({ params }) {
 								Working Days
 							</p>
 							<p className="text-sm">
-								{data?.professional_details?.working_days}
+								{data?.professional_details?.workingDays}
 							</p>
 							<div className="h-[1px] w-52 bg-gray-200" />
 						</div>
@@ -263,7 +274,7 @@ export default function EditEmployee({ params }) {
 								Joining Date
 							</p>
 							<p className="text-sm">
-								{data?.professional_details?.joining_date}
+								{data?.professional_details?.joiningDate}
 							</p>
 							<div className="h-[1px] w-52 bg-gray-200" />
 						</div>
@@ -272,7 +283,7 @@ export default function EditEmployee({ params }) {
 								Office Location
 							</p>
 							<p className="text-sm">
-								{data?.professional_details?.office_location}
+								{data?.professional_details?.officeLocation}
 							</p>
 							<div className="h-[1px] w-52 bg-gray-200" />
 						</div>
