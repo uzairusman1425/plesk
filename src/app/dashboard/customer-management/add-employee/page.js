@@ -8,10 +8,9 @@ import { useRouter } from "next/navigation"
 export default function AddEmployee() {
 	const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
-	const accessToken = localStorage.getItem("plesk_access_token")
-
 	const router = useRouter()
 
+	const [accessToken, setAccessToken] = useState(null)
 	const [selectedTab, setSelectedTab] = useState("personal")
 	const [showDOB, setShowDOB] = useState(false)
 	const [showJoiningDate, setShowJoiningDate] = useState(false)
@@ -96,6 +95,7 @@ export default function AddEmployee() {
 	useEffect(() => {
 		setShowDOB(false)
 		setShowJoiningDate(false)
+		setAccessToken(localStorage.getItem("plesk_access_token"))
 	}, [selectedTab])
 
 	return (

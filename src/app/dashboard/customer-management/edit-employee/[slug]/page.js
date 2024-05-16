@@ -7,10 +7,9 @@ import axios from "axios"
 export default function EditEmployee({ params }) {
 	const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
-	const accessToken = localStorage.getItem("plesk_access_token")
-
 	const [selectedTab, setSelectedTab] = useState("personal")
 	const [data, setData] = useState(null)
+	const [accessToken, setAccessToken] = useState(null)
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -33,6 +32,11 @@ export default function EditEmployee({ params }) {
 		}
 		fetchData()
 	}, [params, API_BASE_URL, accessToken])
+
+	useEffect(() => {
+		setAccessToken(localStorage.getItem("plesk_access_token"))
+	}, [])
+
 	return (
 		<div className="h-full flex-1 flex items-center justify-center">
 			<div className="size-[95%] border border-gray-400 rounded-xl p-10 flex flex-col gap-5">
