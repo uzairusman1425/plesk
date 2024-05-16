@@ -1,3 +1,6 @@
+"use client"
+
+import { useEffect, useState } from "react"
 import axios from "axios"
 import PropTypes from "prop-types"
 import { XCircleIcon } from "@heroicons/react/24/outline"
@@ -8,7 +11,7 @@ export default function CustomerDeleteConfirmationPopup({
 }) {
 	const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
-	const accessToken = localStorage.getItem("plesk_access_token")
+	const [accessToken, setAccessToken] = useState(null)
 
 	const handleDelete = async () => {
 		await axios
@@ -28,6 +31,10 @@ export default function CustomerDeleteConfirmationPopup({
 				console.error(err)
 			})
 	}
+
+	useEffect(() => {
+		setAccessToken(localStorage.getItem("plesk_access_token"))
+	}, [])
 
 	return (
 		<div className="fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-35 flex items-center justify-center">
