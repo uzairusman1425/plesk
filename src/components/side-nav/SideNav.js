@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useContext } from "react"
+import { useState, useContext, useEffect } from "react"
 import Image from "next/image"
 import { usePathname, useRouter } from "next/navigation"
 import { ChevronDownIcon, ChevronRightIcon } from "@heroicons/react/24/outline"
@@ -23,6 +23,12 @@ export default function SideNav() {
 		})
 		router.push("/")
 	}
+
+	useEffect(() => {
+		if (pathName?.includes("/dashboard/pc-monitoring")) {
+			setShowPCMonitoringDropdown(true)
+		}
+	}, [pathName])
 
 	return (
 		<div className="h-full w-56 flex flex-col gap-10 pl-5 pt-10">
@@ -150,7 +156,10 @@ export default function SideNav() {
 					<div className="w-full flex flex-col gap-3">
 						<button
 							className={`flex flex-row items-center justify-between h-10 w-full rounded px-3 transform-gpu ease-in-out duration-500 ${
-								pathName === "/dashboard/pc-monitoring" &&
+								(pathName === "/dashboard/pc-monitoring" ||
+									pathName?.includes(
+										"/dashboard/pc-monitoring/pc"
+									)) &&
 								"bg-primary bg-opacity-35"
 							}`}
 							onClick={() => {
@@ -161,7 +170,10 @@ export default function SideNav() {
 						>
 							<p
 								className={`text-xs transform-gpu ease-in-out duration-500 ${
-									pathName === "/dashboard/pc-monitoring"
+									pathName === "/dashboard/pc-monitoring" ||
+									pathName?.includes(
+										"/dashboard/pc-monitoring/pc"
+									)
 										? "text-primary"
 										: "text-gray-400"
 								}`}
@@ -170,7 +182,10 @@ export default function SideNav() {
 							</p>
 							<ChevronRightIcon
 								className={`size-3 transform-gpu ease-in-out duration-500 ${
-									pathName === "/dashboard/pc-monitoring"
+									pathName === "/dashboard/pc-monitoring" ||
+									pathName?.includes(
+										"/dashboard/pc-monitoring/pc"
+									)
 										? "text-primary"
 										: "text-gray-400"
 								}`}
