@@ -50,11 +50,6 @@ export default function Dashboard() {
 			productive: 1,
 			unproductive: 4,
 			unidentified: 2
-		},
-		{
-			productive: 9,
-			unproductive: 5,
-			unidentified: 1
 		}
 	]
 
