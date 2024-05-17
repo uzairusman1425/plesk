@@ -14,6 +14,7 @@ export default function CustomerManagement() {
 	const [customers, setCustomers] = useState([])
 
 	useEffect(() => {
+		setAccessToken(localStorage.getItem("plesk_access_token"))
 		;(async () => {
 			await axios
 				.get(`${API_BASE_URL}/api/employee/get`, {
@@ -30,10 +31,6 @@ export default function CustomerManagement() {
 				})
 		})()
 	}, [customerToDelete, API_BASE_URL, accessToken])
-
-	useEffect(() => {
-		setAccessToken(localStorage.getItem("plesk_access_token"))
-	}, [])
 
 	return (
 		<div className="h-full flex-1 flex items-center justify-center">
