@@ -12,7 +12,8 @@ export default function EditEmployee({ params }) {
 	const [accessToken, setAccessToken] = useState(null)
 
 	useEffect(() => {
-		const fetchData = async () => {
+		setAccessToken(localStorage.getItem("plesk_access_token"))
+		;(async () => {
 			await axios
 				.get(
 					`${API_BASE_URL}/api/employee/get?userId=${params?.slug}`,
@@ -29,13 +30,8 @@ export default function EditEmployee({ params }) {
 				?.catch((err) => {
 					console.error(err)
 				})
-		}
-		fetchData()
+		})()
 	}, [params, API_BASE_URL, accessToken])
-
-	useEffect(() => {
-		setAccessToken(localStorage.getItem("plesk_access_token"))
-	}, [])
 
 	return (
 		<div className="h-full flex-1 flex items-center justify-center">
