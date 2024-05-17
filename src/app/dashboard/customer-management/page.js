@@ -8,8 +8,6 @@ import CustomerDeleteConfirmationPopup from "@/components/customer-delete-confir
 export default function CustomerManagement() {
 	const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
-	localStorage.getItem("plesk_access_token")
-
 	const [customerToDelete, setCustomerToDelete] = useState(null)
 	const [accessToken, setAccessToken] = useState(null)
 
