@@ -1,13 +1,14 @@
 "use client"
 
 import { useRouter } from "next/navigation"
+import Link from "next/link"
 import { ArrowLeftCircleIcon } from "@heroicons/react/24/outline"
 
 export default function PC({ params }) {
 	const router = useRouter()
 
 	return (
-		<div className="h-full flex-1 flex flex-col gap-10 p-10">
+		<div className="h-full flex-1 flex flex-col gap-10 px-10 py-5">
 			<div className="flex flex-row gap-3 items-center">
 				<button
 					onClick={() => {
@@ -36,9 +37,12 @@ export default function PC({ params }) {
 							<p className="font-light">
 								Total Storage: 0.004 GB
 							</p>
-							<p className="font-semibold text-primary underline cursor-pointer">
+							<Link
+								href={`/dashboard/pc-monitoring/activity-log/${params?.slug}`}
+								className="font-semibold text-primary underline cursor-pointer"
+							>
 								View Activity Log
-							</p>
+							</Link>
 						</div>
 						<div className="flex flex-col gap-5">
 							<p className="font-light">

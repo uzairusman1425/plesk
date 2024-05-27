@@ -73,7 +73,7 @@ export default function CustomerTable({ data, setCustomerToDelete }) {
 						)
 					}}
 				>
-					<PlusCircleIcon className="h-7 w-7 text-white" />
+					<PlusCircleIcon className="size-7 text-white" />
 					<p className="text-white text-sm font-light">
 						Add New Employee
 					</p>
@@ -158,7 +158,7 @@ export default function CustomerTable({ data, setCustomerToDelete }) {
 								}}
 							>
 								<ChevronUpIcon
-									className={`h-3 w-3 ${
+									className={`size-3 transform-gpu ease-in-out duration-500 ${
 										itemsPerPage < 10
 											? "text-black"
 											: "text-gray-300"
@@ -173,7 +173,7 @@ export default function CustomerTable({ data, setCustomerToDelete }) {
 								}}
 							>
 								<ChevronDownIcon
-									className={`h-3 w-3 ${
+									className={`size-3 transform-gpu ease-in-out duration-500 ${
 										itemsPerPage > 5
 											? "text-black"
 											: "text-gray-300"
@@ -204,13 +204,13 @@ export default function CustomerTable({ data, setCustomerToDelete }) {
 						}}
 					>
 						<ChevronLeftIcon
-							className={`h-4 w-4 ${
+							className={`size-4 transform-gpu ease-in-out duration-500 ${
 								pageNumber > 0 ? "text-black" : "text-gray-300"
 							}`}
 						/>
 					</button>
 					<div className="flex flex-row items-center">
-						{paginated_data?.map((item, key) => {
+						{paginated_data?.map((_, key) => {
 							if (
 								key >= paginationStart &&
 								key <= paginationEnd
@@ -221,7 +221,7 @@ export default function CustomerTable({ data, setCustomerToDelete }) {
 										onClick={() => {
 											setPageNumber(key)
 										}}
-										className={`h-7 w-7 ${
+										className={`size-7 transform-gpu ease-in-out duration-500 ${
 											pageNumber === key &&
 											"border border-primary text-primary rounded-lg"
 										} text-xs flex items-center justify-center`}
@@ -240,7 +240,7 @@ export default function CustomerTable({ data, setCustomerToDelete }) {
 						}}
 					>
 						<ChevronRightIcon
-							className={`h-4 w-4 ${
+							className={`size-4 transform-gpu ease-in-out duration-500 ${
 								pageNumber < paginated_data?.length - 1
 									? "text-black"
 									: "text-gray-300"

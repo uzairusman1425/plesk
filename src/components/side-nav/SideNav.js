@@ -159,6 +159,9 @@ export default function SideNav() {
 								(pathName === "/dashboard/pc-monitoring" ||
 									pathName?.includes(
 										"/dashboard/pc-monitoring/pc"
+									) ||
+									pathName?.includes(
+										"/dashboard/pc-monitoring/activity-log"
 									)) &&
 								"bg-primary bg-opacity-35"
 							}`}
@@ -173,6 +176,9 @@ export default function SideNav() {
 									pathName === "/dashboard/pc-monitoring" ||
 									pathName?.includes(
 										"/dashboard/pc-monitoring/pc"
+									) ||
+									pathName?.includes(
+										"/dashboard/pc-monitoring/activity-log"
 									)
 										? "text-primary"
 										: "text-gray-400"
@@ -185,6 +191,9 @@ export default function SideNav() {
 									pathName === "/dashboard/pc-monitoring" ||
 									pathName?.includes(
 										"/dashboard/pc-monitoring/pc"
+									) ||
+									pathName?.includes(
+										"/dashboard/pc-monitoring/activity-log"
 									)
 										? "text-primary"
 										: "text-gray-400"
