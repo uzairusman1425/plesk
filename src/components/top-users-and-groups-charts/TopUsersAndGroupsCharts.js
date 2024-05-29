@@ -71,7 +71,7 @@ export default function TopUsersAndGroupsCharts({ topUsersAndGroups }) {
 					</button>
 				</div>
 			</div>
-			<div className="size-full grid grid-rows-2 gap-5">
+			<div className="h-80 w-full grid grid-cols-2 gap-5">
 				{topUsersAndGroups?.map((item, key) => {
 					return (
 						<ProductivityAreaChart
