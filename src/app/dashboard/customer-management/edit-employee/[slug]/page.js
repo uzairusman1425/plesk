@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import axios from "axios"
+import { FallingLines } from "react-loader-spinner"
 
 export default function EditEmployee({ params }) {
 	const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
@@ -10,7 +11,7 @@ export default function EditEmployee({ params }) {
 	const [accessToken, setAccessToken] = useState(null)
 	const [selectedTab, setSelectedTab] = useState("personal")
 	const [isEditing, setIsEditing] = useState(false)
-	const [data, setData] = useState(null)
+	const [isLoading, setIsLoading] = useState(false)
 	const [firstName, setFirstName] = useState("")
 	const [lastName, setLastName] = useState("")
 	const [designation, setDesignation] = useState("")
@@ -46,7 +47,6 @@ export default function EditEmployee({ params }) {
 					}
 				)
 				?.then((res) => {
-					setData(res?.data?.data)
 					setFirstName(res?.data?.data?.firstName || "")
 					setLastName(res?.data?.data?.lastName || "")
 					setDesignation(
@@ -95,6 +95,58 @@ export default function EditEmployee({ params }) {
 		})()
 	}, [params, API_BASE_URL, accessToken])
 
+	const handleSave = async () => {
+		const payload = {
+			firstName: firstName,
+			lastName: lastName,
+			phone: phoneNumber,
+			email: personalEmail,
+			dob: DOB,
+			maritalStatus: maritalStatus,
+			gender: gender,
+			nationality: nationality,
+			address: address,
+			city: city,
+			state: state,
+			zipCode: zipCode,
+			professional_details: {
+				id: employeeID,
+				userName: userName,
+				type: employeeType,
+				email: professionalEmail,
+				department: department,
+				designation: designation,
+				workingDays: workingDays,
+				joiningDate: joiningDate,
+				officeLocation: officeLocation
+			}
+		}
+
+		setIsLoading(true)
+
+		await axios
+			.put(
+				`${API_BASE_URL}/api/employee/update?userId=${params?.slug}`,
+				payload,
+				{
+					headers: {
+						Authorization: `Bearer ${accessToken}`
+					}
+				}
+			)
+			?.then((res) => {
+				console.log(res)
+				setIsLoading(false)
+				if (res?.status === 200) {
+					setIsEditing(false)
+				}
+			})
+			?.catch((err) => {
+				console.log(err)
+				setIsLoading(false)
+			})
+	}
+
 	return (
 		<div className="h-full flex-1 flex items-center justify-center">
 			<div className="size-[95%] border border-gray-400 rounded-xl p-10 flex flex-col gap-5">
@@ -125,13 +177,20 @@ export default function EditEmployee({ params }) {
 					{isEditing ? (
 						<button
 							className="h-14 w-24 rounded-xl bg-primary flex items-center justify-center"
-							onClick={() => {
-								setIsEditing(false)
-							}}
+							onClick={handleSave}
 						>
-							<p className="font-light text-white uppercase">
-								done
-							</p>
+							{isLoading ? (
+								<FallingLines
+									color="#ffffff"
+									width="50"
+									visible={true}
+									ariaLabel="falling-circles-loading"
+								/>
+							) : (
+								<p className="font-light text-white uppercase">
+									done
+								</p>
+							)}
 						</button>
 					) : (
 						<button

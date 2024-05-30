@@ -101,223 +101,86 @@ export default function SideNav() {
 					</p>
 				</button>
 				<button
-					className={`h-10 px-3 rounded flex flex-row  justify-between items-center transform-gpu ease-in-out duration-500 ${
-						showPCMonitoringDropdown &&
-						!pathName?.includes("/dashboard/pc-monitoring") &&
+					className={`h-10 px-3 rounded flex flex-row  gap-3 items-center transform-gpu ease-in-out duration-500 ${
+						pathName?.includes("/dashboard/pc-monitoring") &&
 						"bg-primary bg-opacity-35"
 					}`}
 					onClick={() => {
 						if (!pathName?.includes("/dashboard/pc-monitoring")) {
-							setShowPCMonitoringDropdown(
-								!showPCMonitoringDropdown
-							)
+							router.push("/dashboard/pc-monitoring")
 						}
 					}}
 				>
-					<div className="flex flex-row gap-3 items-center">
-						<Image
-							src={
-								showPCMonitoringDropdown &&
-								!pathName?.includes("/dashboard/pc-monitoring")
-									? "/icons/pc-monitoring-blue.png"
-									: "/icons/pc-monitoring.png"
-							}
-							alt="icon"
-							height={15}
-							width={15}
-						/>
-						<p
-							className={`text-xs transform-gpu ease-in-out duration-500 ${
-								showPCMonitoringDropdown &&
-								!pathName?.includes("/dashboard/pc-monitoring")
-									? "text-primary"
-									: "text-gray-400"
-							}`}
-						>
-							PC Monitoring
-						</p>
-					</div>
-					<div
-						className={`${
-							showPCMonitoringDropdown ? "rotate-180" : "rotate-0"
-						} transform-gpu ease-in-out duration-500`}
+					<Image
+						src={
+							pathName?.includes("/dashboard/pc-monitoring")
+								? "/icons/pc-monitoring-blue.png"
+								: "/icons/pc-monitoring.png"
+						}
+						alt="icon"
+						height={15}
+						width={15}
+					/>
+					<p
+						className={`text-xs transform-gpu ease-in-out duration-500 ${
+							pathName?.includes("/dashboard/pc-monitoring")
+								? "text-primary"
+								: "text-gray-400"
+						}`}
 					>
-						<ChevronDownIcon
-							className={`size-3 ${
-								showPCMonitoringDropdown &&
-								!pathName?.includes("/dashboard/pc-monitoring")
-									? "text-primary"
-									: "text-gray-400"
-							}`}
-						/>
-					</div>
+						PC Monitoring
+					</p>
 				</button>
-				{showPCMonitoringDropdown && (
-					<div className="w-full flex flex-col gap-3">
-						<button
-							className={`flex flex-row items-center justify-between h-10 w-full rounded px-3 transform-gpu ease-in-out duration-500 ${
-								(pathName === "/dashboard/pc-monitoring" ||
-									pathName?.includes(
-										"/dashboard/pc-monitoring/pc"
-									) ||
-									pathName?.includes(
-										"/dashboard/pc-monitoring/activity-log"
-									)) &&
-								"bg-primary bg-opacity-35"
-							}`}
-							onClick={() => {
-								if (pathName !== "/dashboard/pc-monitoring") {
-									router.push("/dashboard/pc-monitoring")
-								}
-							}}
-						>
-							<p
-								className={`text-xs transform-gpu ease-in-out duration-500 ${
-									pathName === "/dashboard/pc-monitoring" ||
-									pathName?.includes(
-										"/dashboard/pc-monitoring/pc"
-									) ||
-									pathName?.includes(
-										"/dashboard/pc-monitoring/activity-log"
-									)
-										? "text-primary"
-										: "text-gray-400"
-								}`}
-							>
-								Monitored PCs
-							</p>
-							<ChevronRightIcon
-								className={`size-3 transform-gpu ease-in-out duration-500 ${
-									pathName === "/dashboard/pc-monitoring" ||
-									pathName?.includes(
-										"/dashboard/pc-monitoring/pc"
-									) ||
-									pathName?.includes(
-										"/dashboard/pc-monitoring/activity-log"
-									)
-										? "text-primary"
-										: "text-gray-400"
-								}`}
-							/>
-						</button>
-						<button
-							className={`flex flex-row items-center justify-between h-10 w-full rounded px-3 transform-gpu ease-in-out duration-500 ${
-								pathName ===
-									"/dashboard/pc-monitoring/custom-agent" &&
-								"bg-primary bg-opacity-35"
-							}`}
-							onClick={() => {
-								if (
-									pathName !==
-									"/dashboard/pc-monitoring/custom-agent"
-								) {
-									router.push(
-										"/dashboard/pc-monitoring/custom-agent"
-									)
-								}
-							}}
-						>
-							<p
-								className={`text-xs transform-gpu ease-in-out duration-500 ${
-									pathName ===
-									"/dashboard/pc-monitoring/custom-agent"
-										? "text-primary"
-										: "text-gray-400"
-								}`}
-							>
-								Custom Agent
-							</p>
-							<ChevronRightIcon
-								className={`size-3 transform-gpu ease-in-out duration-500 ${
-									pathName ===
-									"/dashboard/pc-monitoring/custom-agent"
-										? "text-primary"
-										: "text-gray-400"
-								}`}
-							/>
-						</button>
-						<button
-							className={`flex flex-row items-center justify-between h-10 w-full rounded px-3 transform-gpu ease-in-out duration-500 ${
-								pathName ===
-									"/dashboard/pc-monitoring/real-time-tracking" &&
-								"bg-primary bg-opacity-35"
-							}`}
-							onClick={() => {
-								if (
-									pathName !==
-									"/dashboard/pc-monitoring/real-time-tracking"
-								) {
-									router.push(
-										"/dashboard/pc-monitoring/real-time-tracking"
-									)
-								}
-							}}
-						>
-							<p
-								className={`text-xs transform-gpu ease-in-out duration-500 ${
-									pathName ===
-									"/dashboard/pc-monitoring/real-time-tracking"
-										? "text-primary"
-										: "text-gray-400"
-								}`}
-							>
-								Real-Time Tracking
-							</p>
-							<ChevronRightIcon
-								className={`size-3 transform-gpu ease-in-out duration-500 ${
-									pathName ===
-									"/dashboard/pc-monitoring/real-time-tracking"
-										? "text-primary"
-										: "text-gray-400"
-								}`}
-							/>
-						</button>
-						<button
-							className={`flex flex-row items-center justify-between h-10 w-full rounded px-3 transform-gpu ease-in-out duration-500 ${
-								pathName ===
-									"/dashboard/pc-monitoring/productivity-analysis" &&
-								"bg-primary bg-opacity-35"
-							}`}
-							onClick={() => {
-								if (
-									pathName !==
-									"/dashboard/pc-monitoring/productivity-analysis"
-								) {
-									router.push(
-										"/dashboard/pc-monitoring/productivity-analysis"
-									)
-								}
-							}}
-						>
-							<p
-								className={`text-xs transform-gpu ease-in-out duration-500 ${
-									pathName ===
-									"/dashboard/pc-monitoring/productivity-analysis"
-										? "text-primary"
-										: "text-gray-400"
-								}`}
-							>
-								Productivity Analysis
-							</p>
-							<ChevronRightIcon
-								className={`size-3 transform-gpu ease-in-out duration-500 ${
-									pathName ===
-									"/dashboard/pc-monitoring/productivity-analysis"
-										? "text-primary"
-										: "text-gray-400"
-								}`}
-							/>
-						</button>
-					</div>
-				)}
+				<button
+					className={`h-10 px-3 rounded flex flex-row  gap-3 items-center transform-gpu ease-in-out duration-500 ${
+						pathName?.includes("/dashboard/real-time-tracking") &&
+						"bg-primary bg-opacity-35"
+					}`}
+					onClick={() => {
+						if (
+							!pathName?.includes("/dashboard/real-time-tracking")
+						) {
+							router.push("/dashboard/real-time-tracking")
+						}
+					}}
+				>
+					<Image
+						src={
+							pathName?.includes("/dashboard/real-time-tracking")
+								? "/icons/real-time-tracking-blue.png"
+								: "/icons/real-time-tracking.png"
+						}
+						alt="icon"
+						height={15}
+						width={15}
+					/>
+					<p
+						className={`text-xs transform-gpu ease-in-out duration-500 ${
+							pathName?.includes("/dashboard/real-time-tracking")
+								? "text-primary"
+								: "text-gray-400"
+						}`}
+					>
+						Real-Time Tracking
+					</p>
+				</button>
 				<button
 					className={`h-10 pl-3 rounded flex flex-row gap-3 items-center transform-gpu ease-in-out duration-500 ${
 						pathName === "/dashboard/settings" &&
 						"bg-primary bg-opacity-35"
 					}`}
+					onClick={() => {
+						if (!pathName?.includes("/dashboard/settings")) {
+							router.push("/dashboard/settings")
+						}
+					}}
 				>
 					<Image
-						src={"/icons/settings.png"}
+						src={
+							pathName?.includes("/dashboard/settings")
+								? "/icons/settings-blue.png"
+								: "/icons/settings.png"
+						}
 						alt="icon"
 						height={15}
 						width={15}
