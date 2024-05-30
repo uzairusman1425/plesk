@@ -5,6 +5,7 @@ import ProductivityChart from "@/components/productivity-chart/ProductivityChart
 import TopUsersAndGroupsCharts from "@/components/top-users-and-groups-charts/TopUsersAndGroupsCharts"
 import TopApplicationsChart from "@/components/top-applications-chart/TopApplicationsChart"
 import TopWebsitesChart from "@/components/top-websites-chart/TopWebsitesChart"
+import PendingClassificationsChart from "@/components/pending-classifications-chart/PendingClassificationsChart"
 
 export default function Dashboard() {
 	const productivity = [
@@ -150,10 +151,163 @@ export default function Dashboard() {
 		}
 	]
 
+	const pendingClassifications = [
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m",
+			url: "www.facebook.com"
+		},
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m",
+			url: "admin.onetraveller.co.uk"
+		},
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m",
+			url: "admin.onetraveller.co.uk"
+		},
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m",
+			url: "trello.com"
+		},
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m",
+			url: ""
+		},
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m",
+			url: ""
+		},
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m",
+			url: "www.facebook.com"
+		},
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m",
+			url: "admin.onetraveller.co.uk"
+		},
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m",
+			url: "admin.onetraveller.co.uk"
+		},
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m",
+			url: "trello.com"
+		},
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m",
+			url: ""
+		},
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m",
+			url: ""
+		},
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m",
+			url: "www.facebook.com"
+		},
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m",
+			url: "admin.onetraveller.co.uk"
+		},
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m",
+			url: "admin.onetraveller.co.uk"
+		},
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m",
+			url: "trello.com"
+		},
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m",
+			url: ""
+		},
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m",
+			url: ""
+		},
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m",
+			url: "www.facebook.com"
+		},
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m",
+			url: "admin.onetraveller.co.uk"
+		},
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m",
+			url: "admin.onetraveller.co.uk"
+		},
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m",
+			url: "trello.com"
+		},
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m",
+			url: ""
+		},
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m",
+			url: ""
+		},
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m",
+			url: "www.facebook.com"
+		},
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m",
+			url: "admin.onetraveller.co.uk"
+		},
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m",
+			url: "admin.onetraveller.co.uk"
+		},
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m",
+			url: "trello.com"
+		},
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m",
+			url: ""
+		},
+		{
+			name: "www.postpack.co.uk",
+			duration: "17h 4m",
+			url: ""
+		}
+	]
+
 	return (
-		<div className="h-fit flex-1 flex flex-col gap-20 px-10 pb-10 pt-5">
+		<div className="h-fit flex-1 flex flex-col gap-10 px-10 pb-10 pt-5">
 			<DashboardHeader />
-			<div className="w-full grid grid-cols-2 gap-20">
+			<div className="w-full grid grid-cols-2 gap-10">
 				<ProductivityChart productivity={productivity} />
 				<TopUsersAndGroupsCharts
 					topUsersAndGroups={topUsersAndGroups}
@@ -161,6 +315,9 @@ export default function Dashboard() {
 				<TopApplicationsChart topApplications={topApplications} />
 				<TopWebsitesChart topWebsites={topWebsites} />
 			</div>
+			<PendingClassificationsChart
+				pendingClassifications={pendingClassifications}
+			/>
 		</div>
 	)
 }
