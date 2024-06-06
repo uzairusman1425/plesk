@@ -14,21 +14,25 @@ export default function CustomerManagement() {
 	const [customers, setCustomers] = useState([])
 
 	useEffect(() => {
-		setAccessToken(localStorage.getItem("plesk_access_token"))
+		if (!accessToken) {
+			setAccessToken(localStorage.getItem("plesk_access_token"))
+		}
 		;(async () => {
-			await axios
-				.get(`${API_BASE_URL}/api/employee/get`, {
-					headers: {
-						Authorization: `Bearer ${accessToken}`
-					}
-				})
-				?.then((res) => {
-					console.log(res)
-					setCustomers(res?.data?.data)
-				})
-				?.catch((err) => {
-					console.error(err)
-				})
+			if (accessToken) {
+				await axios
+					.get(`${API_BASE_URL}/api/employee/get`, {
+						headers: {
+							Authorization: `Bearer ${accessToken}`
+						}
+					})
+					?.then((res) => {
+						console.log(res)
+						setCustomers(res?.data?.data)
+					})
+					?.catch((err) => {
+						console.error(err)
+					})
+			}
 		})()
 	}, [customerToDelete, API_BASE_URL, accessToken])
 

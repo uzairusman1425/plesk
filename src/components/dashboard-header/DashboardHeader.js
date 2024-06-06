@@ -1,24 +1,33 @@
+"use client"
+
+import { useState } from "react"
 import Image from "next/image"
 import { ChevronDownIcon } from "@heroicons/react/24/solid"
+import DateRangeDropDown from "../date-range-drop-down/DateRangeDropDown"
+import UsersDropDown from "../users-drop-down/UsersDropDown"
 
 export default function DashboardHeader() {
+	const [showRangeDropdown, setShowRangeDropdown] = useState(false)
+	const [selectedRange, setSelectedRange] = useState("Custom Range")
+	const [showUserDropdown, setShowUserDropdown] = useState(false)
+	const [selectedUser, setSelectedUser] = useState("All Users")
+
 	return (
 		<div className="w-full flex flex-row items-center justify-between">
 			<div className="flex flex-row items-center gap-2">
-				<button className="flex flex-row items-center gap-1 p-1 border border-transparent hover:border-primary transform-gpu ease-in-out duration-300">
-					<p className="text-xs">Custom Range</p>
-					<ChevronDownIcon className="h-3 w-3 text-black" />
-				</button>
+				<DateRangeDropDown
+					selectedRange={selectedRange}
+					setSelectedRange={setSelectedRange}
+					showRangeDropdown={showRangeDropdown}
+					setShowRangeDropdown={setShowRangeDropdown}
+				/>
 				<p className="text-xs p-2">03/13/2024 to 03/13/2024</p>
-				<button className="flex flex-row items-center gap-1 p-1 border border-transparent hover:border-primary transform-gpu ease-in-out duration-300">
-					<Image
-						src={"/icons/all-users.png"}
-						alt="all-users"
-						height={12}
-						width={12}
-					/>
-					<p className="text-xs">All Users</p>
-				</button>
+				<UsersDropDown
+					selectedUser={selectedUser}
+					setSelectedUser={setSelectedUser}
+					showUserDropdown={showUserDropdown}
+					setShowUserDropdown={setShowUserDropdown}
+				/>
 				<button className="flex flex-row items-center gap-1 p-1 border border-transparent hover:border-primary transform-gpu ease-in-out duration-300">
 					<Image
 						src={"/icons/refresh.png"}
@@ -27,15 +36,6 @@ export default function DashboardHeader() {
 						width={12}
 					/>
 					<p className="text-xs">Refresh</p>
-				</button>
-				<button className="flex flex-row items-center gap-1 p-1 border border-transparent hover:border-primary transform-gpu ease-in-out duration-300">
-					<Image
-						src={"/icons/print.png"}
-						alt="print"
-						height={12}
-						width={12}
-					/>
-					<p className="text-xs">Print Page</p>
 				</button>
 			</div>
 			<button className="h-8 w-44 bg-primary rounded flex flex-row items-center justify-center gap-3">

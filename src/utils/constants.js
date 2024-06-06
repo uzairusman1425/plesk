@@ -10,3 +10,14 @@ export const colors = [
 	"#000000",
 	"#FF7C43"
 ]
+
+export const dateRanges = [
+	"Today",
+	"Yesterday",
+	"Last 7 days",
+	"Last 30 days",
+	"Custom Range",
+	"This Week",
+	"Last Week",
+	"This Month"
+]
