@@ -1,6 +1,8 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
+import axios from "axios"
 import {
 	ArrowLeftCircleIcon,
 	ArrowPathIcon,
@@ -10,8 +12,41 @@ import { UserGroupIcon } from "@heroicons/react/24/solid"
 import DateSlider from "@/components/date-slider/DateSlider"
 import ActivityLogTable from "@/components/activity-log-table/ActivityLogTable"
 
-export default function ActivityLog() {
+export default function ActivityLog({ params }) {
 	const router = useRouter()
+
+	const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+
+	const [customerToDelete, setCustomerToDelete] = useState(null)
+	const [accessToken, setAccessToken] = useState(null)
+
+	const [activities, setActivities] = useState([])
+
+	useEffect(() => {
+		if (!accessToken) {
+			setAccessToken(localStorage.getItem("plesk_access_token"))
+		}
+		;(async () => {
+			if (accessToken) {
+				await axios
+					.get(
+						`${API_BASE_URL}/api/employee/activity?id=${params?.slug}`,
+						{
+							headers: {
+								Authorization: `Bearer ${accessToken}`
+							}
+						}
+					)
+					?.then((res) => {
+						console.log(res)
+						setActivities(res?.data?.data)
+					})
+					?.catch((err) => {
+						console.error(err)
+					})
+			}
+		})()
+	}, [customerToDelete, API_BASE_URL, accessToken, params])
 
 	const data = [
 		{
@@ -6094,7 +6129,7 @@ export default function ActivityLog() {
 				</button>
 			</div>
 			<DateSlider />
-			<ActivityLogTable data={data} />
+			<ActivityLogTable data={activities} />
 		</div>
 	)
 }

@@ -127,10 +127,10 @@ export default function ActivityLogTable({ data }) {
 				</div>
 				<div className="w-[1px] min-h-full bg-gray-300" />
 				<div className="flex flex-col gap-2 items-center">
-					<div className="h-6 w-24 rounded border flex items-center justify-center">
+					<div className="h-6 w-32 rounded border flex items-center justify-center">
 						<p className="text-xs">Description</p>
 					</div>
-					<div className="h-6 w-24 rounded border flex items-center justify-center" />
+					<div className="h-6 w-32 rounded border flex items-center justify-center" />
 				</div>
 				<div className="w-[1px] min-h-full bg-gray-300" />
 				<div className="flex-1 flex flex-col gap-2 items-center">
@@ -149,9 +149,9 @@ export default function ActivityLogTable({ data }) {
 							key={key}
 						>
 							<div className="w-10 flex justify-center">
-								{item?.category === "productive" ? (
+								{item?.productivity === "Productive" ? (
 									<CheckCircleIcon className="size-7 text-primary" />
-								) : item?.category === "unproductive" ? (
+								) : item?.productivity === "Unproductive" ? (
 									<MinusCircleIcon className="size-7 text-green-300" />
 								) : (
 									<QuestionMarkCircleIcon className="size-7 text-gray-500" />
@@ -188,18 +188,23 @@ export default function ActivityLogTable({ data }) {
 								</p>
 							</div>
 							<div className="w-[1px]" />
-							<div className="w-24">
+							<div className="w-32">
 								<p className="text-xs text-primary truncate">
-									{item?.description}
+									{item?.active_window
+										?.split("-")
+										[
+											data[0]?.active_window?.split("-")
+												?.length - 1
+										]?.trim()}
 								</p>
 							</div>
 							<div className="w-[1px]" />
 							<div className="flex-1 flex flex-row gap-2 items-center">
-								{item?.website && (
+								{item?.current_url && (
 									<GlobeAltIcon className="size-4 text-primary" />
 								)}
 								<p className="text-xs truncate">
-									{item?.website}
+									{item?.current_url}
 								</p>
 							</div>
 						</div>

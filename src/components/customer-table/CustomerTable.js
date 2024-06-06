@@ -80,13 +80,14 @@ export default function CustomerTable({ data, setCustomerToDelete }) {
 				</button>
 			</div>
 			<div className="h-[80%] w-full flex flex-col gap-8">
-				<div className="grid grid-cols-7 text-xs">
+				<div className="grid grid-cols-8 text-xs">
 					<p>Customer Name</p>
 					<p>Contact Information</p>
 					<p>Company Name</p>
 					<p>Designation</p>
 					<p>Type</p>
 					<p>Status</p>
+					<p>Key</p>
 					<div className="w-full text-center">
 						<p>Action</p>
 					</div>
@@ -94,7 +95,7 @@ export default function CustomerTable({ data, setCustomerToDelete }) {
 				<div className="flex-1 flex flex-col gap-7 overflow-y-auto scrollbar-none">
 					{paginated_data[pageNumber]?.map((item, key) => {
 						return (
-							<div className="grid grid-cols-7 text-xs" key={key}>
+							<div className="grid grid-cols-8 text-xs" key={key}>
 								<p className="truncate pr-5">
 									{item?.firstName}
 								</p>
@@ -111,6 +112,7 @@ export default function CustomerTable({ data, setCustomerToDelete }) {
 										{"Permanent"}
 									</p>
 								</div>
+								<p className="pr-5">{item?.key}</p>
 								<div className="w-full flex flex-row items-center justify-center gap-5">
 									<button
 										onClick={() => {

@@ -1,6 +1,8 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
+import axios from "axios"
 import {
 	MagnifyingGlassIcon,
 	AdjustmentsHorizontalIcon,
@@ -12,58 +14,35 @@ import {
 export default function PCMonitoring() {
 	const router = useRouter()
 
-	const data = [
-		{
-			id: 1,
-			pcName: "AzureAD",
-			user: "melissa.morley@onetraveller.co.uk"
-		},
-		{
-			id: 2,
-			pcName: "AzureAD",
-			user: "claireracher@onetraveller.co.uk"
-		},
-		{
-			id: 3,
-			pcName: "AzureAD",
-			user: "melissa.morley@onetraveller.co.uk"
-		},
-		{
-			id: 4,
-			pcName: "AzureAD",
-			user: "claireracher@onetraveller.co.uk"
-		},
-		{
-			id: 5,
-			pcName: "AzureAD",
-			user: "melissa.morley@onetraveller.co.uk"
-		},
-		{
-			id: 6,
-			pcName: "AzureAD",
-			user: "claireracher@onetraveller.co.uk"
-		},
-		{
-			id: 7,
-			pcName: "AzureAD",
-			user: "melissa.morley@onetraveller.co.uk"
-		},
-		{
-			id: 8,
-			pcName: "AzureAD",
-			user: "claireracher@onetraveller.co.uk"
-		},
-		{
-			id: 9,
-			pcName: "AzureAD",
-			user: "melissa.morley@onetraveller.co.uk"
-		},
-		{
-			id: 10,
-			pcName: "AzureAD",
-			user: "claireracher@onetraveller.co.uk"
+	const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+
+	const [customerToDelete, setCustomerToDelete] = useState(null)
+	const [accessToken, setAccessToken] = useState(null)
+
+	const [customers, setCustomers] = useState([])
+
+	useEffect(() => {
+		if (!accessToken) {
+			setAccessToken(localStorage.getItem("plesk_access_token"))
 		}
-	]
+		;(async () => {
+			if (accessToken) {
+				await axios
+					.get(`${API_BASE_URL}/api/employee/get`, {
+						headers: {
+							Authorization: `Bearer ${accessToken}`
+						}
+					})
+					?.then((res) => {
+						console.log(res)
+						setCustomers(res?.data?.data)
+					})
+					?.catch((err) => {
+						console.error(err)
+					})
+			}
+		})()
+	}, [customerToDelete, API_BASE_URL, accessToken])
 
 	return (
 		<div className="h-full flex-1 flex flex-col items-center gap-7 px-10 py-5">
@@ -103,7 +82,7 @@ export default function PCMonitoring() {
 					</div>
 				</div>
 				<div className="w-full flex-1 flex flex-col gap-3">
-					{data?.map((item, key) => {
+					{customers?.map((item, key) => {
 						return (
 							<div
 								className="h-10 w-full border rounded flex flex-row gap-5 items-center px-3 shadow-lg"
@@ -116,14 +95,14 @@ export default function PCMonitoring() {
 										className="flex flex-row gap-3 items-center"
 										onClick={() => {
 											router?.push(
-												`/dashboard/pc-monitoring/pc/${item?.id}`
+												`/dashboard/pc-monitoring/pc/${item?._id}`
 											)
 										}}
 									>
 										<ComputerDesktopIcon className="size-4 text-primary" />
-										<p>{item?.pcName}</p>
+										<p>Azure AD</p>
 									</button>
-									<p>{item?.user}</p>
+									<p>{item?.email}</p>
 								</div>
 							</div>
 						)
