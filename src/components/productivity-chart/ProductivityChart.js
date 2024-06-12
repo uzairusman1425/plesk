@@ -86,7 +86,7 @@ export default function ProductivityChart({ productivity }) {
 				<ResponsiveContainer width="100%" height="100%">
 					<BarChart width={500} height={300} data={productivity}>
 						<CartesianGrid strokeDasharray="3 3" />
-						<YAxis unit={"hrs"} />
+						<YAxis unit={"hrs"} width={75} />
 						<Legend iconType="circle" iconSize={10} />
 						<Bar dataKey="productive" fill="#2D9CDB" barSize={10} />
 						<Bar

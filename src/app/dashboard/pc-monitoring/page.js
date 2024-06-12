@@ -16,9 +16,7 @@ export default function PCMonitoring() {
 
 	const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
-	const [customerToDelete, setCustomerToDelete] = useState(null)
 	const [accessToken, setAccessToken] = useState(null)
-
 	const [customers, setCustomers] = useState([])
 
 	useEffect(() => {
@@ -42,7 +40,7 @@ export default function PCMonitoring() {
 					})
 			}
 		})()
-	}, [customerToDelete, API_BASE_URL, accessToken])
+	}, [API_BASE_URL, accessToken])
 
 	return (
 		<div className="h-full flex-1 flex flex-col items-center gap-7 px-10 py-5">
@@ -90,7 +88,7 @@ export default function PCMonitoring() {
 							>
 								<input type="checkbox" className="size-4" />
 								<div className="grid grid-cols-3 place-items-center flex-1 text-sm">
-									<p className="font-semibold">{item?.id}</p>
+									<p className="font-semibold">{item?._id}</p>
 									<button
 										className="flex flex-row gap-3 items-center"
 										onClick={() => {

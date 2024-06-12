@@ -188,7 +188,7 @@ export default function ActivityLogTable({ data }) {
 								</p>
 							</div>
 							<div className="w-[1px]" />
-							<div className="w-32">
+							<div className="w-32 flex justify-center">
 								<p className="text-xs text-primary truncate">
 									{item?.active_window
 										?.split("-")

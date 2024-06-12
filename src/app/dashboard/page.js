@@ -1,5 +1,7 @@
 "use client"
 
+import { useState, useEffect } from "react"
+import axios from "axios"
 import DashboardHeader from "@/components/dashboard-header/DashboardHeader"
 import ProductivityChart from "@/components/productivity-chart/ProductivityChart"
 import TopUsersAndGroupsCharts from "@/components/top-users-and-groups-charts/TopUsersAndGroupsCharts"
@@ -8,33 +10,34 @@ import TopWebsitesChart from "@/components/top-websites-chart/TopWebsitesChart"
 import PendingClassificationsChart from "@/components/pending-classifications-chart/PendingClassificationsChart"
 
 export default function Dashboard() {
-	const productivity = [
-		{
-			productive: 8,
-			unproductive: 2,
-			unidentified: 1
-		},
-		{
-			productive: 3,
-			unproductive: 1,
-			unidentified: 2
-		},
-		{
-			productive: 2,
-			unproductive: 9,
-			unidentified: 2
-		},
-		{
-			productive: 7,
-			unproductive: 3,
-			unidentified: 2
-		},
-		{
-			productive: 1,
-			unproductive: 4,
-			unidentified: 2
+	const [productivity, setProductivity] = useState([])
+
+	const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+
+	const [accessToken, setAccessToken] = useState(null)
+
+	useEffect(() => {
+		if (!accessToken) {
+			setAccessToken(localStorage.getItem("plesk_access_token"))
 		}
-	]
+		;(async () => {
+			if (accessToken) {
+				await axios
+					.get(`${API_BASE_URL}/api/employee/activity/data`, {
+						headers: {
+							Authorization: `Bearer ${accessToken}`
+						}
+					})
+					?.then((res) => {
+						console.log(res)
+						setProductivity(res?.data?.data)
+					})
+					?.catch((err) => {
+						console.error(err)
+					})
+			}
+		})()
+	}, [API_BASE_URL, accessToken])
 
 	const topUsersAndGroups = [
 		{
