@@ -1,16 +1,44 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
+import axios from "axios"
 import { ChevronDownIcon } from "@heroicons/react/24/solid"
 import DateRangeDropDown from "../date-range-drop-down/DateRangeDropDown"
 import UsersDropDown from "../users-drop-down/UsersDropDown"
 
 export default function DashboardHeader() {
+	const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+
+	const [accessToken, setAccessToken] = useState(null)
 	const [showRangeDropdown, setShowRangeDropdown] = useState(false)
 	const [selectedRange, setSelectedRange] = useState("Custom Range")
 	const [showUserDropdown, setShowUserDropdown] = useState(false)
-	const [selectedUser, setSelectedUser] = useState("All Users")
+	const [selectedUser, setSelectedUser] = useState(null)
+	const [allUsers, setAllUsers] = useState([])
+
+	useEffect(() => {
+		if (!accessToken) {
+			setAccessToken(localStorage.getItem("plesk_access_token"))
+		}
+		;(async () => {
+			if (accessToken) {
+				await axios
+					.get(`${API_BASE_URL}/api/employee/get`, {
+						headers: {
+							Authorization: `Bearer ${accessToken}`
+						}
+					})
+					?.then((res) => {
+						console.log(res)
+						setAllUsers(res?.data?.data)
+					})
+					?.catch((err) => {
+						console.log(err)
+					})
+			}
+		})()
+	}, [API_BASE_URL, accessToken])
 
 	return (
 		<div className="w-full flex flex-row items-center justify-between">
@@ -23,6 +51,7 @@ export default function DashboardHeader() {
 				/>
 				<p className="text-xs p-2">03/13/2024 to 03/13/2024</p>
 				<UsersDropDown
+					allUsers={allUsers}
 					selectedUser={selectedUser}
 					setSelectedUser={setSelectedUser}
 					showUserDropdown={showUserDropdown}

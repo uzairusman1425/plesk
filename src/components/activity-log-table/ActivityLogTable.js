@@ -2,13 +2,7 @@
 
 import { useEffect, useState } from "react"
 import {
-	ArrowPathIcon,
 	ChevronDownIcon,
-	ChevronUpIcon,
-	ChevronLeftIcon,
-	ChevronRightIcon,
-	ChevronDoubleLeftIcon,
-	ChevronDoubleRightIcon,
 	ArrowLongUpIcon,
 	InformationCircleIcon,
 	GlobeAltIcon
@@ -33,6 +27,11 @@ export default function ActivityLogTable({ data }) {
 			result.push(array.slice(i, i + chunkSize))
 		}
 		return result
+	}
+
+	const getBaseUrl = (url) => {
+		const parsedUrl = new URL(url)
+		return `${parsedUrl?.protocol}//${parsedUrl?.hostname}/`
 	}
 
 	const paginated_data = chunkArray(data, itemsPerPage)
@@ -96,10 +95,10 @@ export default function ActivityLogTable({ data }) {
 				</div>
 				<div className="w-[1px] min-h-full bg-gray-300" />
 				<div className="flex flex-col gap-2 items-center">
-					<div className="h-6 w-20 rounded border flex items-center justify-center">
+					<div className="h-6 w-32 rounded border flex items-center justify-center">
 						<p className="text-xs">Computer</p>
 					</div>
-					<div className="h-6 w-20 rounded border flex items-center justify-center" />
+					<div className="h-6 w-32 rounded border flex items-center justify-center" />
 				</div>
 				<div className="w-[1px] min-h-full bg-gray-300" />
 				<div className="flex-1 flex flex-col gap-2 items-center">
@@ -160,15 +159,15 @@ export default function ActivityLogTable({ data }) {
 							<div className="w-[1px]" />
 							<div className="w-48 flex justify-center">
 								<p className="text-xs truncate">
-									{item?.dateTime}
+									{item?.start_time}
 								</p>
 							</div>
 							<div className="w-[1px]" />
 							<div className="w-5" />
 							<div className="w-[1px]" />
-							<div className="w-20 flex justify-center">
+							<div className="w-32 flex justify-center">
 								<p className="text-xs truncate">
-									{item?.computer}
+									{item?.pc_name}
 								</p>
 							</div>
 							<div className="w-[1px]" />
@@ -178,7 +177,11 @@ export default function ActivityLogTable({ data }) {
 							<div className="w-[1px]" />
 							<div className="w-20 flex justify-center">
 								<p className="text-xs truncate">
-									{item?.duration}
+									{`${Math.floor(
+										item?.time_spent / 3600
+									)}h ${Math.floor(
+										item?.time_spent / 60
+									)}m ${Math.round(item?.time_spent % 60)}s`}
 								</p>
 							</div>
 							<div className="w-[1px]" />
@@ -199,13 +202,15 @@ export default function ActivityLogTable({ data }) {
 								</p>
 							</div>
 							<div className="w-[1px]" />
-							<div className="flex-1 flex flex-row gap-2 items-center">
+							<div className="flex-1 flex flex-row gap-2 items-center justify-center">
 								{item?.current_url && (
 									<GlobeAltIcon className="size-4 text-primary" />
 								)}
-								<p className="text-xs truncate">
-									{item?.current_url}
-								</p>
+								{item?.current_url && (
+									<p className="text-xs truncate">
+										{getBaseUrl(item?.current_url)}
+									</p>
+								)}
 							</div>
 						</div>
 					)
