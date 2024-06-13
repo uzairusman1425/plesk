@@ -308,7 +308,7 @@ export default function Dashboard() {
 	]
 
 	return (
-		<div className="h-fit flex-1 flex flex-col gap-10 px-10 pb-10 pt-5">
+		<div className="h-fit flex-1 flex flex-col gap-10 px-10 pb-20 pt-5">
 			<DashboardHeader />
 			<div className="w-full grid grid-cols-2 gap-10">
 				<ProductivityChart productivity={productivity} />
