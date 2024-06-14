@@ -14,8 +14,6 @@ export default function UsersDropDown({
 	showUserDropdown,
 	setShowUserDropdown
 }) {
-	console.log(allUsers)
-
 	return (
 		<div className="flex flex-row items-center gap-2 p-1 border border-transparent hover:border-primary transform-gpu ease-in-out duration-300 relative z-10">
 			<UserGroupIcon className="size-4 text-black" />
@@ -96,7 +94,7 @@ export default function UsersDropDown({
 
 UsersDropDown.propTypes = {
 	allUsers: PropTypes.array.isRequired,
-	selectedUser: PropTypes.string.isRequired,
+	selectedUser: PropTypes.string,
 	setSelectedUser: PropTypes.func.isRequired,
 	showUserDropdown: PropTypes.bool.isRequired,
 	setShowUserDropdown: PropTypes.func.isRequired

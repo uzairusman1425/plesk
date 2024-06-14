@@ -18,7 +18,11 @@ export default function ChartLegend({ list }) {
 								}}
 							/>
 							<p className="text-sm text-gray-500">
-								{list[key]?.name}
+								{list[key]?.name
+									?.split("-")
+									[
+										list[key]?.name?.split("-")?.length - 1
+									]?.trim()}
 							</p>
 						</div>
 					)
