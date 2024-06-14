@@ -10,11 +10,11 @@ import TopWebsitesChart from "@/components/top-websites-chart/TopWebsitesChart"
 import PendingClassificationsChart from "@/components/pending-classifications-chart/PendingClassificationsChart"
 
 export default function Dashboard() {
-	const [productivity, setProductivity] = useState([])
-
 	const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
 	const [accessToken, setAccessToken] = useState(null)
+	const [productivity, setProductivity] = useState([])
+	const [topApplications, setTopApplications] = useState([])
 
 	useEffect(() => {
 		if (!accessToken) {
@@ -31,6 +31,19 @@ export default function Dashboard() {
 					?.then((res) => {
 						console.log(res)
 						setProductivity(res?.data?.data)
+					})
+					?.catch((err) => {
+						console.error(err)
+					})
+				await axios
+					.get(`${API_BASE_URL}/api/employee/top`, {
+						headers: {
+							Authorization: `Bearer ${accessToken}`
+						}
+					})
+					?.then((res) => {
+						console.log(res)
+						setTopApplications(res?.data?.data)
 					})
 					?.catch((err) => {
 						console.error(err)
@@ -81,41 +94,6 @@ export default function Dashboard() {
 					unidentified: 1
 				}
 			]
-		}
-	]
-
-	const topApplications = [
-		{
-			name: "Microsoft Outlook",
-			hours: 3
-		},
-		{
-			name: "Figma",
-			hours: 2
-		},
-		{
-			name: "VS Code",
-			hours: 1
-		},
-		{
-			name: "Chrome",
-			hours: 2
-		},
-		{
-			name: "Slack",
-			hours: 1
-		},
-		{
-			name: "Skype",
-			hours: 2
-		},
-		{
-			name: "Postman",
-			hours: 2
-		},
-		{
-			name: "Counter Strike",
-			hours: 1
 		}
 	]
 
