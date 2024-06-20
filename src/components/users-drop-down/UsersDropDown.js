@@ -33,7 +33,7 @@ export default function UsersDropDown({
 				<ChevronDownIcon className="size-3 text-black" />
 			</button>
 			{showUserDropdown && (
-				<div className="h-60 w-[500px] rounded-lg border shadow-xl absolute left-0 -bottom-[215px] bg-white z-20 px-5 py-3 flex flex-col gap-3">
+				<div className="h-60 w-[500px] rounded-lg border shadow-xl absolute left-0 -bottom-[245px] bg-white z-20 px-5 py-3 flex flex-col gap-3">
 					<div className="w-full flex flex-row items-center justify-between">
 						<div className="flex flex-row items-center gap-3">
 							<p className="text-xs">Filter By:</p>
