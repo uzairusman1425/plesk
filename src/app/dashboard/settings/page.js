@@ -63,7 +63,12 @@ export default function Settings() {
 						width={25}
 					/>
 					<p className="text-xl">Password</p>
-					<button className="size-6 rounded-lg border-2 border-primary flex items-center justify-center">
+					<button
+						className="size-6 rounded-lg border-2 border-primary flex items-center justify-center"
+						onClick={() => {
+							router?.push("/dashboard/settings/change-password")
+						}}
+					>
 						<ChevronRightIcon className="size-4 text-primary" />
 					</button>
 				</div>

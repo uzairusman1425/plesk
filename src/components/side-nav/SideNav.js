@@ -166,7 +166,7 @@ export default function SideNav() {
 				</button>
 				<button
 					className={`h-10 pl-3 rounded flex flex-row gap-3 items-center transform-gpu ease-in-out duration-500 ${
-						pathName === "/dashboard/settings" &&
+						pathName?.includes("/dashboard/settings") &&
 						"bg-primary bg-opacity-35"
 					}`}
 					onClick={() => {
@@ -187,7 +187,7 @@ export default function SideNav() {
 					/>
 					<p
 						className={`text-xs transform-gpu ease-in-out duration-500 ${
-							pathName === "/dashboard/settings"
+							pathName?.includes("/dashboard/settings")
 								? "text-primary"
 								: "text-gray-400"
 						}`}
