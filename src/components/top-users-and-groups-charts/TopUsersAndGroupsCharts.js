@@ -76,7 +76,7 @@ export default function TopUsersAndGroupsCharts({ topUsersAndGroups }) {
 					return (
 						<ProductivityAreaChart
 							productivity={item?.productivity}
-							name={item?.name}
+							email={item?.email}
 							totalTime={item?.totalTime}
 							key={key}
 						/>

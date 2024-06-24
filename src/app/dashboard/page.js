@@ -15,6 +15,7 @@ export default function Dashboard() {
 	const [accessToken, setAccessToken] = useState(null)
 	const [productivity, setProductivity] = useState([])
 	const [topApplications, setTopApplications] = useState([])
+	const [topUsersAndGroups, setTopUsersAndGroups] = useState([])
 
 	useEffect(() => {
 		if (!accessToken) {
@@ -36,14 +37,30 @@ export default function Dashboard() {
 						console.error(err)
 					})
 				await axios
-					.get(`${API_BASE_URL}/api/employee/top`, {
+					.get(
+						`${API_BASE_URL}/api/employee/activity/topApplications`,
+						{
+							headers: {
+								Authorization: `Bearer ${accessToken}`
+							}
+						}
+					)
+					?.then((res) => {
+						console.log(res)
+						setTopApplications(res?.data?.data)
+					})
+					?.catch((err) => {
+						console.error(err)
+					})
+				await axios
+					.get(`${API_BASE_URL}/api/employee/activity/topUsers`, {
 						headers: {
 							Authorization: `Bearer ${accessToken}`
 						}
 					})
 					?.then((res) => {
 						console.log(res)
-						setTopApplications(res?.data?.data)
+						setTopUsersAndGroups(res?.data?.data?.data)
 					})
 					?.catch((err) => {
 						console.error(err)
@@ -52,50 +69,50 @@ export default function Dashboard() {
 		})()
 	}, [API_BASE_URL, accessToken])
 
-	const topUsersAndGroups = [
-		{
-			name: "claireracher@onetraveller.co",
-			totalTime: "7h 24m",
-			productivity: [
-				{
-					productive: 8,
-					unproductive: 2,
-					unidentified: 1
-				},
-				{
-					productive: 3,
-					unproductive: 1,
-					unidentified: 2
-				},
-				{
-					productive: 2,
-					unproductive: 9,
-					unidentified: 2
-				}
-			]
-		},
-		{
-			name: "melissa.morley@onetraveller.co",
-			totalTime: "5h 24m",
-			productivity: [
-				{
-					productive: 7,
-					unproductive: 3,
-					unidentified: 2
-				},
-				{
-					productive: 1,
-					unproductive: 4,
-					unidentified: 2
-				},
-				{
-					productive: 9,
-					unproductive: 5,
-					unidentified: 1
-				}
-			]
-		}
-	]
+	// const topUsersAndGroups = [
+	// 	{
+	// 		name: "claireracher@onetraveller.co",
+	// 		totalTime: "7h 24m",
+	// 		productivity: [
+	// 			{
+	// 				productive: 8,
+	// 				unproductive: 2,
+	// 				unidentified: 1
+	// 			},
+	// 			{
+	// 				productive: 3,
+	// 				unproductive: 1,
+	// 				unidentified: 2
+	// 			},
+	// 			{
+	// 				productive: 2,
+	// 				unproductive: 9,
+	// 				unidentified: 2
+	// 			}
+	// 		]
+	// 	},
+	// 	{
+	// 		name: "melissa.morley@onetraveller.co",
+	// 		totalTime: "5h 24m",
+	// 		productivity: [
+	// 			{
+	// 				productive: 7,
+	// 				unproductive: 3,
+	// 				unidentified: 2
+	// 			},
+	// 			{
+	// 				productive: 1,
+	// 				unproductive: 4,
+	// 				unidentified: 2
+	// 			},
+	// 			{
+	// 				productive: 9,
+	// 				unproductive: 5,
+	// 				unidentified: 1
+	// 			}
+	// 		]
+	// 	}
+	// ]
 
 	const topWebsites = [
 		{

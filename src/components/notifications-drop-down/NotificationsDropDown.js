@@ -142,7 +142,7 @@ export default function NotificationsDropDown() {
 											{item?.date}
 										</p>
 									</div>
-									<p className="truncate text-xs font-light">
+									<p className="truncate text-xs font-light max-w-60">
 										{item?.description}
 									</p>
 								</button>
