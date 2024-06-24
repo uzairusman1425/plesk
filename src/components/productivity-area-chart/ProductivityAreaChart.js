@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 
 export default function ProductivityAreaChart({
 	productivity,
-	name,
+	email,
 	totalTime
 }) {
 	return (
@@ -34,7 +34,7 @@ export default function ProductivityAreaChart({
 				</ResponsiveContainer>
 			</div>
 			<div className="flex flex-row items-center justify-center gap-10 w-full">
-				<p className="text-gray- truncate">{name}</p>
+				<p className="text-gray- truncate">{email}</p>
 				<p className="h-7 w-20 flex items-center justify-center rounded bg-gray-500 text-white font-semibold text-xs">
 					{totalTime}
 				</p>
@@ -45,6 +45,6 @@ export default function ProductivityAreaChart({
 
 ProductivityAreaChart.propTypes = {
 	productivity: PropTypes.array.isRequired,
-	name: PropTypes.string.isRequired,
+	email: PropTypes.string.isRequired,
 	totalTime: PropTypes.string.isRequired
 }
