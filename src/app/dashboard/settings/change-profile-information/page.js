@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation"
 import { ChevronLeftIcon } from "@heroicons/react/24/outline"
 
-export default function ChangePassword() {
+export default function ChangeProfileInformation() {
 	const router = useRouter()
 
 	return (
@@ -17,44 +17,43 @@ export default function ChangePassword() {
 				>
 					<ChevronLeftIcon className="size-5 text-black" />
 				</button>
-				<p className="text-xl font-semibold">Password</p>
+				<p className="text-xl font-semibold">Edit Profile</p>
 				<div className="w-7" />
 			</div>
-			<div className="w-full flex flex-col gap-5 lg:gap-0 lg:flex-row lg:items-center justify-around">
+			<div className="w-full flex flex-wrap gap-10 lg:gap-20 mx-32">
 				<div className="flex flex-col gap-2">
-					<div className="flex flex-row gap-1 items-start">
-						<p className="text-sm">Password</p>
-						<p className="text-xs text-primary justify-self-start">
-							*
-						</p>
-					</div>
+					<p className="text-sm">First Name</p>
 					<input
 						className="h-10 w-72 rounded-lg border border-black px-3"
-						type="password"
+						type="text"
 					/>
 				</div>
 				<div className="flex flex-col gap-2">
-					<div className="flex flex-row gap-1 items-start">
-						<p className="text-sm">New Password</p>
-						<p className="text-xs text-primary justify-self-start">
-							*
-						</p>
-					</div>
+					<p className="text-sm">Last Name</p>
 					<input
 						className="h-10 w-72 rounded-lg border border-black px-3"
-						type="password"
+						type="text"
 					/>
 				</div>
 				<div className="flex flex-col gap-2">
-					<div className="flex flex-row gap-1 items-start">
-						<p className="text-sm">Re-Enter Password</p>
-						<p className="text-xs text-primary justify-self-start">
-							*
-						</p>
-					</div>
+					<p className="text-sm">Email</p>
 					<input
 						className="h-10 w-72 rounded-lg border border-black px-3"
-						type="password"
+						type="text"
+					/>
+				</div>
+				<div className="flex flex-col gap-2">
+					<p className="text-sm">Phone Number</p>
+					<input
+						className="h-10 w-72 rounded-lg border border-black px-3"
+						type="text"
+					/>
+				</div>
+				<div className="flex flex-col gap-2">
+					<p className="text-sm">Organization</p>
+					<input
+						className="h-10 w-72 rounded-lg border border-black px-3"
+						type="text"
 					/>
 				</div>
 			</div>

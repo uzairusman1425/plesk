@@ -41,7 +41,19 @@ export default function Settings() {
 				className="rounded-full"
 			/>
 			<p className="font-light">{state?.user?.email}</p>
-			<p className="text-2xl">{`${state?.user?.firstName} ${state?.user?.lastName}`}</p>
+			<div className="flex flex-row items-center gap-5">
+				<p className="text-2xl max-w-52 truncate">{`${state?.user?.firstName} ${state?.user?.lastName}`}</p>
+				<button
+					className="size-7 rounded-lg border-2 border-primary flex items-center justify-center"
+					onClick={() => {
+						router?.push(
+							"/dashboard/settings/change-profile-picture"
+						)
+					}}
+				>
+					<ChevronRightIcon className="size-5 text-primary" />
+				</button>
+			</div>
 			<div className="w-full grid grid-cols-3 gap-20 my-16">
 				<div className="flex flex-row items-center justify-between w-full">
 					<Image
@@ -51,7 +63,14 @@ export default function Settings() {
 						width={30}
 					/>
 					<p className="text-xl">Profile</p>
-					<button className="size-6 rounded-lg border-2 border-primary flex items-center justify-center">
+					<button
+						className="size-6 rounded-lg border-2 border-primary flex items-center justify-center"
+						onClick={() => {
+							router?.push(
+								"/dashboard/settings/change-profile-information"
+							)
+						}}
+					>
 						<ChevronRightIcon className="size-4 text-primary" />
 					</button>
 				</div>
