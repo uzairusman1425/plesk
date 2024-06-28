@@ -69,51 +69,6 @@ export default function Dashboard() {
 		})()
 	}, [API_BASE_URL, accessToken])
 
-	// const topUsersAndGroups = [
-	// 	{
-	// 		name: "claireracher@onetraveller.co",
-	// 		totalTime: "7h 24m",
-	// 		productivity: [
-	// 			{
-	// 				productive: 8,
-	// 				unproductive: 2,
-	// 				unidentified: 1
-	// 			},
-	// 			{
-	// 				productive: 3,
-	// 				unproductive: 1,
-	// 				unidentified: 2
-	// 			},
-	// 			{
-	// 				productive: 2,
-	// 				unproductive: 9,
-	// 				unidentified: 2
-	// 			}
-	// 		]
-	// 	},
-	// 	{
-	// 		name: "melissa.morley@onetraveller.co",
-	// 		totalTime: "5h 24m",
-	// 		productivity: [
-	// 			{
-	// 				productive: 7,
-	// 				unproductive: 3,
-	// 				unidentified: 2
-	// 			},
-	// 			{
-	// 				productive: 1,
-	// 				unproductive: 4,
-	// 				unidentified: 2
-	// 			},
-	// 			{
-	// 				productive: 9,
-	// 				unproductive: 5,
-	// 				unidentified: 1
-	// 			}
-	// 		]
-	// 	}
-	// ]
-
 	const topWebsites = [
 		{
 			name: "youtube.com",

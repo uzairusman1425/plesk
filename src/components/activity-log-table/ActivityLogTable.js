@@ -105,8 +105,8 @@ export default function ActivityLogTable({ data }) {
 					<div className="h-6 w-12 rounded border flex items-center justify-center">
 						<p className="text-xs">User</p>
 					</div>
-					<div className="h-6 w-full rounded border flex items-center justify-center">
-						<p className="text-xs truncate">
+					<div className="h-6 w-full rounded border flex items-center justify-center px-1">
+						<p className="text-xs truncate max-w-52">
 							melissa.morley@onetraveller.co.uk
 						</p>
 					</div>

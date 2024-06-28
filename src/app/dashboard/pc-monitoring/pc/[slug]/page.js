@@ -50,39 +50,35 @@ export default function PC({ params }) {
 				>
 					<ArrowLeftCircleIcon className="size-6 text-black" />
 				</button>
-				<p>AzureAD\{employee?.email}</p>
+				<p>
+					{employee?.first?.pc_name}\{employee?.Employee?.email}
+				</p>
 			</div>
 			<div className="w-full grid grid-cols-2 px-5">
 				<div className="flex flex-col gap-5">
 					<p className="font-semibold">User Info</p>
-					<p className="font-light">Logon Domain: AzureAD</p>
-					<p className="font-light">User: {employee?.email}</p>
+					<p className="font-light">
+						Logon Domain: {employee?.first?.pc_name}
+					</p>
+					<p className="font-light">
+						User: {employee?.Employee?.email}
+					</p>
 				</div>
 				<div className="flex flex-col gap-5">
 					<p className="font-semibold">Activity Details</p>
-					<div className="w-full grid grid-cols-2">
-						<div className="flex flex-col gap-5">
-							<p className="font-light">
-								First Log Record: 02/27/2024 11:32:45
-							</p>
-							<p className="font-light">
-								Total Storage: 0.004 GB
-							</p>
-							<Link
-								href={`/dashboard/pc-monitoring/activity-log/${params?.slug}`}
-								className="font-semibold text-primary underline cursor-pointer"
-							>
-								View Activity Log
-							</Link>
-						</div>
-						<div className="flex flex-col gap-5">
-							<p className="font-light">
-								Last Log Record: 05/08/2024 17:10:48
-							</p>
-							<p className="font-light">
-								# of Log Records: 32457
-							</p>
-						</div>
+					<div className="flex flex-col gap-5">
+						<p className="font-light">
+							First Log Record: {employee?.first?.start_time}
+						</p>
+						<p className="font-light">
+							Last Log Record: {employee?.last?.end_time}
+						</p>
+						<Link
+							href={`/dashboard/pc-monitoring/activity-log/${params?.slug}`}
+							className="font-semibold text-primary underline cursor-pointer"
+						>
+							View Activity Log
+						</Link>
 					</div>
 				</div>
 			</div>

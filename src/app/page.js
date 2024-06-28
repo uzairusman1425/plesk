@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation"
 import { auth, provider } from "@/firebase/firebase-config"
 import { signInWithPopup } from "firebase/auth"
 import axios from "axios"
+import toast from "react-hot-toast"
 import { HeartIcon, EyeSlashIcon, EyeIcon } from "@heroicons/react/24/solid"
 import { FallingLines } from "react-loader-spinner"
 import { AppContext } from "@/context/context"
@@ -21,7 +22,6 @@ export default function SignUp() {
 	const [showPassword, setShowPassword] = useState(false)
 	const [agreed, setAgreed] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
-	const [error, setError] = useState("")
 	const [firstName, setFirstName] = useState("")
 	const [lastName, setLastName] = useState("")
 	const [phoneNumber, setPhoneNumber] = useState("")
@@ -48,13 +48,12 @@ export default function SignUp() {
 				?.then((res) => {
 					console.log(res)
 					setIsLoading(false)
-					if (res?.status === 201) {
-						router.push("/sign-in")
-					}
+					toast.success("Signup successful!")
+					router.push("/sign-in")
 				})
 				?.catch((err) => {
 					console.log(err)
-					setError(err?.response?.data?.error)
+					toast.error(err?.response?.data)
 					setIsLoading(false)
 				})
 		}
@@ -241,9 +240,6 @@ export default function SignUp() {
 							</span>
 						</p>
 					</div>
-					{error?.length > 0 && (
-						<p className="text-xs text-red-500">{error}</p>
-					)}
 					<button
 						className={`h-12 w-full flex items-center justify-center uppercase text-white text-md font-medium bg-primary rounded-md ${
 							!agreed && "bg-opacity-50 cursor-not-allowed"

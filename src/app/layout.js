@@ -1,4 +1,5 @@
 import { Poppins } from "next/font/google"
+import { Toaster } from "react-hot-toast"
 import { ContextProvider } from "@/providers/ContextProvider"
 import "./globals.css"
 
@@ -16,7 +17,10 @@ export default function RootLayout({ children }) {
 	return (
 		<html lang="en">
 			<ContextProvider>
-				<body className={poppins.className}>{children}</body>
+				<body className={poppins.className}>
+					<Toaster />
+					{children}
+				</body>
 			</ContextProvider>
 		</html>
 	)
