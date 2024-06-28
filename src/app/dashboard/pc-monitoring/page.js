@@ -54,7 +54,9 @@ export default function PCMonitoring() {
 				<AdjustmentsHorizontalIcon className="size-6 text-primary" />
 			</div>
 			<div className="w-full flex flex-row items-center justify-between">
-				<p className="uppercase text-sm">total users: 3</p>
+				<p className="uppercase text-sm">
+					total users: {customers?.length || 0}
+				</p>
 				<div className="flex flex-row items-center gap-5">
 					<button className="h-8 w-32 rounded flex flex-row gap-2 items-center justify-center border">
 						<Bars3CenterLeftIcon className="size-4 text-black" />
