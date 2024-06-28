@@ -15,7 +15,7 @@ import {
 import PropTypes from "prop-types"
 import ActivityLogTableNavigation from "../activity-log-table-navigation/ActivityLogTableNavigation"
 
-export default function ActivityLogTable({ data }) {
+export default function ActivityLogTable({ data, email }) {
 	const [pageNumber, setPageNumber] = useState(0)
 	const [paginationStart, setPaginationStart] = useState(0)
 	const [paginationEnd, setPaginationEnd] = useState(0)
@@ -106,9 +106,7 @@ export default function ActivityLogTable({ data }) {
 						<p className="text-xs">User</p>
 					</div>
 					<div className="h-6 w-full rounded border flex items-center justify-center px-1">
-						<p className="text-xs truncate max-w-52">
-							melissa.morley@onetraveller.co.uk
-						</p>
+						<p className="text-xs truncate max-w-52">{email}</p>
 					</div>
 				</div>
 				<div className="w-[1px] min-h-full bg-gray-300" />
@@ -171,8 +169,10 @@ export default function ActivityLogTable({ data }) {
 								</p>
 							</div>
 							<div className="w-[1px]" />
-							<div className="flex-1">
-								<p className="text-xs truncate">{item?.user}</p>
+							<div className="flex-1 flex justify-center">
+								<p className="text-xs truncate max-w-52">
+									{email}
+								</p>
 							</div>
 							<div className="w-[1px]" />
 							<div className="w-20 flex justify-center">
@@ -185,7 +185,7 @@ export default function ActivityLogTable({ data }) {
 								</p>
 							</div>
 							<div className="w-[1px]" />
-							<div className="w-24">
+							<div className="w-24 flex justify-center">
 								<p className="text-xs text-primary truncate">
 									{item?.executable}
 								</p>
@@ -231,5 +231,6 @@ export default function ActivityLogTable({ data }) {
 }
 
 ActivityLogTable.propTypes = {
-	data: PropTypes.array.isRequired
+	data: PropTypes.array.isRequired,
+	email: PropTypes.string.isRequired
 }

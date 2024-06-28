@@ -100,7 +100,7 @@ export default function PCMonitoring() {
 										}}
 									>
 										<ComputerDesktopIcon className="size-4 text-primary" />
-										<p>Azure AD</p>
+										<p>{item?.pc_name}</p>
 									</button>
 									<p>{item?.email}</p>
 								</div>
