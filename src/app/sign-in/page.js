@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation"
 import { CheckIcon } from "@heroicons/react/24/solid"
 import { signInWithPopup } from "firebase/auth"
 import axios from "axios"
+import toast from "react-hot-toast"
 import { FallingLines } from "react-loader-spinner"
 import { auth, provider } from "@/firebase/firebase-config"
 import { AppContext } from "@/context/context"
@@ -48,6 +49,7 @@ export default function SignIn() {
 						type: "SET_USER",
 						payload: res?.data?.data?.user
 					})
+					toast.success("Login successful!")
 					router.push("/dashboard")
 				}
 			})
