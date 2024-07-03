@@ -3,11 +3,12 @@
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import axios from "axios"
+import PropTypes from "prop-types"
 import { ChevronDownIcon } from "@heroicons/react/24/solid"
 import DateRangeDropDown from "../date-range-drop-down/DateRangeDropDown"
 import UsersDropDown from "../users-drop-down/UsersDropDown"
 
-export default function DashboardHeader() {
+export default function DashboardHeader({ handleRefresh }) {
 	const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
 	const [accessToken, setAccessToken] = useState(null)
@@ -57,7 +58,10 @@ export default function DashboardHeader() {
 					showUserDropdown={showUserDropdown}
 					setShowUserDropdown={setShowUserDropdown}
 				/>
-				<button className="flex flex-row items-center gap-1 p-1 border border-transparent hover:border-primary transform-gpu ease-in-out duration-300">
+				<button
+					className="flex flex-row items-center gap-1 p-1 border border-transparent hover:border-primary transform-gpu ease-in-out duration-300"
+					onClick={handleRefresh}
+				>
 					<Image
 						src={"/icons/refresh.png"}
 						alt="refresh"
@@ -79,4 +83,8 @@ export default function DashboardHeader() {
 			</button>
 		</div>
 	)
+}
+
+DashboardHeader.propTypes = {
+	handleRefresh: PropTypes.func.isRequired
 }

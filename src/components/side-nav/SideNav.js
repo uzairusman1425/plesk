@@ -3,7 +3,6 @@
 import { useState, useContext, useEffect } from "react"
 import Image from "next/image"
 import { usePathname, useRouter } from "next/navigation"
-import { ChevronDownIcon, ChevronRightIcon } from "@heroicons/react/24/outline"
 import { AppContext } from "@/context/context"
 
 export default function SideNav() {
@@ -131,7 +130,7 @@ export default function SideNav() {
 						PC Monitoring
 					</p>
 				</button>
-				<button
+				{/* <button
 					className={`h-10 px-3 rounded flex flex-row  gap-3 items-center transform-gpu ease-in-out duration-500 ${
 						pathName?.includes("/dashboard/real-time-tracking") &&
 						"bg-primary bg-opacity-35"
@@ -163,7 +162,7 @@ export default function SideNav() {
 					>
 						Real-Time Tracking
 					</p>
-				</button>
+				</button> */}
 				<button
 					className={`h-10 pl-3 rounded flex flex-row gap-3 items-center transform-gpu ease-in-out duration-500 ${
 						pathName?.includes("/dashboard/settings") &&

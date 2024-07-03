@@ -1,5 +1,4 @@
 import { ChevronDownIcon } from "@heroicons/react/24/solid"
-import Image from "next/image"
 import {
 	UserGroupIcon,
 	MagnifyingGlassIcon,
@@ -94,7 +93,7 @@ export default function UsersDropDown({
 
 UsersDropDown.propTypes = {
 	allUsers: PropTypes.array.isRequired,
-	selectedUser: PropTypes.string,
+	selectedUser: PropTypes.object,
 	setSelectedUser: PropTypes.func.isRequired,
 	showUserDropdown: PropTypes.bool.isRequired,
 	setShowUserDropdown: PropTypes.func.isRequired
