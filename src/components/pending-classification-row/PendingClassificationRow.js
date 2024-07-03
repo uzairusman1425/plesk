@@ -1,7 +1,8 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
+import axios from "axios"
 import { ChevronDownIcon } from "@heroicons/react/24/solid"
 import { GlobeAltIcon } from "@heroicons/react/24/outline"
 import PropTypes from "prop-types"
@@ -10,17 +11,63 @@ export default function PendingClassificationRow({
 	name,
 	url,
 	duration,
-	isLastIndex
+	isLastIndex,
+	handleRefresh
 }) {
+	const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+
 	const [showStatusDropdown, setShowStatusDropdown] = useState(false)
+	const [accessToken, setAccessToken] = useState(null)
 
 	const handleSelectProductive = async () => {
-		setShowStatusDropdown(false)
+		const payload = {
+			executable: name,
+			isProductive: "true"
+		}
+
+		await axios
+			.post(`${API_BASE_URL}/api/productive/add`, payload, {
+				headers: {
+					Authorization: `Bearer ${accessToken}`
+				}
+			})
+			?.then((res) => {
+				console.log(res)
+				setShowStatusDropdown(false)
+				handleRefresh()
+			})
+			?.catch((err) => {
+				console.log(err)
+				setShowStatusDropdown(false)
+			})
 	}
 
 	const handleSelectUnproductive = async () => {
-		setShowStatusDropdown(false)
+		const payload = {
+			executable: name,
+			isProductive: "false"
+		}
+
+		await axios
+			.post(`${API_BASE_URL}/api/productive/add`, payload, {
+				headers: {
+					Authorization: `Bearer ${accessToken}`
+				}
+			})
+			?.then((res) => {
+				console.log(res)
+				setShowStatusDropdown(false)
+				handleRefresh()
+			})
+			?.catch((err) => {
+				console.log(err)
+				setShowStatusDropdown(false)
+			})
 	}
+
+	useEffect(() => {
+		setAccessToken(localStorage.getItem("plesk_access_token"))
+	}, [])
 
 	return (
 		<div className="min-h-12 w-full grid grid-cols-4 place-items-center border-b border-t border-dashed">
@@ -76,14 +123,15 @@ export default function PendingClassificationRow({
 					</div>
 				)}
 			</div>
-			<p className="text-xs font-light text-gray-500">{duration}</p>
+			<p className="text-xs font-light text-gray-500">{duration} h</p>
 		</div>
 	)
 }
 
 PendingClassificationRow.propTypes = {
 	name: PropTypes.string.isRequired,
-	url: PropTypes.string.isRequired,
+	url: PropTypes.string,
 	duration: PropTypes.string.isRequired,
-	isLastIndex: PropTypes.bool.isRequired
+	isLastIndex: PropTypes.bool.isRequired,
+	handleRefresh: PropTypes.func.isRequired
 }

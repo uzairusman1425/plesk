@@ -3,7 +3,8 @@ import PropTypes from "prop-types"
 import PendingClassificationRow from "../pending-classification-row/PendingClassificationRow"
 
 export default function PendingClassificationsChart({
-	pendingClassifications
+	pendingClassifications,
+	handleRefresh
 }) {
 	return (
 		<div className="flex flex-col gap-5">
@@ -29,12 +30,13 @@ export default function PendingClassificationsChart({
 					{pendingClassifications?.map((item, key) => {
 						return (
 							<PendingClassificationRow
-								name={item?.name}
+								name={item?.executable}
 								url={item?.url}
-								duration={item?.duration}
+								duration={item?.time_spent}
 								isLastIndex={
 									key === pendingClassifications?.length - 1
 								}
+								handleRefresh={handleRefresh}
 								key={key}
 							/>
 						)
@@ -46,5 +48,6 @@ export default function PendingClassificationsChart({
 }
 
 PendingClassificationsChart.propTypes = {
-	pendingClassifications: PropTypes.array.isRequired
+	pendingClassifications: PropTypes.array.isRequired,
+	handleRefresh: PropTypes.func.isRequired
 }
