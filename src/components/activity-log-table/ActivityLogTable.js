@@ -7,7 +7,8 @@ import {
 	InformationCircleIcon,
 	GlobeAltIcon
 } from "@heroicons/react/24/outline"
-import {
+import { 
+	
 	CheckCircleIcon,
 	MinusCircleIcon,
 	QuestionMarkCircleIcon
