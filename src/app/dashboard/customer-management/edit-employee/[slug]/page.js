@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import Image from "next/image"
 import axios from "axios"
 import { FallingLines } from "react-loader-spinner"
+import toast from "react-hot-toast"
 
 export default function EditEmployee({ params }) {
 	const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
@@ -142,6 +143,7 @@ export default function EditEmployee({ params }) {
 				}
 			})
 			?.catch((err) => {
+				toast.error(err?.message)
 				console.log(err)
 				setIsLoading(false)
 			})
