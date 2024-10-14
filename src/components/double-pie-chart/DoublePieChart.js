@@ -4,7 +4,15 @@ import { colors } from "@/utils/constants";
 import ChartLegend from "../chart-legend/ChartLegend";
 
 export default function DoublePieChart({ list }) {
-  console.log(list);
+  // let list = [
+  //   { name: "Code.exe", hours: 0 },
+  //   { name: "Firefox.exe", hours: 1 },
+  //   { name: "shell.exe", hours: 2 },
+  //   { name: "a.exe", hours: 3 },
+  //   { name: "b.exe", hours: 4 },
+  //   { name: "c.exe", hours: 5 },
+  // ];
+
   return (
     <div className="flex flex-col items-center gap-5">
       <div className="size-96">
