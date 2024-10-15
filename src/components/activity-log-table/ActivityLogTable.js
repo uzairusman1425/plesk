@@ -70,7 +70,7 @@ export default function ActivityLogTable({ data, email }) {
         itemsPerPage={itemsPerPage}
         setItemsPerPage={setItemsPerPage}
       />
-      <div className="w-full flex flex-row gap-3">
+      <div className="w-full flex flex-row gap-3 bg-gray-50 rounded-md sticky top-0">
         <div className="flex flex-col gap-2 items-center">
           <div className="h-6 w-10 rounded border flex items-center justify-center">
             <p className="text-xs">Prod</p>
@@ -129,7 +129,7 @@ export default function ActivityLogTable({ data, email }) {
         <div className="w-[1px] min-h-full bg-gray-300" />
         <div className="flex-1 flex flex-col gap-2 items-center">
           <div className="h-6 w-24 rounded border flex flex-row gap-2 items-center justify-center">
-            <p className="text-xs">Website</p>
+            <p className="text-xs">Url</p>
             <InformationCircleIcon className="size-4 text-primary" />
           </div>
           <div className="h-6 w-full rounded border flex items-center justify-center" />
