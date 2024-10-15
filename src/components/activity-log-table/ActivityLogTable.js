@@ -194,7 +194,9 @@ export default function ActivityLogTable({ data, email }) {
                     {getBaseUrl(item?.current_url)}
                   </p>
                 )} */}
-                <p className="text-xs truncate text-primary">{item?.website}</p>
+                <p className="text-xs truncate text-primary">
+                  {item?.url ? item?.url?.slice(0, 50) : "-"}
+                </p>
               </div>
             </div>
           );
