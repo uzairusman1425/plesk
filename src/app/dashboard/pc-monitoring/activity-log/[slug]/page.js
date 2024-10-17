@@ -19,7 +19,7 @@ export default function ActivityLog({ params }) {
 
   const [customerToDelete, setCustomerToDelete] = useState(null);
   const [accessToken, setAccessToken] = useState(null);
-
+  const [category, setCategory] = useState("websites");
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -35,7 +35,6 @@ export default function ActivityLog({ params }) {
             },
           })
           ?.then((res) => {
-            console.log(res);
             setData(res?.data?.data);
           })
           ?.catch((err) => {
@@ -45,6 +44,26 @@ export default function ActivityLog({ params }) {
     })();
   }, [customerToDelete, API_BASE_URL, accessToken, params]);
 
+  const browserExecutables = [
+    "chrome.exe",
+    "firefox.exe",
+    "msedge.exe",
+    "safari.exe",
+    "opera.exe",
+    "brave.exe",
+  ];
+
+  const filteredData =
+    category === "websites"
+      ? data?.activities?.filter((item) =>
+          browserExecutables.includes(item?.executable)
+        )
+      : data?.activities?.filter(
+          (item) => !browserExecutables.includes(item?.executable)
+        );
+
+  console.log(category);
+  console.log(filteredData);
   return (
     <div className="h-fit flex-1 flex flex-col gap-5 px-10 py-5">
       <div className="flex flex-row gap-3 items-center">
@@ -71,9 +90,25 @@ export default function ActivityLog({ params }) {
           <ArrowPathIcon className="size-3 text-gray-700" />
           <p className="text-xs text-gray-700">Refresh</p>
         </button>
+        <button
+          onClick={() => {
+            setCategory("websites");
+          }}
+          className="h-full px-3 flex flex-row items-center gap-2 border rounded"
+        >
+          <p className="text-xs text-gray-700">Websites</p>
+        </button>
+        <button
+          onClick={() => {
+            setCategory("executable");
+          }}
+          className="h-full px-3 flex flex-row items-center gap-2 border rounded"
+        >
+          <p className="text-xs text-gray-700">Executables</p>
+        </button>
       </div>
       <DateSlider />
-      <ActivityLogTable data={data?.activities} email={data?.email} />
+      <ActivityLogTable data={filteredData} email={data?.email} />
     </div>
   );
 }
