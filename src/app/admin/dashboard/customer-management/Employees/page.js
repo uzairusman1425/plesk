@@ -3,7 +3,7 @@
 import EmployeeDetails from "@/components/admin/EmployeeDetails";
 import { useSearchParams } from "next/navigation";
 
-export default function page() {
+export default function Employee() {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
   console.log(id);
