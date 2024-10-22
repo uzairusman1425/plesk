@@ -1,7 +1,7 @@
 "use client";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function EmployeeDetails({ id }) {
   const [employees, setEmployees] = useState([]);
