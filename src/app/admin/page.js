@@ -1,18 +1,13 @@
 "use client";
 
-import { useState, useContext } from "react";
-
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-
 import axios from "axios";
 import toast from "react-hot-toast";
 import { FallingLines } from "react-loader-spinner";
 
-import { AppContext } from "@/context/context";
-
 export default function SignIn() {
   const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -34,13 +29,17 @@ export default function SignIn() {
         console.log(res);
         setIsLoading(false);
         if (res?.status === 200) {
+          localStorage?.setItem(
+            "plesk_admin_access_token",
+            res?.data?.accessToken
+          );
           toast.success("Login successful!");
           router.push("/admin/dashboard/customer-management");
         }
       })
       ?.catch((err) => {
         console.log(err);
-        toast.error(err?.message);
+        toast.error(err?.response?.data?.message);
         setIsLoading(false);
         setError(true);
       });
