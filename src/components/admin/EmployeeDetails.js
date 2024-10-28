@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 export default function EmployeeDetails({ id }) {
   const [employees, setEmployees] = useState([]);
+  const [department, setDepartment] = useState([]);
   const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState(1);
@@ -15,6 +16,8 @@ export default function EmployeeDetails({ id }) {
     indexOfFirstItem,
     indexOfLastItem
   );
+  const totalPages = Math.ceil(employees.length / rowsPerPage);
+
   useEffect(() => {
     const fetchEmployees = async () => {
       const token = localStorage?.getItem("plesk_admin_access_token");
@@ -28,6 +31,7 @@ export default function EmployeeDetails({ id }) {
         const filteredEmployees =
           res.data.data.find((item) => item._id === id)?.employees || [];
         setEmployees(filteredEmployees);
+        console.log(filteredEmployees);
       } catch (error) {
         console.error("Error fetching employees:", error);
       }
@@ -35,8 +39,15 @@ export default function EmployeeDetails({ id }) {
 
     fetchEmployees();
   }, [id]);
+  const handleDepartmentChange = (e) => {
+    setDepartment(e.target.value);
+  };
 
-  const totalPages = Math.ceil(employees.length / rowsPerPage);
+  const Filtered_Department = paginatedEmployees.filter((item) =>
+    department
+      ? item.professional_details.department === department
+      : paginatedEmployees
+  );
 
   return (
     <main className="p-20 w-full min-h-screen">
@@ -58,6 +69,17 @@ export default function EmployeeDetails({ id }) {
             />
           </svg>
         </button>
+        <select onChange={handleDepartmentChange}>
+          <option value="">Select Department</option>
+          {employees?.map((employee) => (
+            <option
+              key={employee._id}
+              value={employee.professional_details.department}
+            >
+              {employee.professional_details.department}
+            </option>
+          ))}
+        </select>
       </div>
 
       <div className="w-full h-max mb-20 flex flex-col">
@@ -74,7 +96,7 @@ export default function EmployeeDetails({ id }) {
           <p className="w-[10%]">User Email</p>
         </div>
 
-        {paginatedEmployees.map((item, index) => (
+        {Filtered_Department?.map((item, index) => (
           <div
             key={index}
             className="Data flex text-left items-center border-b h-20 text-md mt-10 justify-evenly"
@@ -104,7 +126,7 @@ export default function EmployeeDetails({ id }) {
             <button
               key={index}
               onClick={() => setCurrentPage(index + 1)}
-              className="p-2 border "
+              className="p-2 border"
             >
               {index + 1}
             </button>

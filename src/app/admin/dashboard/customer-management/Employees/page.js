@@ -14,7 +14,6 @@ const EmployeeContent = () => {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
 
-  // Early return if id is not present
   if (!id) {
     return (
       <div className="w-full min-h-screen flex items-center justify-center">
