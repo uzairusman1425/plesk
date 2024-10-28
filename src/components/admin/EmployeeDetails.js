@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 export default function EmployeeDetails({ id }) {
   const [employees, setEmployees] = useState([]);
-  const [department, setDepartment] = useState([]);
+  const [department, setDepartment] = useState("");
   const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState(1);
