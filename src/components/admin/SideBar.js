@@ -1,25 +1,59 @@
 "use client";
+import { useUser } from "@/context/userContext";
+import axios from "axios";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function SideBar() {
   const router = useRouter();
   const pathname = usePathname();
+  const [hidden, setHidden] = useState(false);
+  const [data, setData] = useState([]);
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+  const { setUser } = useUser();
+
+  useEffect(() => {
+    FetchUsers();
+  }, []);
+
+  const FetchUsers = () => {
+    const token = localStorage.getItem("plesk_admin_access_token");
+    axios
+      .get(`${API_BASE_URL}/api/superadmin/users`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        setData(response?.data?.data || []);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleUser = (id) => {
+    if (!id) return;
+    setUser(id);
+  };
+
   return (
-    <div className="h-full w-[12%] flex flex-col gap-10 pl-5 pt-10">
+    <div className="h-full w-[15%] flex flex-col gap-10 pl-5 pt-10">
       <Image
         src={"/images/logo.png"}
         alt="plesk.png"
         height={150}
         width={150}
       />
-      <div className="flex flex-col gap-3">
-        <button
-          className={`h-12  rounded flex flex-row gap-3 items-center justify-center transform-gpu ease-in-out duration-500 ${
-            pathname == "/admin/dashboard/customer-management"
+      <div className="flex flex-col gap-3 relative">
+        {/* Set parent to relative */}
+        <div
+          className={`h-12 rounded flex flex-row gap-3 items-center justify-center transform-gpu ease-in-out duration-500 ${
+            pathname === "/admin/dashboard/customer-management"
               ? "bg-primary bg-opacity-35"
               : "bg-white"
-          } `}
+          }`}
           onClick={() => {
             router.push("/admin/dashboard/customer-management");
           }}
@@ -31,21 +65,42 @@ export default function SideBar() {
             width={15}
           />
           <p
-            className={`text-md transform-gpu ease-in-out duration-500  ${
-              pathname == "/admin/dashboard/customer-management"
+            className={`text-md transform-gpu ease-in-out duration-500 ${
+              pathname === "/admin/dashboard/customer-management"
                 ? "text-primary"
                 : "text-gray-500"
             }`}
           >
             Customer Management
           </p>
-        </button>
+          <button
+            onClick={() => {
+              setHidden((prev) => !prev);
+            }}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="size-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="m19.5 8.25-7.5 7.5-7.5-7.5"
+              />
+            </svg>
+          </button>
+        </div>
+
         <button
-          className={`h-12  rounded flex flex-row gap-3 items-center justify-center transform-gpu ease-in-out duration-500 ${
-            pathname == "/admin/dashboard/Super-admin"
+          className={`h-12 rounded flex flex-row gap-3 items-center justify-center transform-gpu ease-in-out duration-500 ${
+            pathname === "/admin/dashboard/Super-admin"
               ? "bg-primary bg-opacity-35"
               : "bg-white"
-          } `}
+          }`}
           onClick={() => {
             router.push("/admin/dashboard/Super-admin");
           }}
@@ -57,15 +112,43 @@ export default function SideBar() {
             width={15}
           />
           <p
-            className={`text-md transform-gpu ease-in-out duration-500  ${
-              pathname == "/admin/dashboard/Super-admin"
+            className={`text-md transform-gpu ease-in-out duration-500 ${
+              pathname === "/admin/dashboard/Super-admin"
                 ? "text-primary"
                 : "text-gray-500"
             }`}
           >
-            Super-Admin
+            Settings
           </p>
         </button>
+
+        {/* Dropdown container */}
+        <div
+          className={`flex flex-col px-2 gap-3 items-center justify-center transform-gpu ease-in-out duration-500 transition-transform 
+            ${
+              hidden
+                ? "translate-y-0 opacity-100"
+                : "translate-y-full opacity-0"
+            } 
+            overflow-y-scroll bg-white  shadow-xl rounded-lg pt-10 mb-12 h-[300px] absolute top-14 w-full`}
+        >
+          {data?.length ? (
+            data.map((item, index) => (
+              <button
+                className="text-primary pt-2 font-semibold"
+                key={index}
+                onClick={() => {
+                  handleUser(item?._id);
+                  // Optionally trigger a state update in a parent component or use router push
+                }}
+              >
+                {item?.firstName} {item?.lastName}
+              </button>
+            ))
+          ) : (
+            <p className="text-gray-500">No users found.</p>
+          )}
+        </div>
       </div>
     </div>
   );
