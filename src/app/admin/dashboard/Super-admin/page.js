@@ -1,6 +1,5 @@
 "use client";
 import SuperAdminDetails from "@/components/admin/SuperAdmindetails";
-import { useState } from "react";
 
 export default function SuperAdmin() {
   return (
