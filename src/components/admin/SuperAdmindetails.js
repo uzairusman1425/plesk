@@ -14,11 +14,8 @@ export default function SuperAdminDetails() {
   const [modalVisible, setModalVisible] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
-  // New state variables for editing
   const [editingId, setEditingId] = useState(null);
   const [editingUsername, setEditingUsername] = useState("");
-
   const indexOfLastItem = rowsPerPage * currentPage;
   const indexOfFirstItem = indexOfLastItem - rowsPerPage;
   const totalPages = Math.ceil(data.length / rowsPerPage);
