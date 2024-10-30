@@ -21,11 +21,13 @@ export default function CompanyDetails() {
     country: "",
   });
   const { userId } = useUser();
+  const [token, setToken] = useState("");
 
   // Fetch users whenever the component mounts
   useEffect(() => {
+    const token = localStorage.getItem("plesk_admin_access_token");
+    setToken(token);
     const fetchUsers = async () => {
-      const token = localStorage.getItem("plesk_admin_access_token");
       try {
         const response = await axios.get(
           `${API_BASE_URL}/api/superadmin/users`,
@@ -45,20 +47,9 @@ export default function CompanyDetails() {
     fetchUsers();
   }, []);
 
-  useEffect(() => {
-    const handleStorageChange = () => {
-      setCurrentUserId(localStorage.getItem("user_id"));
-    };
-
-    // Listen for changes to localStorage
-    window.addEventListener("storage", handleStorageChange);
-
-    return () => window.removeEventListener("storage", handleStorageChange);
-  }, []);
   const filtered_data = data?.filter((item) => item?._id === userId);
 
   const handleAddCompany = async () => {
-    const token = localStorage.getItem("plesk_admin_access_token");
     if (!items) {
       toast.error("All Items Required");
     }

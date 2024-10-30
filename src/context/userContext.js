@@ -1,16 +1,24 @@
-"use client";
 // UserContext.js
-import { createContext, useContext, useState } from "react";
+"use client";
+import { createContext, useContext, useEffect, useState } from "react";
 
-// Create the context
 const UserContext = createContext();
 
-// Create a provider component
 export const UserProvider = ({ children }) => {
-  const [userId, setUserId] = useState(localStorage.getItem("user_id") || "");
+  const [userId, setUserId] = useState(""); // Initialize as empty string
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      // Check if window is available
+      const storedUserId = localStorage.getItem("user_id");
+      if (storedUserId) setUserId(storedUserId);
+    }
+  }, []);
 
   const setUser = (id) => {
-    localStorage.setItem("user_id", id); // Optionally sync with localStorage
+    if (typeof window !== "undefined") {
+      localStorage.setItem("user_id", id);
+    }
     setUserId(id);
   };
 
@@ -21,5 +29,5 @@ export const UserProvider = ({ children }) => {
   );
 };
 
-// Create a custom hook for easy access
+// Custom hook for using the context
 export const useUser = () => useContext(UserContext);
