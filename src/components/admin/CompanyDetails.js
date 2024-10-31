@@ -22,6 +22,7 @@ export default function CompanyDetails() {
   });
   const { userId } = useUser();
   const [token, setToken] = useState("");
+  const [edit, setEdit] = useState(false);
 
   // Fetch users whenever the component mounts
   useEffect(() => {
