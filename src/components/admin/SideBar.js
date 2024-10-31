@@ -9,34 +9,41 @@ export default function SideBar() {
   const router = useRouter();
   const pathname = usePathname();
   const [hidden, setHidden] = useState(false);
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(null);
+  const [mounted, setMounted] = useState(false);
   const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
   const { setUser } = useUser();
 
   useEffect(() => {
-    FetchUsers();
+    setMounted(true);
   }, []);
 
-  const FetchUsers = () => {
-    const token = localStorage.getItem("plesk_admin_access_token");
-    axios
-      .get(`${API_BASE_URL}/api/superadmin/users`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        setData(response?.data?.data || []);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  useEffect(() => {
+    if (!mounted) return;
+    const FetchUsers = async () => {
+      const token = localStorage.getItem("plesk_admin_access_token");
+      try {
+        const response = await axios.get(
+          `${API_BASE_URL}/api/superadmin/users`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        setData(response.data.data || []);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+        setData([]);
+      }
+    };
+    FetchUsers();
+  }, [API_BASE_URL, mounted]);
 
   const handleUser = (id) => {
     if (!id) return;
     setUser(id);
   };
+
+  if (!mounted) return null;
 
   return (
     <div className="h-full w-[15%] flex flex-col gap-10 pl-5 pt-10">
@@ -47,16 +54,13 @@ export default function SideBar() {
         width={150}
       />
       <div className="flex flex-col gap-3 relative">
-        {/* Set parent to relative */}
         <button
-          className={`h-12 rounded flex flex-row gap-3 items-center justify-center transform-gpu ease-in-out duration-500 ${
+          className={`h-12 rounded flex flex-row gap-3 items-center justify-center ${
             pathname === "/admin/dashboard/customer-management"
               ? "bg-primary bg-opacity-35"
               : "bg-white"
           }`}
-          onClick={() => {
-            router.push("/admin/dashboard/customer-management");
-          }}
+          onClick={() => router.push("/admin/dashboard/customer-management")}
         >
           <Image
             src={"/icons/customer-management-blue.png"}
@@ -65,7 +69,7 @@ export default function SideBar() {
             width={15}
           />
           <p
-            className={`text-md transform-gpu ease-in-out duration-500 ${
+            className={`text-md ${
               pathname === "/admin/dashboard/customer-management"
                 ? "text-primary"
                 : "text-gray-500"
@@ -73,11 +77,7 @@ export default function SideBar() {
           >
             Customer Management
           </p>
-          <button
-            onClick={() => {
-              setHidden((prev) => !prev);
-            }}
-          >
+          <button onClick={() => setHidden((prev) => !prev)}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -96,14 +96,12 @@ export default function SideBar() {
         </button>
 
         <button
-          className={`h-12 rounded flex flex-row gap-3 items-center justify-center transform-gpu ease-in-out duration-500 ${
+          className={`h-12 rounded flex flex-row gap-3 items-center justify-center ${
             pathname === "/admin/dashboard/Super-admin"
               ? "bg-primary bg-opacity-35"
               : "bg-white"
           }`}
-          onClick={() => {
-            router.push("/admin/dashboard/Super-admin");
-          }}
+          onClick={() => router.push("/admin/dashboard/Super-admin")}
         >
           <Image
             src={"/icons/customer-management-blue.png"}
@@ -112,7 +110,7 @@ export default function SideBar() {
             width={15}
           />
           <p
-            className={`text-md transform-gpu ease-in-out duration-500 ${
+            className={`text-md ${
               pathname === "/admin/dashboard/Super-admin"
                 ? "text-primary"
                 : "text-gray-500"
@@ -124,25 +122,20 @@ export default function SideBar() {
 
         {/* Dropdown container */}
         <div
-          className={`flex flex-col px-2 gap-3 items-center justify-center transform-gpu ease-in-out duration-500 transition-transform 
-            ${
-              hidden
-                ? "translate-y-0 opacity-100"
-                : "translate-y-full opacity-0"
-            } 
-            overflow-y-scroll bg-white  shadow-xl rounded-lg pt-10 mb-12 h-[300px] absolute top-14 w-full`}
+          className={`${
+            hidden ? "opacity-100 max-h-96" : "opacity-0 max-h-0"
+          } transition-all duration-500 overflow-y-auto bg-white shadow-xl rounded-lg mt-3 pt-5 absolute top-14 w-full`}
         >
-          {data?.length ? (
-            data.map((item, index) => (
+          {data === null ? (
+            <p className="text-gray-500">Loading users...</p>
+          ) : data.length ? (
+            data.map((item) => (
               <button
-                className="text-primary pt-2 font-semibold"
-                key={index}
-                onClick={() => {
-                  handleUser(item?._id);
-                  // Optionally trigger a state update in a parent component or use router push
-                }}
+                className="text-primary pt-2 font-semibold w-full text-left px-3"
+                key={item._id}
+                onClick={() => handleUser(item._id)}
               >
-                {item?.firstName} {item?.lastName}
+                {item.firstName} {item.lastName}
               </button>
             ))
           ) : (

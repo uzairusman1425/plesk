@@ -66,6 +66,7 @@ export default function CompanyDetails() {
       );
       console.log(response);
       toast.success("Company Added");
+      window.reload();
     } catch (error) {
       console.log(error);
     }
