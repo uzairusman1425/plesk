@@ -46,7 +46,7 @@ export default function SideBar() {
   if (!mounted) return null;
 
   return (
-    <div className="h-full w-[15%] flex flex-col gap-10 pl-5 pt-10">
+    <div className="h-full w-[18%] flex flex-col gap-10 pl-5 pt-10">
       <Image
         src={"/images/logo.png"}
         alt="plesk.png"
@@ -96,7 +96,7 @@ export default function SideBar() {
         </button>
 
         <button
-          className={`h-12 rounded flex flex-row gap-3 items-center justify-center ${
+          className={`h-12 rounded flex flex-row gap-3 pt-4 items-center justify-center ${
             pathname === "/admin/dashboard/Super-admin"
               ? "bg-primary bg-opacity-35"
               : "bg-white"
