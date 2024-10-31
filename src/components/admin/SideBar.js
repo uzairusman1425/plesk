@@ -9,7 +9,7 @@ export default function SideBar() {
   const router = useRouter();
   const pathname = usePathname();
   const [hidden, setHidden] = useState(false);
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
   const [mounted, setMounted] = useState(false);
   const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
   const { setUser } = useUser();
@@ -20,8 +20,13 @@ export default function SideBar() {
 
   useEffect(() => {
     if (!mounted) return;
-    const FetchUsers = async () => {
+
+    const fetchUsers = async () => {
       const token = localStorage.getItem("plesk_admin_access_token");
+      if (!token) {
+        setData([]); // No token found, handle accordingly
+        return;
+      }
       try {
         const response = await axios.get(
           `${API_BASE_URL}/api/superadmin/users`,
@@ -32,11 +37,12 @@ export default function SideBar() {
         setData(response.data.data || []);
       } catch (error) {
         console.error("Error fetching users:", error);
-        setData([]);
+        setData([]); // Set to empty array on error
       }
     };
-    FetchUsers();
-  }, [API_BASE_URL, mounted]);
+
+    fetchUsers();
+  }, [mounted, API_BASE_URL]);
 
   const handleUser = (id) => {
     if (!id) return;
@@ -46,7 +52,7 @@ export default function SideBar() {
   if (!mounted) return null;
 
   return (
-    <div className="h-full w-[18%] flex flex-col gap-10 pl-5 pt-10">
+    <div className="min-h-screen w-[16%] flex flex-col gap-10 pl-5 pt-10">
       <Image
         src={"/images/logo.png"}
         alt="plesk.png"
@@ -126,9 +132,9 @@ export default function SideBar() {
             hidden ? "opacity-100 max-h-96" : "opacity-0 max-h-0"
           } transition-all duration-500 overflow-y-auto bg-white shadow-xl rounded-lg mt-3 pt-5 absolute top-14 w-full`}
         >
-          {data === null ? (
+          {data.length === 0 ? (
             <p className="text-gray-500">Loading users...</p>
-          ) : data.length ? (
+          ) : (
             data.map((item) => (
               <button
                 className="text-primary pt-2 font-semibold w-full text-left px-3"
@@ -138,8 +144,6 @@ export default function SideBar() {
                 {item.firstName} {item.lastName}
               </button>
             ))
-          ) : (
-            <p className="text-gray-500">No users found.</p>
           )}
         </div>
       </div>
