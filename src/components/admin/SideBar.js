@@ -10,49 +10,36 @@ export default function SideBar() {
   const pathname = usePathname();
   const [hidden, setHidden] = useState(false);
   const [data, setData] = useState([]);
-  const [mounted, setMounted] = useState(false);
   const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
   const { setUser } = useUser();
 
   useEffect(() => {
-    setMounted(true);
+    FetchUsers();
   }, []);
 
-  useEffect(() => {
-    if (!mounted) return;
-
-    const fetchUsers = async () => {
-      const token = localStorage.getItem("plesk_admin_access_token");
-      if (!token) {
-        setData([]); // No token found, handle accordingly
-        return;
-      }
-      try {
-        const response = await axios.get(
-          `${API_BASE_URL}/api/superadmin/users`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
-        setData(response.data.data || []);
-      } catch (error) {
-        console.error("Error fetching users:", error);
-        setData([]); // Set to empty array on error
-      }
-    };
-
-    fetchUsers();
-  }, [mounted, API_BASE_URL]);
+  const FetchUsers = () => {
+    const token = localStorage.getItem("plesk_admin_access_token");
+    axios
+      .get(`${API_BASE_URL}/api/superadmin/users`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        setData(response?.data?.data || []);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const handleUser = (id) => {
     if (!id) return;
     setUser(id);
   };
 
-  if (!mounted) return null;
-
   return (
-    <div className="min-h-screen w-[16%] flex flex-col gap-10 pl-5 pt-10">
+    <div className="h-full w-[15%] flex flex-col gap-10 pl-5 pt-10">
       <Image
         src={"/images/logo.png"}
         alt="plesk.png"
@@ -60,13 +47,16 @@ export default function SideBar() {
         width={150}
       />
       <div className="flex flex-col gap-3 relative">
+        {/* Set parent to relative */}
         <button
-          className={`h-12 rounded flex flex-row gap-3 items-center justify-center ${
+          className={`h-12 rounded flex flex-row gap-3 items-center justify-center transform-gpu ease-in-out duration-500 ${
             pathname === "/admin/dashboard/customer-management"
               ? "bg-primary bg-opacity-35"
               : "bg-white"
           }`}
-          onClick={() => router.push("/admin/dashboard/customer-management")}
+          onClick={() => {
+            router.push("/admin/dashboard/customer-management");
+          }}
         >
           <Image
             src={"/icons/customer-management-blue.png"}
@@ -75,7 +65,7 @@ export default function SideBar() {
             width={15}
           />
           <p
-            className={`text-md ${
+            className={`text-md transform-gpu ease-in-out duration-500 ${
               pathname === "/admin/dashboard/customer-management"
                 ? "text-primary"
                 : "text-gray-500"
@@ -83,7 +73,11 @@ export default function SideBar() {
           >
             Customer Management
           </p>
-          <button onClick={() => setHidden((prev) => !prev)}>
+          <button
+            onClick={() => {
+              setHidden((prev) => !prev);
+            }}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -102,12 +96,14 @@ export default function SideBar() {
         </button>
 
         <button
-          className={`h-12 rounded flex flex-row gap-3 pt-4 items-center justify-center ${
+          className={`h-12 rounded flex flex-row gap-3 items-center justify-center transform-gpu ease-in-out duration-500 ${
             pathname === "/admin/dashboard/Super-admin"
               ? "bg-primary bg-opacity-35"
               : "bg-white"
           }`}
-          onClick={() => router.push("/admin/dashboard/Super-admin")}
+          onClick={() => {
+            router.push("/admin/dashboard/Super-admin");
+          }}
         >
           <Image
             src={"/icons/customer-management-blue.png"}
@@ -116,7 +112,7 @@ export default function SideBar() {
             width={15}
           />
           <p
-            className={`text-md ${
+            className={`text-md transform-gpu ease-in-out duration-500 ${
               pathname === "/admin/dashboard/Super-admin"
                 ? "text-primary"
                 : "text-gray-500"
@@ -126,6 +122,7 @@ export default function SideBar() {
           </p>
         </button>
 
+        {/* Dropdown container */}
         {/* Dropdown container */}
         <div
           className={`${
