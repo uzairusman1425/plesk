@@ -99,12 +99,11 @@ export default function EmployeeDetails({ id }) {
         {Filtered_Department?.map((item, index) => (
           <div
             key={index}
-            className="Data flex text-left items-center border-b h-20 text-md mt-10 justify-evenly"
+            className="Data flex text-left items-center border-b h-20 text-sm mt-10 justify-evenly"
           >
             <p className="w-[10%]">{item.firstName}</p>
             <p className="w-[10%]">{item.phone}</p>
             <p className="w-[10%]">{item.email}</p>
-
             <p className="w-[10%]">{item.gender}</p>
             <p className="w-[10%]">{item.nationality}</p>
             <p className="w-[10%]">{item.city}</p>
