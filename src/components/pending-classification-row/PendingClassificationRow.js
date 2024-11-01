@@ -78,7 +78,7 @@ export default function PendingClassificationRow({
       </div>
       <div className="flex flex-row items-center gap-2">
         {url?.length > 0 && <GlobeAltIcon className="size-3 text-primary" />}
-        <p className="text-xs font-light text-gray-500">{url}</p>
+        <p className="text-xs font-light text-gray-500">{url?.slice(0, 50)}</p>
       </div>
       <div className="flex flex-row items-center gap-2 relative">
         <p className="text-xs font-light text-gray-500">Select Status</p>
