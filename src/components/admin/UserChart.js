@@ -19,7 +19,7 @@ const UserBarChart = () => {
   const FetchData = () => {
     const token = localStorage.getItem("plesk_admin_access_token");
     axios
-      .get(`${API_URL}/api/superadmin/user/yearly-count`, {
+      .get(`${API_URL}/api/superadmin/cemployees`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -47,12 +47,12 @@ const UserBarChart = () => {
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="year" />
+        <XAxis dataKey="company" />
         <YAxis />
         <Tooltip />
         <Legend />
         <Bar
-          dataKey="userCount"
+          dataKey="employees"
           fill="#8884d8"
           activeBar={<Rectangle fill="pink" stroke="blue" />}
         />

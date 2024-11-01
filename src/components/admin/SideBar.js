@@ -47,7 +47,6 @@ export default function SideBar() {
         width={150}
       />
       <div className="flex flex-col gap-3 relative">
-        {/* Set parent to relative */}
         <button
           className={`h-12 rounded flex flex-row gap-3 items-center justify-center transform-gpu ease-in-out duration-500 ${
             pathname === "/admin/dashboard/customer-management"
@@ -122,8 +121,6 @@ export default function SideBar() {
           </p>
         </button>
 
-        {/* Dropdown container */}
-        {/* Dropdown container */}
         <div
           className={`${
             hidden ? "opacity-100 max-h-96" : "opacity-0 max-h-0"
@@ -136,13 +133,13 @@ export default function SideBar() {
               <button
                 className="text-primary pt-2 font-semibold w-full text-left px-3"
                 key={item._id}
-                onClick={() => handleUser(item._id)}
+                onClick={() => handleUser(item?._id)}
               >
-                {item.firstName} {item.lastName}
+                {item?.firstName} {item?.lastName}
               </button>
             ))
           )}
-        </div>
+        </div> 
       </div>
     </div>
   );
