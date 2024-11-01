@@ -115,7 +115,7 @@ export default function PendingClassificationRow({
           </div>
         )}
       </div>
-      <p className="text-xs font-light text-gray-500">{duration} h</p>
+      <p className="text-xs font-light text-gray-500">{duration} s</p>
     </div>
   );
 }
