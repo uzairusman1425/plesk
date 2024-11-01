@@ -2,13 +2,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import {
-  AreaChart,
-  Area,
+  BarChart,
   XAxis,
   YAxis,
   CartesianGrid,
-  Tooltip,
   ResponsiveContainer,
+  Bar,
 } from "recharts";
 
 const Example = () => {
@@ -18,7 +17,7 @@ const Example = () => {
   const FetchData = () => {
     const token = localStorage.getItem("plesk_admin_access_token");
     axios
-      .get(`${API_URL}/api/superadmin/cemployees`, {
+      .get(`${API_URL}/api/superadmin/user/yearly-count`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -37,26 +36,15 @@ const Example = () => {
 
   return (
     <ResponsiveContainer width="100%" height={450}>
-      <AreaChart
+      <BarChart
         data={data}
-        margin={{
-          top: 10,
-          right: 30,
-          left: 0,
-          bottom: 20,
-        }}
+        margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
       >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="company" />
+        <XAxis dataKey="year" />
         <YAxis />
-        <Tooltip />
-        <Area
-          type="monotone"
-          dataKey="employees"
-          stroke="#8884d8"
-          fill="#8884d8"
-        />
-      </AreaChart>
+        <Bar dataKey="userCount" fill="#39B6E8" />
+      </BarChart>
     </ResponsiveContainer>
   );
 };

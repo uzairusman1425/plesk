@@ -87,7 +87,7 @@ export default function EmployeeDetails({ id }) {
           <p className="w-[10%]">First Name</p>
           <p className="w-[10%]">Phone</p>
           <p className="w-[10%]">Email</p>
-          <p className="w-[10%]">DOB</p>
+
           <p className="w-[10%]">Gender</p>
           <p className="w-[10%]">Nationality</p>
           <p className="w-[10%]">City</p>
@@ -104,7 +104,7 @@ export default function EmployeeDetails({ id }) {
             <p className="w-[10%]">{item.firstName}</p>
             <p className="w-[10%]">{item.phone}</p>
             <p className="w-[10%]">{item.email}</p>
-            <p className="w-[10%]">{item.dob}</p>
+
             <p className="w-[10%]">{item.gender}</p>
             <p className="w-[10%]">{item.nationality}</p>
             <p className="w-[10%]">{item.city}</p>
