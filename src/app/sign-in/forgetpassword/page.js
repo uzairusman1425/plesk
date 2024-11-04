@@ -3,12 +3,13 @@
 import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
-
+import { useRouter } from "next/router";
 export default function ForgetScreen() {
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
   const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
+  const router = useRouter();
   const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
   async function handleVerify() {
@@ -52,6 +53,7 @@ export default function ForgetScreen() {
           setVisible(false);
           toast.success(response?.data?.message || "Password Updated");
           setEmail("");
+          router.push("/sign-in");
         }
       } catch (error) {
         console.log(error);
