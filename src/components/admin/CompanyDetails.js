@@ -20,6 +20,14 @@ export default function CompanyDetails() {
     password: "",
     country: "",
   });
+  const [editItems, SetEditItems] = useState({
+    firstName: "",
+    lastName: "",
+    phoneNumber: "",
+    country: "",
+    organization: "",
+    password: "",
+  });
   const { userId } = useUser();
   const [token, setToken] = useState("");
   const [edit, setEdit] = useState(false);
@@ -69,6 +77,7 @@ export default function CompanyDetails() {
       window.location.reload();
     } catch (error) {
       console.log(error);
+      toast.error(error?.response?.data?.message);
     }
     setItems({
       firstName: "",
@@ -80,6 +89,75 @@ export default function CompanyDetails() {
       country: "",
     });
     setModalVisible(false);
+  };
+
+  const handleEdit = async () => {
+    if (
+      !editItems.country ||
+      !editItems.firstName ||
+      !editItems.lastName ||
+      !editItems.organization ||
+      !editItems.password ||
+      !editItems.phoneNumber
+    ) {
+      toast.error("All Items Required");
+    } else {
+      try {
+        const response = await axios.put(
+          `${API_BASE_URL}/api/superadmin/updateuser/${userId}`,
+          editItems,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log(response);
+        toast.success("Company Updated");
+        window.location.reload();
+      } catch (error) {
+        console.log(error);
+        toast.error(error?.response?.data?.message || "An error Occured");
+      }
+    }
+    SetEditItems({
+      firstName: "",
+      lastName: "",
+      phoneNumber: "",
+      organization: "",
+      password: "",
+      country: "",
+    });
+    setEdit(false);
+  };
+
+  const handleDelete = async (id) => {
+    if (!id) {
+      toast.error("No User Selected");
+    } else {
+      try {
+        const confirmation = window.confirm(
+          "Are you sure you want to delete this user?"
+        );
+        if (confirmation) {
+          const response = await axios.delete(
+            `${API_BASE_URL}/api/superadmin/deleteuser/${userId}`,
+
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          console.log(response);
+          toast.success("Company Deleted");
+          window.location.reload();
+        }
+      } catch (error) {
+        console.log(error);
+        toast.error(error?.response?.data?.message || "An error Occured");
+      }
+    }
   };
   return (
     <main className="p-20 w-full min-h-screen">
@@ -110,6 +188,7 @@ export default function CompanyDetails() {
               className="data flex text-left items-center border-b-[1px] h-20 text-md mt-10 justify-evenly"
             >
               <p className="w-[10%]">{item?.firstName}</p>
+
               <p className="w-[10%]">{item?.organization}</p>
               <div className="w-[10%]">
                 {item?.employees?.length > 0 ? (
@@ -125,7 +204,11 @@ export default function CompanyDetails() {
               <p className="w-[10%]">{item?.country}</p>
               <p className="w-[10%]">{item?.phoneNumber}</p>
               <div className="w-[10%] flex gap-4">
-                <button>
+                <button
+                  onClick={() => {
+                    setEdit(true);
+                  }}
+                >
                   <Image
                     src={"/icons/edit.png"}
                     alt="edit"
@@ -133,7 +216,11 @@ export default function CompanyDetails() {
                     width={17.5}
                   />
                 </button>
-                <button>
+                <button
+                  onClick={() => {
+                    handleDelete(item?._id);
+                  }}
+                >
                   <Image
                     src={"/icons/delete.png"}
                     alt="delete"
@@ -249,6 +336,100 @@ export default function CompanyDetails() {
               </button>
               <button
                 onClick={() => setModalVisible(false)}
+                className="px-6 py-2 border-2 text-primary rounded-md border-primary"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {edit && (
+        <div className="w-full min-h-screen bg-black/20 inset-0 fixed flex items-center justify-center">
+          <div className="w-[600px] h-[900px] bg-white rounded-xl flex items-center flex-col justify-center gap-10">
+            <h1 className="text-2xl font-bold">Edit Company</h1>
+            <input
+              type="text"
+              placeholder="First Name"
+              className="w-[300px] h-14 px-2 bg-gray-200 rounded-xl"
+              value={editItems.firstName}
+              onChange={(e) => {
+                SetEditItems((items) => ({
+                  ...items,
+                  firstName: e.target.value,
+                }));
+              }}
+            />
+            <input
+              type="text"
+              placeholder="Last Name"
+              className="w-[300px] h-14 px-2 bg-gray-200 rounded-xl"
+              value={editItems.lastName}
+              onChange={(e) => {
+                SetEditItems((items) => ({
+                  ...items,
+                  lastName: e.target.value,
+                }));
+              }}
+            />
+
+            <input
+              type="number"
+              placeholder="Phone Number"
+              className="w-[300px] h-14 px-2 bg-gray-200 rounded-xl"
+              value={editItems.phoneNumber}
+              onChange={(e) => {
+                SetEditItems((items) => ({
+                  ...items,
+                  phoneNumber: e.target.value,
+                }));
+              }}
+            />
+            <input
+              type="text"
+              placeholder="Organization"
+              className="w-[300px] h-14 px-2 bg-gray-200 rounded-xl"
+              value={editItems.organization}
+              onChange={(e) => {
+                SetEditItems((items) => ({
+                  ...items,
+                  organization: e.target.value,
+                }));
+              }}
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              className="w-[300px] h-14 px-2 bg-gray-200 rounded-xl"
+              value={editItems.password}
+              onChange={(e) => {
+                SetEditItems((items) => ({
+                  ...items,
+                  password: e.target.value,
+                }));
+              }}
+            />
+            <input
+              type="text"
+              placeholder="Country"
+              className="w-[300px] h-14 px-2 bg-gray-200 rounded-xl"
+              value={editItems.country}
+              onChange={(e) => {
+                SetEditItems((items) => ({
+                  ...items,
+                  country: e.target.value,
+                }));
+              }}
+            />
+            <div className="flex flex-row gap-4">
+              <button
+                onClick={handleEdit}
+                className="px-6 py-2 bg-primary text-white font-bold rounded-md"
+              >
+                Save
+              </button>
+              <button
+                onClick={() => setEdit(false)}
                 className="px-6 py-2 border-2 text-primary rounded-md border-primary"
               >
                 Cancel
