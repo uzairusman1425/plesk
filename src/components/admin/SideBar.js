@@ -47,7 +47,7 @@ export default function SideBar() {
         width={150}
       />
       <div className="flex flex-col gap-3 relative">
-        <button
+        <div
           className={`h-12 rounded flex flex-row gap-3 items-center justify-center transform-gpu ease-in-out duration-500 ${
             pathname === "/admin/dashboard/customer-management"
               ? "bg-primary bg-opacity-35"
@@ -92,7 +92,7 @@ export default function SideBar() {
               />
             </svg>
           </button>
-        </button>
+        </div>
 
         <button
           className={`h-12 rounded flex flex-row gap-3 items-center justify-center transform-gpu ease-in-out duration-500 ${
@@ -139,7 +139,7 @@ export default function SideBar() {
               </button>
             ))
           )}
-        </div> 
+        </div>
       </div>
     </div>
   );
