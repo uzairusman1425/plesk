@@ -62,7 +62,7 @@ export default function ForgetScreen() {
 
   return (
     <main className="flex items-center justify-center">
-      <div className="w-[400px] h-[300px] rounded-xl bg-white shadow-lg flex items-center flex-col justify-start gap-6">
+      <div className="w-[400px] h-[250px] rounded-xl bg-white shadow-lg flex items-center flex-col justify-start gap-6">
         <h1 className="font-bold text-2xl">Forget Password</h1>
         <input
           value={email}
