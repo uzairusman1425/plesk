@@ -137,7 +137,12 @@ export default function SignIn() {
             </button>
             <p className="text-xs">Keep me logged in</p>
           </div>
-          <p className="text-xs font-medium text-red-500">Forgot Password?</p>
+          <Link
+            href={"/sign-in/forgetpassword"}
+            className="text-xs font-medium text-red-500"
+          >
+            Forgot Password?
+          </Link>
         </div>
         <button
           className="h-10 w-full flex items-center justify-center uppercase text-white text-md font-medium bg-primary rounded-md"
