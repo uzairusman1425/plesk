@@ -48,7 +48,7 @@ export default function SideBar() {
       />
       <div className="flex flex-col gap-3 relative">
         <div
-          className={`h-12 rounded flex flex-row gap-3 items-center justify-center transform-gpu ease-in-out duration-500 ${
+          className={`h-12 rounded cursor-pointer flex flex-row gap-3 items-center justify-center transform-gpu ease-in-out duration-500 ${
             pathname === "/admin/dashboard/customer-management"
               ? "bg-primary bg-opacity-35"
               : "bg-white"
