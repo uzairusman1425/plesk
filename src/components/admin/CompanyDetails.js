@@ -159,6 +159,7 @@ export default function CompanyDetails() {
       }
     }
   };
+
   return (
     <main className="p-20 w-full min-h-screen">
       <div className="w-full flex flex-row items-center justify-between">
