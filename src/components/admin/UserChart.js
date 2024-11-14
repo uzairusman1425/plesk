@@ -55,6 +55,7 @@ const UserBarChart = () => {
           dataKey="employees"
           fill="#8884d8"
           activeBar={<Rectangle fill="pink" stroke="blue" />}
+          barSize={30}
         />
       </BarChart>
     </ResponsiveContainer>

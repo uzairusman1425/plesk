@@ -4,7 +4,8 @@ export default function AdminLayout({ children }) {
   return (
     <section className="w-full min-h-screen flex">
       <SideBar />
-      {children}
+
+      <div className="w-[80%]">{children}</div>
     </section>
   );
 }
