@@ -43,7 +43,7 @@ const Example = () => {
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="year" />
         <YAxis />
-        <Bar dataKey="userCount" fill="#39B6E8" />
+        <Bar dataKey="userCount" fill="#39B6E8" barSize={30} />
       </BarChart>
     </ResponsiveContainer>
   );

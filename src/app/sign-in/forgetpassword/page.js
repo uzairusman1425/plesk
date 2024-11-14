@@ -4,6 +4,7 @@ import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+
 export default function ForgetScreen() {
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");

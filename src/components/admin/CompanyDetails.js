@@ -32,7 +32,6 @@ export default function CompanyDetails() {
   const [token, setToken] = useState("");
   const [edit, setEdit] = useState(false);
 
-  // Fetch users whenever the component mounts
   useEffect(() => {
     const token = localStorage.getItem("plesk_admin_access_token");
     setToken(token);
@@ -161,7 +160,7 @@ export default function CompanyDetails() {
   };
 
   return (
-    <main className="p-20 w-full min-h-screen">
+    <main className="p-20 w-full h-full flex flex-col gap-4">
       <div className="w-full flex flex-row items-center justify-between">
         <button
           onClick={() => {
@@ -173,7 +172,7 @@ export default function CompanyDetails() {
           <p className="text-white text-sm font-light">Add New Company</p>
         </button>
       </div>
-      <div className="w-[100%] h-max mb-20 flex flex-col">
+      <div className="w-[100%] h-max mb-10 flex flex-col border-[2px] border-[#CBCBCB] rounded-xl">
         <div className="headings flex text-left items-center bg-gray-50 h-10 border-b-[1px] text-md mt-10 justify-evenly">
           <p className="w-[10%]">Customer Name</p>
           <p className="w-[10%]">Company Name</p>
@@ -186,17 +185,48 @@ export default function CompanyDetails() {
           filtered_data.map((item, index) => (
             <div
               key={index}
-              className="data flex text-left items-center border-b-[1px] h-20 text-md mt-10 justify-evenly"
+              className="data flex text-left items-center border-b-[1px] h-36 text-md mt-10 justify-evenly text-[#475467]"
             >
               <p className="w-[10%]">{item?.firstName}</p>
 
               <p className="w-[10%]">{item?.organization}</p>
-              <div className="w-[10%]">
+              <div className="w-[100px] bg-[#39B6E833] rounded h-8">
                 {item?.employees?.length > 0 ? (
                   <Link
                     href={`/admin/dashboard/customer-management/Employees?id=${item?._id}`}
+                    className=" w-full  flex items-center justify-around px-2"
                   >
-                    {item?.employees.length}
+                    <div className="w-full flex items-center justify-center text-primary font-semibold">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="size-5"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
+                        />
+                      </svg>
+                      <p className="text-xl"> {item?.employees.length}</p>
+                    </div>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="size-5 text-primary"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
+                      />
+                    </svg>
                   </Link>
                 ) : (
                   <span className="text-gray-500">0</span>

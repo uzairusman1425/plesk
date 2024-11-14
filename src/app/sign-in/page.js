@@ -14,11 +14,9 @@ import { AppContext } from "@/context/context";
 
 export default function SignIn() {
   const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-
   const { dispatch } = useContext(AppContext);
 
   const router = useRouter();
-
   const [checked, setChecked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
