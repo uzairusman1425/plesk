@@ -154,24 +154,11 @@ export default function SuperAdminDetails() {
             />
           </div>
           <button
-            className="flex items-center bg-[#F6F6F6] px-3 py-2 gap-2 "
-            onClick={() => router.back()}
+            onClick={() => setModalVisible(true)}
+            className="h-12 bg-primary rounded-lg flex flex-row items-center gap-2 px-3"
           >
-            Back
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="size-4"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3"
-              />
-            </svg>
+            <PlusCircleIcon className="size-7 text-white" />
+            <p className="text-white text-sm font-light">Add New Admin</p>
           </button>
         </div>
         <div className="w-[95%] h-max  flex flex-col mb-6 border-[#E4E7EC] border-[2px] rounded-xl">
