@@ -46,11 +46,22 @@ export default function SideBar() {
     localStorage.setItem("userId", user._id);
   };
 
+  const handleLogout = () => {
+    const token = localStorage.getItem("plesk_admin_refresh_token");
+    const payload = {
+      refreshToken: token,
+    };
+    axios
+      .post(`${API_BASE_URL}/api/superadmin/logout`, payload)
+      .then(() => router.replace("/admin"))
+      .catch((error) => console.log(error));
+  };
+
   return (
     <div className="h-screen w-[15%] flex flex-col gap-10 pl-5 pt-10 items-center">
       <Image src="/images/logo.png" alt="Logo" height={150} width={150} />
 
-      <div className="flex flex-col gap-3 relative items-center justify-between w-full h-full">
+      <div className="flex flex-col gap-3 text-[13px] font-medium relative items-center justify-between w-full h-full">
         {/* Customer Management Section */}
         <div className="w-full">
           <div
@@ -113,14 +124,14 @@ export default function SideBar() {
 
           {/* Dropdown List */}
           {dropdownVisible && (
-            <div className="transition-all duration-500 mt-3 pt-5 absolute top-14 w-full overflow-y-auto h-[600px] bg-white shadow-lg rounded-lg flex flex-col items-start">
+            <div className="transition-all duration-500 mt-3 pt-5 absolute top-14 w-full overflow-y-auto h-[600px] bg-white  rounded-lg flex flex-col items-center gap-4">
               {userList.length === 0 ? (
                 <p className="text-gray-500 px-4">Loading users...</p>
               ) : (
                 userList.map((user) => (
                   <div
                     key={user._id}
-                    className="flex items-center gap-4 px-4 py-2 cursor-pointer"
+                    className="flex items-center gap-4 w-[80%] h-12 cursor-pointer bg-[#FCFCFC]"
                     onClick={() => handleUserSelect(user)}
                   >
                     <svg
@@ -175,7 +186,7 @@ export default function SideBar() {
         {/* Other Sidebar Links */}
         <div className="w-full flex items-center justify-center flex-col mb-24 gap-2">
           <button
-            className={`h-12 w-full rounded flex items-center gap-3 justify-center transition duration-500 ${
+            className={`h-12   w-[80%] text-[#979797] cursor-pointer bg-[#FCFCFC] rounded flex items-center text-[#979797] gap-3 justify-center transition duration-500 ${
               pathname === "/admin/dashboard/Super-admin"
                 ? "bg-primary bg-opacity-35"
                 : "bg-white"
@@ -209,14 +220,15 @@ export default function SideBar() {
               className={`text-md ${
                 pathname === "/admin/dashboard/Super-admin"
                   ? "text-primary"
-                  : "text-gray-500"
+                  : "text-[#979797]"
               }`}
             >
               Settings
             </p>
           </button>
           <button
-            className={`h-12 w-full rounded flex items-center gap-3 justify-center transition duration-500 
+            onClick={handleLogout}
+            className={` w-[80%] h-12 cursor-pointer bg-[#FCFCFC] rounded flex items-center gap-3 justify-center transition duration-500 
              `}
           >
             <svg
@@ -225,23 +237,15 @@ export default function SideBar() {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className={`size-6 ${
-                pathname === "/admin/dashboard/Super-admin"
-                  ? "text-primary"
-                  : "text-[#979797]"
-              }`}
+              className="size-6 text-[#979797]"
             >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.003-.827c.293-.241.438-.613.43-.991a8.4 8.4 0 0 1 0-.256c.008-.378-.137-.75-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.217.456c.355.133.75.072 1.075-.124a7.7 7.7 0 0 1 .221-.127c.332-.184.582-.496.645-.87l.213-1.281Z"
-              />
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75"
               />
             </svg>
+
             <p className={`text-md text-[#979797]`}>Logout</p>
           </button>
         </div>

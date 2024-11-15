@@ -53,13 +53,13 @@ export default function EmployeeDetails({ id }) {
 
   return (
     <main className="p-4 w-full min-h-screen">
-      <h1 className="text-xl flex items-center gap-2 font-bold mt-2 ">
+      <h1 className="text-[20px] font-semibold   flex items-center gap-2  mt-2 ">
         HOME <span>-</span>{" "}
         <span className="text-primary">ADMIN DASHBOARD</span>
       </h1>
       <div className="children border-[#E4E7EC] w-full h-max mt-2 mb-10 border-[3px] rounded-lg flex flex-col items-center">
         <div className="headings w-[95%] h-20  mt-6 flex items-center justify-between px-2">
-          <h1 className="text-2xl font-bold">Employee Details</h1>
+          <h1 className="text-[25px] font-semibold">Employee Details</h1>
           <select
             onChange={handleDepartmentChange}
             className="px-6 py-3 bg-[#F6F6F6] flex items-center justify-center gap-2 appearance-auto"
@@ -96,7 +96,7 @@ export default function EmployeeDetails({ id }) {
           </button>
         </div>
         <div className="w-[95%] h-max pb-10 mb-4 flex flex-col border-[#E4E7EC] border-[3px] rounded-xl">
-          <div className="headings  flex text-left items-center font-bold bg-gray-50 h-10 border-b text-md mt-10 justify-evenly">
+          <div className="headings  flex text-left items-center text-[16px] font-medium bg-gray-50 h-10 border-b text-md mt-10 justify-evenly">
             <p className="w-[10%] break-words">First Name</p>
             <p className="w-[10%] break-words">Phone</p>
             <p className="w-[10%] break-words">Email</p>
@@ -111,7 +111,7 @@ export default function EmployeeDetails({ id }) {
           {Filtered_Department?.map((item, index) => (
             <div
               key={index}
-              className="Data flex text-left items-center border-b h-20 text-sm mt-10  justify-evenly text-[#475467]"
+              className="Data flex text-left items-center border-b h-20 text-[14px] font-normal mt-10  justify-evenly text-[#475467]"
             >
               <p className="w-[10%] break-words">{item?.firstName}</p>
               <p className="w-[10%] break-words">{item?.phone}</p>
