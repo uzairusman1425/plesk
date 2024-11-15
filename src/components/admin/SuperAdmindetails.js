@@ -135,106 +135,184 @@ export default function SuperAdminDetails() {
   };
 
   return (
-    <main className="p-20 w-full min-h-screen">
-      <div className="w-full flex flex-row items-center justify-between">
-        <div className="h-10 w-60 border rounded-lg flex flex-row items-center gap-2 px-2">
-          <MagnifyingGlassIcon className="h-6 w-6 text-black" />
-          <input
-            type="text"
-            placeholder="Search"
-            className="w-full outline-none"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-        </div>
-        <button
-          onClick={() => setModalVisible(true)}
-          className="h-12 bg-primary rounded-lg flex flex-row items-center gap-2 px-3"
-        >
-          <PlusCircleIcon className="size-7 text-white" />
-          <p className="text-white text-sm font-light">Add New Admin</p>
-        </button>
-      </div>
-
-      <div className="w-full h-max mb-20 flex flex-col">
-        <div className="headings flex text-left items-center bg-gray-50 h-10 border-b text-md mt-10 justify-evenly">
-          <p className="w-[10%]">UserName</p>
-          <p className="w-[10%]">Action</p>
-        </div>
-
-        {filteredData.map((item, index) => (
-          <div
-            key={index}
-            className="Data flex text-left items-center border-b h-20 text-md mt-10 justify-evenly"
-          >
-            {editingId === item._id ? (
-              <>
-                <input
-                  type="text"
-                  value={editingUsername}
-                  onChange={(e) => setEditingUsername(e.target.value)}
-                  className="w-[10%] border p-1 rounded"
-                />
-                <div className="w-[10%] flex gap-4">
-                  <button onClick={() => handleEdit(item._id)}>save</button>
-                  <button onClick={() => setEditingId(null)}>cancel</button>
-                </div>
-              </>
-            ) : (
-              <>
-                <p className="w-[10%]">{item.username}</p>
-                <div className="w-[10%] flex gap-4">
-                  <button
-                    onClick={() => {
-                      setEditingId(item._id);
-                      setEditingUsername(item.username);
-                    }}
-                  >
-                    <Image
-                      src="/icons/edit.png"
-                      alt="edit"
-                      height={17.5}
-                      width={17.5}
-                    />
-                  </button>
-                  <button onClick={() => handleDelete(item._id)}>
-                    <Image
-                      src="/icons/delete.png"
-                      alt="delete"
-                      height={17.5}
-                      width={17.5}
-                    />
-                  </button>
-                </div>
-              </>
-            )}
+    <main className="p-4 w-full min-h-screen">
+      <h1 className="text-xl flex items-center gap-2 font-bold mt-2 ">
+        HOME <span>-</span>{" "}
+        <span className="text-primary">ADMIN DASHBOARD</span>
+      </h1>
+      <div className="children border-[#E4E7EC] w-full h-max mb-10 border-[3px] rounded-lg flex flex-col items-center mt-2">
+        <div className="headings w-[95%] h-20  mt-6 flex items-center justify-between px-2">
+          <h1 className="text-2xl font-bold">Admin Details</h1>
+          <div className="h-10 w-60 border rounded-lg flex flex-row items-center gap-2 px-2">
+            <MagnifyingGlassIcon className="h-6 w-6 text-black" />
+            <input
+              type="text"
+              placeholder="Search"
+              className="w-full outline-none"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
           </div>
-        ))}
-
-        <div className="buttons w-full flex items-center gap-4 justify-center mt-10">
           <button
-            className="p-2 border"
-            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            className="flex items-center bg-[#F6F6F6] px-3 py-2 gap-2 "
+            onClick={() => router.back()}
           >
-            Prev
-          </button>
-          {Array.from({ length: totalPages }, (_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentPage(index + 1)}
-              className="p-2 border"
+            Back
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="size-4"
             >
-              {index + 1}
-            </button>
-          ))}
-          <button
-            className="p-2 border"
-            onClick={() =>
-              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-            }
-          >
-            Next
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3"
+              />
+            </svg>
           </button>
+        </div>
+        <div className="w-[95%] h-max  flex flex-col mb-6 border-[#E4E7EC] border-[2px] rounded-xl">
+          <div className="headings  font-bold flex text-left items-center bg-gray-50 h-10 border-b text-md mt-10 justify-evenly">
+            <p className="w-[10%]">UserName</p>
+            <p className="w-[10%]">Action</p>
+          </div>
+
+          {filteredData.map((item, index) => (
+            <div
+              key={index}
+              className="Data flex text-left items-center border-b h-10 text-md mt-10 justify-evenly"
+            >
+              {editingId === item._id ? (
+                <>
+                  <input
+                    type="text"
+                    value={editingUsername}
+                    onChange={(e) => setEditingUsername(e.target.value)}
+                    className="w-[10%] border p-1 rounded"
+                  />
+                  <div className="w-[10%] flex gap-4">
+                    <button
+                      className="text-primary font-bold"
+                      onClick={() => handleEdit(item._id)}
+                    >
+                      Save
+                    </button>
+                    <button
+                      className="font-bold"
+                      onClick={() => setEditingId(null)}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <p className="w-[10%]">{item.username}</p>
+                  <div className="w-[10%] flex gap-4">
+                    <button
+                      className="bg-[#39B6E833] px-1 py-1 rounded-md"
+                      onClick={() => {
+                        setEditingId(item._id);
+                        setEditingUsername(item.username);
+                      }}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="size-6 text-primary"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
+                        />
+                      </svg>
+                    </button>
+                    <button
+                      className="bg-[#39B6E833] px-1 py-1 rounded-md"
+                      onClick={() => handleDelete(item._id)}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="size-6 text-primary"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+          ))}
+          <div className="buttons w-full flex items-center gap-4 justify-center mt-10 text-[#475467]">
+            <button
+              className="p-2 flex items-center gap-2"
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="size-4 text-[#475467]"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+                />
+              </svg>
+              Prev
+            </button>
+            {Array.from({ length: totalPages }, (_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentPage(index + 1)}
+                className="p-2 "
+              >
+                {index + 1}
+              </button>
+            ))}
+            <button
+              className="p-2  flex items-center gap-2"
+              onClick={() =>
+                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+              }
+              disabled={currentPage === totalPages}
+            >
+              Next
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="size-4"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+                />
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
 
