@@ -56,7 +56,7 @@ export default function EmployeeDetails({ id }) {
         HOME <span>-</span>{" "}
         <span className="text-primary">ADMIN DASHBOARD</span>
       </h1>
-      <div className="children border-[#E4E7EC] w-full h-[700px] mt-2 mb-10 border-[3px] rounded-lg flex flex-col items-center">
+      <div className="children border-[#E4E7EC] w-full h-max mt-2 mb-10 border-[3px] rounded-lg flex flex-col items-center">
         <div className="headings w-[95%] h-20  mt-6 flex items-center justify-between px-2">
           <h1 className="text-2xl font-bold">Employee Details</h1>
           <select
