@@ -40,6 +40,7 @@ export default function EmployeeDetails({ id }) {
 
     fetchEmployees();
   }, [id]);
+
   const handleDepartmentChange = (e) => {
     setDepartment(e.target.value);
   };
@@ -94,7 +95,7 @@ export default function EmployeeDetails({ id }) {
             </svg>
           </button>
         </div>
-        <div className="w-[95%] h-max pb-10 flex flex-col border-[#E4E7EC] border-[3px] rounded-xl">
+        <div className="w-[95%] h-max pb-10 mb-4 flex flex-col border-[#E4E7EC] border-[3px] rounded-xl">
           <div className="headings  flex text-left items-center font-bold bg-gray-50 h-10 border-b text-md mt-10 justify-evenly">
             <p className="w-[10%] break-words">First Name</p>
             <p className="w-[10%] break-words">Phone</p>
@@ -112,20 +113,25 @@ export default function EmployeeDetails({ id }) {
               key={index}
               className="Data flex text-left items-center border-b h-20 text-sm mt-10  justify-evenly text-[#475467]"
             >
-              <p className="w-[10%] break-words">{item.firstName}</p>
-              <p className="w-[10%] break-words">{item.phone}</p>
-              <p className="w-[10%] break-words">{item.email}</p>
-              <p className="w-[10%] break-words">{item.gender}</p>
-              <p className="w-[10%] break-words">{item.nationality}</p>
-              <p className="w-[10%] break-words">{item.city}</p>
-              <p className="w-[10%] break-words">{item.state}</p>
-              <p className="w-[10%] break-words">{item.userEmail}</p>
-              <Link
-                href="#"
-                className="w-[10%] break-words py-2 text-primary flex justify-center rounded-md bg-[#39B6E833]"
-              >
-                {item.pc_name}{" "}
-              </Link>
+              <p className="w-[10%] break-words">{item?.firstName}</p>
+              <p className="w-[10%] break-words">{item?.phone}</p>
+              <p className="w-[10%] break-words">{item?.email}</p>
+              <p className="w-[10%] break-words">{item?.gender}</p>
+              <p className="w-[10%] break-words">{item?.nationality}</p>
+              <p className="w-[10%] break-words">{item?.city}</p>
+              <p className="w-[10%] break-words">{item?.state}</p>
+              <p className="w-[10%] break-words">{item?.userEmail}</p>
+              <button className="w-[10%] break-words py-2 text-primary flex justify-center rounded-md bg-[#39B6E833]">
+                <Link
+                  href={{
+                    pathname:
+                      "/admin/dashboard/customer-management/Employees/Activity", // Target page
+                    query: { id: item._id, key: item.key }, // Pass query params
+                  }}
+                >
+                  {item.pc_name}
+                </Link>
+              </button>
             </div>
           ))}
 
