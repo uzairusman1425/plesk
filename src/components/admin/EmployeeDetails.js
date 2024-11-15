@@ -1,5 +1,6 @@
 "use client";
 import axios from "axios";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -50,95 +51,139 @@ export default function EmployeeDetails({ id }) {
   );
 
   return (
-    <main className="p-20 w-full min-h-screen">
-      <div className="flex items-center gap-4">
-        <h1 className="text-3xl font-semibold">Employee Details </h1>
-        <button onClick={() => router.back()}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="size-6"
+    <main className="p-4 w-full min-h-screen">
+      <h1 className="text-xl flex items-center gap-2 font-bold mt-2 ">
+        HOME <span>-</span>{" "}
+        <span className="text-primary">ADMIN DASHBOARD</span>
+      </h1>
+      <div className="children border-[#E4E7EC] w-full h-[700px] mt-2 mb-10 border-[3px] rounded-lg flex flex-col items-center">
+        <div className="headings w-[95%] h-20  mt-6 flex items-center justify-between px-2">
+          <h1 className="text-2xl font-bold">Employee Details</h1>
+          <select
+            onChange={handleDepartmentChange}
+            className="px-6 py-3 bg-[#F6F6F6] flex items-center justify-center gap-2 appearance-auto"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3"
-            />
-          </svg>
-        </button>
-        <select onChange={handleDepartmentChange}>
-          <option value="">Select Department</option>
-          {employees?.map((employee) => (
-            <option
-              key={employee._id}
-              value={employee.professional_details.department}
+            <option value="">Select Department</option>
+            {employees?.map((employee) => (
+              <option
+                key={employee._id}
+                value={employee.professional_details.department}
+              >
+                {employee.professional_details.department}
+              </option>
+            ))}
+          </select>
+          <button
+            className="flex items-center bg-[#F6F6F6] px-3 py-2 gap-2 "
+            onClick={() => router.back()}
+          >
+            Back
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="size-4"
             >
-              {employee.professional_details.department}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <div className="w-full h-max mb-20 flex flex-col">
-        <div className="headings flex text-left items-center bg-gray-50 h-10 border-b text-md mt-10 justify-evenly">
-          <p className="w-[10%]">First Name</p>
-          <p className="w-[10%]">Phone</p>
-          <p className="w-[10%]">Email</p>
-
-          <p className="w-[10%]">Gender</p>
-          <p className="w-[10%]">Nationality</p>
-          <p className="w-[10%]">City</p>
-          <p className="w-[10%]">State</p>
-          <p className="w-[10%]">PC Name</p>
-          <p className="w-[10%]">User Email</p>
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3"
+              />
+            </svg>
+          </button>
         </div>
-
-        {Filtered_Department?.map((item, index) => (
-          <div
-            key={index}
-            className="Data flex text-left items-center border-b h-20 text-sm mt-10 justify-evenly"
-          >
-            <p className="w-[10%]">{item.firstName}</p>
-            <p className="w-[10%]">{item.phone}</p>
-            <p className="w-[10%]">{item.email}</p>
-            <p className="w-[10%]">{item.gender}</p>
-            <p className="w-[10%]">{item.nationality}</p>
-            <p className="w-[10%]">{item.city}</p>
-            <p className="w-[10%]">{item.state}</p>
-            <p className="w-[10%]">{item.pc_name}</p>
-            <p className="w-[10%]">{item.userEmail}</p>
+        <div className="w-[95%] h-max pb-10 flex flex-col border-[#E4E7EC] border-[3px] rounded-xl">
+          <div className="headings  flex text-left items-center font-bold bg-gray-50 h-10 border-b text-md mt-10 justify-evenly">
+            <p className="w-[10%] break-words">First Name</p>
+            <p className="w-[10%] break-words">Phone</p>
+            <p className="w-[10%] break-words">Email</p>
+            <p className="w-[10%] break-words">Gender</p>
+            <p className="w-[10%] break-words">Nationality</p>
+            <p className="w-[10%] break-words">City</p>
+            <p className="w-[10%] break-words">State</p>
+            <p className="w-[10%] break-words">User Email</p>
+            <p className="w-[10%] break-words">PC Name</p>
           </div>
-        ))}
 
-        <div className="buttons w-full flex items-center gap-4 justify-center mt-10">
-          <button
-            className="p-2 border"
-            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-            disabled={currentPage === 1}
-          >
-            Prev
-          </button>
-          {Array.from({ length: totalPages }, (_, index) => (
-            <button
+          {Filtered_Department?.map((item, index) => (
+            <div
               key={index}
-              onClick={() => setCurrentPage(index + 1)}
-              className="p-2 border"
+              className="Data flex text-left items-center border-b h-20 text-sm mt-10  justify-evenly text-[#475467]"
             >
-              {index + 1}
-            </button>
+              <p className="w-[10%] break-words">{item.firstName}</p>
+              <p className="w-[10%] break-words">{item.phone}</p>
+              <p className="w-[10%] break-words">{item.email}</p>
+              <p className="w-[10%] break-words">{item.gender}</p>
+              <p className="w-[10%] break-words">{item.nationality}</p>
+              <p className="w-[10%] break-words">{item.city}</p>
+              <p className="w-[10%] break-words">{item.state}</p>
+              <p className="w-[10%] break-words">{item.userEmail}</p>
+              <Link
+                href="#"
+                className="w-[10%] break-words py-2 text-primary flex justify-center rounded-md bg-[#39B6E833]"
+              >
+                {item.pc_name}{" "}
+              </Link>
+            </div>
           ))}
-          <button
-            className="p-2 border"
-            onClick={() =>
-              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-            }
-            disabled={currentPage === totalPages}
-          >
-            Next
-          </button>
+
+          <div className="buttons w-full flex items-center gap-4 justify-center mt-10 text-[#475467]">
+            <button
+              className="p-2 flex items-center gap-2"
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="size-4 text-[#475467]"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+                />
+              </svg>
+              Prev
+            </button>
+            {Array.from({ length: totalPages }, (_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentPage(index + 1)}
+                className="p-2 "
+              >
+                {index + 1}
+              </button>
+            ))}
+            <button
+              className="p-2  flex items-center gap-2"
+              onClick={() =>
+                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+              }
+              disabled={currentPage === totalPages}
+            >
+              Next
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="size-4"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+                />
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
     </main>
