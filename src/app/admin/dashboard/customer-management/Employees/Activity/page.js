@@ -93,8 +93,8 @@ export default function EmployeeActivity() {
             </button>
           </div>
         </div>
-        <div className="w-[95%] h-[600px] overflow-y-auto pb-10 mb-4 flex flex-col border-[#E4E7EC] border-[3px] rounded-xl">
-          <div className="headings w-full flex text-left px-4 items-center font-bold  h-18 border-b text-md mt-10 justify-evenly ">
+        <div className="w-[95%] h-[700px] overflow-y-auto pb-10 mb-4 flex flex-col border-[#E4E7EC] border-[3px] rounded-xl">
+          <div className="headings w-full flex text-left px-4 items-center font-bold  h-18 border-b text-md mt-10 justify-between  ">
             <p className="w-[12%] break-words "> Account Date/Times (UTC+0)</p>
             <p className="w-[10%] break-words"> Computer</p>
             <p className="w-[8%] break-words"> Duration</p>
@@ -102,11 +102,11 @@ export default function EmployeeActivity() {
             <p className="w-[10%] break-words"> Description</p>
             <p className="w-[20%] break-words">Url</p>
           </div>
-          {filteredData &&
-            data?.map((item) => (
+          {filteredData ? (
+            filteredData?.map((item) => (
               <div
                 key={item?._id}
-                className="  flex text-left items-center px-4  scrollbar-none text-[#979797] bg-gray-50 h-20 border-b text-md mt-10 justify-evenly"
+                className="  flex text-left text-sm items-center px-4  scrollbar-none text-[#979797] bg-gray-50 h-36 border-b text-md mt-10 justify-between"
               >
                 <p className="w-[12%] break-words flex items-center  gap-2 ">
                   {item?.start_time}
@@ -125,7 +125,8 @@ export default function EmployeeActivity() {
                 <p className="w-[10%] break-words flex items-center  gap-2 ">
                   {item?.active_window
                     ?.split("-")
-                    [data[0]?.active_window?.split("-")?.length - 1]?.trim()}
+                    [data[0]?.active_window?.split("-")?.length - 1]?.trim()
+                    ?.slice(0, 20)}
                 </p>
 
                 <p className="w-[20%] break-words flex items-center gap-2 text-ellipsis">
@@ -146,7 +147,10 @@ export default function EmployeeActivity() {
                   {item?.url ? item?.url?.slice(0, 30) : "-"}
                 </p>
               </div>
-            ))}
+            ))
+          ) : (
+            <p>Loading......</p>
+          )}
         </div>
       </div>
     </main>
