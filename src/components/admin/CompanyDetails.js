@@ -173,7 +173,7 @@ export default function CompanyDetails() {
         </button>
       </div>
       <div className="w-[100%] h-max mb-10 flex flex-col border-[2px] border-[#CBCBCB] rounded-xl">
-        <div className="headings flex text-left items-center bg-gray-50 h-10 border-b-[1px] text-md mt-10 justify-evenly">
+        <div className="headings font-medium text-[16px] font-Sans flex text-left items-center bg-gray-50 h-10 border-b-[1px] text-md mt-10 justify-evenly">
           <p className="w-[10%]">Customer Name</p>
           <p className="w-[10%]">Company Name</p>
           <p className="w-[10%]">No. of Employees</p>
@@ -185,16 +185,16 @@ export default function CompanyDetails() {
           filtered_data.map((item, index) => (
             <div
               key={index}
-              className="data flex text-left items-center border-b-[1px] h-36 text-md mt-10 justify-evenly text-[#475467]"
+              className="data flex text-left items-center border-b-[1px] h-36 text-[16px] font-ss mt-10 justify-evenly text-[#475467]"
             >
               <p className="w-[10%]">{item?.firstName}</p>
 
               <p className="w-[10%]">{item?.organization}</p>
-              <div className="w-[100px] bg-[#39B6E833] rounded h-8">
+              <div className="w-[10%]  h-8">
                 {item?.employees?.length > 0 ? (
                   <Link
                     href={`/admin/dashboard/customer-management/Employees?id=${item?._id}`}
-                    className=" w-full  flex items-center justify-around px-2"
+                    className=" w-[100px] bg-[#39B6E833] rounded flex items-center justify-around px-2"
                   >
                     <div className="w-full flex items-center justify-center text-primary font-semibold">
                       <svg

@@ -15,6 +15,9 @@ module.exports = {
         primary: "#39B6E8",
         secondary: "#0284B8",
       },
+      fontFamily: {
+        sans: ["Poppins"], // Add Poppins as the default sans-serif font
+      },
     },
   },
   plugins: [require("tailwind-scrollbar")],

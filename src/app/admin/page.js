@@ -33,6 +33,10 @@ export default function SignIn() {
             "plesk_admin_access_token",
             res?.data?.accessToken
           );
+          localStorage?.setItem(
+            "plesk_admin_refresh_token",
+            res?.data?.refreshToken
+          );
           toast.success("Login successful!");
           router.push("/admin/dashboard/customer-management");
         }

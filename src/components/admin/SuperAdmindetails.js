@@ -136,7 +136,7 @@ export default function SuperAdminDetails() {
 
   return (
     <main className="p-4 w-full min-h-screen">
-      <h1 className="text-xl flex items-center gap-2 font-bold mt-2 ">
+      <h1 className="text-[20px] font-semibold   flex items-center gap-2  mt-2 ">
         HOME <span>-</span>{" "}
         <span className="text-primary">ADMIN DASHBOARD</span>
       </h1>
@@ -162,7 +162,7 @@ export default function SuperAdminDetails() {
           </button>
         </div>
         <div className="w-[95%] h-max  flex flex-col mb-6 border-[#E4E7EC] border-[2px] rounded-xl">
-          <div className="headings  font-bold flex text-left items-center bg-gray-50 h-10 border-b text-md mt-10 justify-evenly">
+          <div className="headings  font-semibold text-[16px] flex text-left items-center bg-gray-50 h-10 border-b text-md mt-10 justify-evenly">
             <p className="w-[10%]">UserName</p>
             <p className="w-[10%]">Action</p>
           </div>
@@ -170,7 +170,7 @@ export default function SuperAdminDetails() {
           {filteredData.map((item, index) => (
             <div
               key={index}
-              className="Data flex text-left items-center border-b h-10 text-md mt-10 justify-evenly"
+              className="Data flex text-left text-[#475467] items-center border-b h-10 text-md mt-10 justify-evenly"
             >
               {editingId === item._id ? (
                 <>
