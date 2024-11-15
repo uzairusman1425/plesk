@@ -229,7 +229,9 @@ export default function CompanyDetails() {
                     </svg>
                   </Link>
                 ) : (
-                  <span className="text-gray-500">0</span>
+                  <span className="text-primary flex items-center justify-center">
+                    0
+                  </span>
                 )}
               </div>
               <p className="w-[10%]">{item?.country}</p>
