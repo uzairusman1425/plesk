@@ -124,7 +124,7 @@ export default function SideBar() {
 
           {/* Dropdown List */}
           {dropdownVisible && (
-            <div className="transition-all duration-500 mt-3 pt-5 absolute top-14 w-full overflow-y-auto h-[600px] bg-white  rounded-lg flex flex-col items-center gap-4">
+            <div className="transition-all duration-500 mt-3 pt-5 absolute top-14 w-full overflow-y-auto h-[500px] bg-white  rounded-lg flex flex-col items-center gap-4">
               {userList.length === 0 ? (
                 <p className="text-gray-500 px-4">Loading users...</p>
               ) : (
