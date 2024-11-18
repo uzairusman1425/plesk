@@ -3,10 +3,12 @@ import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { InfinitySpin } from "react-loader-spinner";
 
 export default function EmployeeDetails({ id }) {
   const [employees, setEmployees] = useState([]);
   const [department, setDepartment] = useState("");
+  const [loading, setLoading] = useState(false); // Loading state
   const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState(1);
@@ -22,6 +24,7 @@ export default function EmployeeDetails({ id }) {
   useEffect(() => {
     const fetchEmployees = async () => {
       const token = localStorage?.getItem("plesk_admin_access_token");
+      setLoading(true); // Start loading
       try {
         const res = await axios.get(`${API_URL}/api/superadmin/users`, {
           headers: {
@@ -35,6 +38,8 @@ export default function EmployeeDetails({ id }) {
         console.log(filteredEmployees);
       } catch (error) {
         console.error("Error fetching employees:", error);
+      } finally {
+        setLoading(false); // Stop loading
       }
     };
 
@@ -53,12 +58,12 @@ export default function EmployeeDetails({ id }) {
 
   return (
     <main className="p-4 w-full min-h-screen">
-      <h1 className="text-[20px] font-semibold   flex items-center gap-2  mt-2 ">
+      <h1 className="text-[20px] font-semibold flex items-center gap-2 mt-2">
         HOME <span>-</span>{" "}
         <span className="text-primary">ADMIN DASHBOARD</span>
       </h1>
       <div className="children border-[#E4E7EC] w-full h-max mt-2 mb-10 border-[3px] rounded-lg flex flex-col items-center">
-        <div className="headings w-[95%] h-20  mt-6 flex items-center justify-between px-2">
+        <div className="headings w-[95%] h-20 mt-6 flex items-center justify-between px-2">
           <h1 className="text-[25px] font-semibold">Employee Details</h1>
           <select
             onChange={handleDepartmentChange}
@@ -75,7 +80,7 @@ export default function EmployeeDetails({ id }) {
             ))}
           </select>
           <button
-            className="flex items-center bg-[#F6F6F6] px-3 py-2 gap-2 "
+            className="flex items-center bg-[#F6F6F6] px-3 py-2 gap-2"
             onClick={() => router.back()}
           >
             Back
@@ -96,45 +101,58 @@ export default function EmployeeDetails({ id }) {
           </button>
         </div>
         <div className="w-[95%] h-max pb-10 mb-4 flex flex-col border-[#E4E7EC] border-[3px] rounded-xl">
-          <div className="headings  flex text-left items-center text-[16px] font-medium bg-gray-50 h-10 border-b text-md mt-10 justify-evenly">
-            <p className="w-[10%] break-words">First Name</p>
-            <p className="w-[10%] break-words">Phone</p>
-            <p className="w-[10%] break-words">Email</p>
-            <p className="w-[10%] break-words">Gender</p>
-            <p className="w-[10%] break-words">Nationality</p>
-            <p className="w-[10%] break-words">City</p>
-            <p className="w-[10%] break-words">State</p>
-            <p className="w-[10%] break-words">User Email</p>
-            <p className="w-[10%] break-words">PC Name</p>
-          </div>
-
-          {Filtered_Department?.map((item, index) => (
-            <div
-              key={index}
-              className="Data flex text-left items-center border-b h-20 text-[14px] font-normal mt-10  justify-evenly text-[#475467]"
-            >
-              <p className="w-[10%] break-words">{item?.firstName}</p>
-              <p className="w-[10%] break-words">{item?.phone}</p>
-              <p className="w-[10%] break-words">{item?.email}</p>
-              <p className="w-[10%] break-words">{item?.gender}</p>
-              <p className="w-[10%] break-words">{item?.nationality}</p>
-              <p className="w-[10%] break-words">{item?.city}</p>
-              <p className="w-[10%] break-words">{item?.state}</p>
-              <p className="w-[10%] break-words">{item?.userEmail}</p>
-              <button className="w-[10%] break-words py-2 text-primary flex justify-center rounded-md bg-[#39B6E833]">
-                <Link
-                  href={{
-                    pathname:
-                      "/admin/dashboard/customer-management/Employees/Activity", // Target page
-                    query: { id: item._id, key: item.key }, // Pass query params
-                  }}
-                >
-                  {item.pc_name}
-                </Link>
-              </button>
+          {loading ? ( // Show loader during loading state
+            <div className="flex flex-col justify-center items-center h-40">
+              <InfinitySpin
+                visible={true}
+                width="200"
+                color="#39B6E8"
+                ariaLabel="infinity-spin-loading"
+              />
+              <p className="text-primary text-xl font-bold">Loading....</p>
             </div>
-          ))}
+          ) : (
+            <>
+              <div className="headings flex text-left items-center text-[16px] font-medium bg-gray-50 h-10 border-b text-md mt-10 justify-evenly">
+                <p className="w-[10%] break-words">First Name</p>
+                <p className="w-[10%] break-words">Phone</p>
+                <p className="w-[10%] break-words">Email</p>
+                <p className="w-[10%] break-words">Gender</p>
+                <p className="w-[10%] break-words">Nationality</p>
+                <p className="w-[10%] break-words">City</p>
+                <p className="w-[10%] break-words">State</p>
+                <p className="w-[10%] break-words">User Email</p>
+                <p className="w-[10%] break-words">PC Name</p>
+              </div>
 
+              {Filtered_Department.map((item, index) => (
+                <div
+                  key={index}
+                  className="Data flex text-left items-center border-b h-20 text-[14px] font-normal mt-10 justify-evenly text-[#475467]"
+                >
+                  <p className="w-[10%] break-words">{item?.firstName}</p>
+                  <p className="w-[10%] break-words">{item?.phone}</p>
+                  <p className="w-[10%] break-words">{item?.email}</p>
+                  <p className="w-[10%] break-words">{item?.gender}</p>
+                  <p className="w-[10%] break-words">{item?.nationality}</p>
+                  <p className="w-[10%] break-words">{item?.city}</p>
+                  <p className="w-[10%] break-words">{item?.state}</p>
+                  <p className="w-[10%] break-words">{item?.userEmail}</p>
+                  <button className="w-[10%] break-words py-2 text-primary flex justify-center rounded-md bg-[#39B6E833]">
+                    <Link
+                      href={{
+                        pathname:
+                          "/admin/dashboard/customer-management/Employees/Activity", // Target page
+                        query: { id: item._id, key: item.key }, // Pass query params
+                      }}
+                    >
+                      {item.pc_name}
+                    </Link>
+                  </button>
+                </div>
+              ))}
+            </>
+          )}
           <div className="buttons w-full flex items-center gap-4 justify-center mt-10 text-[#475467]">
             <button
               className="p-2 flex items-center gap-2"

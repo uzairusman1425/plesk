@@ -47,6 +47,8 @@ export default function SideBar() {
   };
 
   const handleLogout = () => {
+    localStorage.removeItem("fname");
+    localStorage.removeItem("lname");
     const token = localStorage.getItem("plesk_admin_refresh_token");
     const payload = {
       refreshToken: token,

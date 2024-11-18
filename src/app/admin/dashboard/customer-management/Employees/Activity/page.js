@@ -1,12 +1,14 @@
 "use client";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { InfinitySpin } from "react-loader-spinner";
 
 export default function EmployeeActivity() {
   const [id, setId] = useState(null);
   const [key, setKey] = useState(null);
   const [data, setData] = useState([]);
   const [category, setCategory] = useState("websites");
+  const [loading, setLoading] = useState(true); // Add loading state
 
   const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -25,6 +27,7 @@ export default function EmployeeActivity() {
   useEffect(() => {
     const fetchEmployees = async () => {
       const token = localStorage?.getItem("plesk_admin_access_token");
+      setLoading(true); // Start loading
       try {
         const res = await axios.get(
           `${API_URL}/api/superadmin/get-logs/${id}?key=${key}`,
@@ -38,11 +41,15 @@ export default function EmployeeActivity() {
         console.log("data", res?.data?.data);
       } catch (error) {
         console.error("Error fetching employees logs:", error);
+      } finally {
+        setLoading(false); // Stop loading
       }
     };
 
-    fetchEmployees();
-  }, [id]);
+    if (id && key) {
+      fetchEmployees();
+    }
+  }, [id, key]);
 
   const browserExecutables = [
     "chrome.exe",
@@ -62,12 +69,9 @@ export default function EmployeeActivity() {
     return <div>Loading...</div>;
   }
 
-  console.log("category", category);
-  console.log("filterdata", filteredData);
-
   return (
     <main className="w-full h-full">
-      <h1 className="text-[20px] font-semibold   flex items-center gap-2  mt-2 ">
+      <h1 className="text-[20px] font-semibold flex items-center gap-2 mt-2 ">
         HOME <span>-</span>{" "}
         <span className="text-primary">ADMIN DASHBOARD</span>
       </h1>
@@ -94,47 +98,59 @@ export default function EmployeeActivity() {
           </div>
         </div>
         <div className="w-[95%] h-[700px] overflow-y-auto pb-10 mb-4 flex flex-col border-[#E4E7EC] border-[3px] rounded-xl">
-          <div className="headings w-full flex text-left text-[16px] font-semibold px-4 items-center   h-18 border-b text-md mt-10 justify-between  ">
+          <div className="headings w-full flex text-left text-[16px] font-semibold px-4 items-center h-18 border-b text-md mt-10 justify-between">
             <p className="w-[12%] break-words "> Account Date/Times (UTC+0)</p>
             <p className="w-[10%] break-words"> Computer</p>
             <p className="w-[8%] break-words"> Duration</p>
             <p className="w-[10%] break-words"> Executable</p>
             <p className="w-[10%] break-words"> Description</p>
 
-            {category == "executable" ? (
+            {category === "executable" ? (
               ""
             ) : (
               <p className="w-[20%] break-words">Url</p>
             )}
           </div>
-          {filteredData ? (
+          {loading ? ( // Show loader when loading is true
+            <div className="flex flex-col justify-center items-center h-40">
+              <InfinitySpin
+                visible={true}
+                width="200"
+                color="#39B6E8"
+                ariaLabel="infinity-spin-loading"
+              />
+              <p className="text-primary text-xl font-bold">Loading....</p>
+            </div>
+          ) : (
             filteredData?.map((item) => (
               <div
                 key={item?._id}
-                className="  flex text-left text-sm items-center px-4  scrollbar-none text-[#979797] bg-gray-50 h-36 border-b text-md mt-10 justify-between"
+                className="flex text-left text-sm items-center px-4 scrollbar-none text-[#979797] bg-gray-50 h-36 border-b text-md mt-10 justify-between"
               >
-                <p className="w-[12%] break-words flex items-center  gap-2 ">
+                <p className="w-[12%] break-words flex items-center gap-2 ">
                   {item?.start_time}
                 </p>
-                <p className="w-[10%] break-words flex items-center  gap-2 ">
+                <p className="w-[10%] break-words flex items-center gap-2 ">
                   {item?.pc_name}
                 </p>
-                <p className="w-[8%] break-words flex items-center  gap-2 ">
+                <p className="w-[8%] break-words flex items-center gap-2 ">
                   {`${Math.floor(item?.time_spent / 3600)}h ${Math.floor(
                     item?.time_spent / 60
                   )}m ${Math.round(item?.time_spent % 60)}s`}
                 </p>
-                <p className="w-[10%] break-words flex items-center  gap-2 ">
+                <p className="w-[10%] break-words flex items-center gap-2 ">
                   {item?.executable}
                 </p>
-                <p className="w-[10%] break-words flex items-center  gap-2 ">
+                <p className="w-[10%] break-words flex items-center gap-2 ">
                   {item?.active_window
-                    ?.split("-")
-                    [data[0]?.active_window?.split("-")?.length - 1]?.trim()
-                    ?.slice(0, 20)}
+                    ? item?.active_window
+                        ?.split("-")
+                        [data[0]?.active_window?.split("-")?.length - 1]?.trim()
+                        ?.slice(0, 20)
+                    : "-"}
                 </p>
 
-                {category == "executable" ? (
+                {category === "executable" ? (
                   ""
                 ) : (
                   <p className="w-[20%] break-words flex items-center gap-2 text-ellipsis">
@@ -157,8 +173,6 @@ export default function EmployeeActivity() {
                 )}
               </div>
             ))
-          ) : (
-            <p>Loading......</p>
           )}
         </div>
       </div>
