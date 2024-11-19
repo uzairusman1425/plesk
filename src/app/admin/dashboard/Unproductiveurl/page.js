@@ -1,5 +1,4 @@
 import UnproductiveTable from "@/components/admin/UnproductiveTable";
-import { PlusCircleIcon } from "@heroicons/react/24/solid";
 
 export default function page() {
   return (
