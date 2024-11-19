@@ -6,7 +6,7 @@ import UserBarChart from "@/components/admin/UserChart";
 export default function CustomerManagement() {
   return (
     <main className="w-full h-full flex flex-col ml-4 gap-2">
-      <h1 className="text-[20px] font-semibold font-sans flex items-center gap-2  mt-2 ">
+      <h1 className="text-[20px] font-semibold  flex items-center gap-2  mt-2 ">
         HOME <span>-</span>{" "}
         <span className="text-primary">ADMIN DASHBOARD</span>
       </h1>
