@@ -2,6 +2,7 @@
 import { useUser } from "@/context/userContext";
 import axios from "axios";
 import Image from "next/image";
+import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -49,6 +50,7 @@ export default function SideBar() {
   const handleLogout = () => {
     localStorage.removeItem("fname");
     localStorage.removeItem("lname");
+    localStorage.removeItem("userId");
     const token = localStorage.getItem("plesk_admin_refresh_token");
     const payload = {
       refreshToken: token,
@@ -61,7 +63,9 @@ export default function SideBar() {
 
   return (
     <div className="h-screen w-[15%] flex flex-col gap-10 pl-5 pt-10 items-center">
-      <Image src="/images/logo.png" alt="Logo" height={150} width={150} />
+      <Link href="/admin/dashboard/customer-management">
+        <Image src="/images/logo.png" alt="Logo" height={150} width={150} />
+      </Link>
 
       <div className="flex flex-col gap-3 text-[13px] font-medium relative items-center justify-between w-full h-full">
         {/* Customer Management Section */}
