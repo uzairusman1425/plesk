@@ -182,9 +182,7 @@ export default function UnproductiveTable() {
                   />
                 </svg>
 
-                {Array.isArray(item?.keywords)
-                  ? item.keywords.join(" ").replace(/ and /g, ", ")
-                  : ""}
+                {Array.isArray(item?.keywords) ? item.keywords.join(", ") : ""}
               </p>
 
               <p className="w-[10%] break-words">
