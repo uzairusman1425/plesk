@@ -1,5 +1,4 @@
 "use client";
-
 import React, { Suspense } from "react";
 import EmployeeDetails from "@/components/admin/EmployeeDetails";
 import { useSearchParams } from "next/navigation";

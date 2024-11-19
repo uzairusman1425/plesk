@@ -67,7 +67,7 @@ export default function EmployeeDetails({ id }) {
           <h1 className="text-[25px] font-semibold">Employee Details</h1>
           <select
             onChange={handleDepartmentChange}
-            className="px-6 py-3 bg-[#F6F6F6] flex items-center justify-center gap-2 appearance-auto"
+            className="px-6 py-3 bg-[#F6F6F6] flex items-center justify-center gap-2 appearance-auto outline-none"
           >
             <option value="">Select Department</option>
             {employees?.map((employee) => (
