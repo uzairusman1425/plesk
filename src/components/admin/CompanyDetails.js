@@ -151,6 +151,9 @@ export default function CompanyDetails() {
           console.log(response);
           toast.success("Company Deleted");
           window.location.reload();
+          localStorage.removeItem("fname");
+          localStorage.removeItem("lname");
+          localStorage.removeItem("userId");
         }
       } catch (error) {
         console.log(error);
