@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 import { FallingLines } from "react-loader-spinner";
 import { auth, provider } from "@/firebase/firebase-config";
 import { AppContext } from "@/context/context";
+import { HeartIcon, EyeSlashIcon, EyeIcon } from "@heroicons/react/24/solid";
 
 export default function SignIn() {
   const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -22,6 +23,7 @@ export default function SignIn() {
   const [error, setError] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -99,11 +101,12 @@ export default function SignIn() {
         error && "border-red-500"
       }`}
     >
-      <div className="flex flex-col items-center gap-7">
+      <form onSubmit={handleLogin} className="flex flex-col items-center gap-7">
         <p className="text-xl font-semibold text-primary">
           Sign in to your Plesk Account
         </p>
         <input
+          required
           type="email"
           placeholder="Email"
           className="h-10 w-full px-2 border rounded-md"
@@ -112,18 +115,35 @@ export default function SignIn() {
             setEmail(e.target.value);
           }}
         />
-        <input
-          type="password"
-          placeholder="Password"
-          className="h-10 w-full px-2 border rounded-md"
-          value={password}
-          onChange={(e) => {
-            setPassword(e.target.value);
-          }}
-        />
+        <div className="w-full flex relative">
+          <input
+            required
+            type={showPassword ? "text" : "password"}
+            placeholder="Password"
+            className="h-10 w-full px-2 border rounded-md"
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+          />
+          <button
+            className="absolute right-2 top-3"
+            onClick={() => {
+              setShowPassword(!showPassword);
+            }}
+          >
+            {showPassword ? (
+              <EyeIcon className="h-5 w-5 text-gray-400" />
+            ) : (
+              <EyeSlashIcon className="h-5 w-5 text-gray-400" />
+            )}
+          </button>
+        </div>
+
         <div className="w-full flex flex-row items-center justify-between">
           <div className="flex flex-row items-center gap-2">
             <button
+              type="button"
               className={`size-5 rounded-full border-2 flex items-center justify-center border-primary ${
                 checked && "bg-primary"
               }`}
@@ -144,7 +164,7 @@ export default function SignIn() {
         </div>
         <button
           className="h-10 w-full flex items-center justify-center uppercase text-white text-md font-medium bg-primary rounded-md"
-          onClick={handleLogin}
+          type="submit"
         >
           {isLoading ? (
             <FallingLines
@@ -157,36 +177,36 @@ export default function SignIn() {
             "sign in"
           )}
         </button>
-        <div className="flex flex-row gap-3 items-center w-full">
-          <div className="h-[1px] w-full bg-gray-300" />
-          <p className="text-xs text-gray-500 text-nowrap">or sign in with</p>
-          <div className="h-[1px] w-full bg-gray-300" />
-        </div>
-        <div className="flex flex-row items-center justify-between w-full">
-          <button
-            className="flex flex-row gap-2 items-center justify-center h-10 w-48 rounded-full border border-gray-300"
-            onClick={() => {
-              router.push("/sign-in/sso");
-            }}
-          >
-            <Image src={"/icons/lock.png"} alt="sso" height={15} width={15} />
-            <p className="uppercase font-medium text-xs">sso</p>
-          </button>
-          <button
-            className="flex flex-row gap-2 items-center justify-center h-10 w-48 rounded-full border border-gray-300"
-            onClick={handleGoogleSignIn}
-          >
-            <Image src={"/icons/google.png"} alt="sso" height={15} width={15} />
-            <p className="uppercase font-medium text-xs">google</p>
-          </button>
-        </div>
-        <p className="text-gray-400 text-xs">
-          Don{"'"}t have an account?{" "}
-          <Link href={"/"} className="text-primary">
-            Free Sign Up
-          </Link>
-        </p>
+      </form>
+      <div className="flex flex-row gap-3 items-center w-full mt-4">
+        <div className="h-[1px] w-full bg-gray-300" />
+        <p className="text-xs text-gray-500 text-nowrap">or sign in with</p>
+        <div className="h-[1px] w-full bg-gray-300" />
       </div>
+      <div className="flex flex-row items-center justify-between w-full mt-4">
+        <button
+          className="flex flex-row gap-2 items-center justify-center h-10 w-48 rounded-full border border-gray-300"
+          onClick={() => {
+            router.push("/sign-in/sso");
+          }}
+        >
+          <Image src={"/icons/lock.png"} alt="sso" height={15} width={15} />
+          <p className="uppercase font-medium text-xs">sso</p>
+        </button>
+        <button
+          className="flex flex-row gap-2 items-center justify-center h-10 w-48 rounded-full border border-gray-300"
+          onClick={handleGoogleSignIn}
+        >
+          <Image src={"/icons/google.png"} alt="sso" height={15} width={15} />
+          <p className="uppercase font-medium text-xs">google</p>
+        </button>
+      </div>
+      <p className="text-gray-400 text-xs mt-4 text-center">
+        Don{"'"}t have an account?{" "}
+        <Link href={"/"} className="text-primary">
+          Free Sign Up
+        </Link>
+      </p>
     </main>
   );
 }

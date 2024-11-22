@@ -106,7 +106,10 @@ export default function SignUp() {
           <HeartIcon className="h-12 w-12 text-primary" />
         </div>
       </div>
-      <div className="flex-1 flex flex-col gap-5 items-center py-20 overflow-y-auto scrollbar-none">
+      <form
+        onSubmit={handleSignUp}
+        className="flex-1 flex flex-col gap-5 items-center py-20 overflow-y-auto scrollbar-none"
+      >
         <p className="text-4xl font-bold text-primary font-sans">
           Create a Free Account
         </p>
@@ -127,6 +130,7 @@ export default function SignUp() {
             <div className="h-12 w-full flex items-center justify-center px-5 border rounded-md">
               <input
                 type="text"
+                required
                 placeholder="First Name*"
                 className="w-full text-sm font-light outline-none"
                 value={firstName}
@@ -137,6 +141,7 @@ export default function SignUp() {
             </div>
             <div className="h-12 w-full flex items-center justify-center px-5 border rounded-md">
               <input
+                required
                 type="text"
                 placeholder="Last Name*"
                 className="w-full text-sm font-light outline-none"
@@ -149,7 +154,9 @@ export default function SignUp() {
           </div>
           <div className="h-12 w-full flex items-center justify-center px-5 border rounded-md">
             <input
+              required
               type="text"
+              maxLength="12"
               placeholder="Phone Number*"
               className="w-full text-sm font-light outline-none"
               value={phoneNumber}
@@ -161,6 +168,7 @@ export default function SignUp() {
           <div className="h-12 w-full flex items-center justify-center px-5 border rounded-md">
             <input
               type="text"
+              required
               placeholder="Organization*"
               className="w-full text-sm font-light outline-none"
               value={organization}
@@ -172,6 +180,7 @@ export default function SignUp() {
           <div className="h-12 w-full flex items-center justify-center px-5 border rounded-md">
             <input
               type="email"
+              required
               placeholder="Business Email*"
               className="w-full text-sm font-light outline-none"
               value={email}
@@ -182,8 +191,11 @@ export default function SignUp() {
           </div>
           <div className="h-12 w-full flex flex-row gap-5 items-center justify-center px-5 border rounded-md">
             <input
+              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+              title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
               type={showPassword ? "text" : "password"}
               placeholder="Password*"
+              required
               className="w-full text-sm font-light outline-none"
               value={password}
               onChange={(e) => {
@@ -206,6 +218,7 @@ export default function SignUp() {
             <input
               type="text"
               placeholder="Country*"
+              required
               className="w-full text-sm font-light outline-none"
               value={country}
               onChange={(e) => {
@@ -218,6 +231,7 @@ export default function SignUp() {
               type="checkbox"
               className="size-4"
               value={agreed}
+              required
               onChange={(e) => {
                 setAgreed(e.target.checked);
               }}
@@ -236,10 +250,10 @@ export default function SignUp() {
             </p>
           </div>
           <button
+            type="submit"
             className={`h-12 w-full flex items-center justify-center uppercase text-white text-md font-medium bg-primary rounded-md ${
               !agreed && "bg-opacity-50 cursor-not-allowed"
             }`}
-            onClick={handleSignUp}
           >
             {isLoading ? (
               <FallingLines
@@ -260,7 +274,7 @@ export default function SignUp() {
             to log in
           </p>
         </div>
-      </div>
+      </form>
     </div>
   );
 }

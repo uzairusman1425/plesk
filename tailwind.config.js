@@ -16,7 +16,7 @@ module.exports = {
         secondary: "#0284B8",
       },
       fontFamily: {
-        sans: ["Poppins"], // Add Poppins as the default sans-serif font
+        sans: ["Poppins"],
       },
     },
   },
