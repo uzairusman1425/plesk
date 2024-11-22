@@ -66,8 +66,33 @@ export default function ForgetScreen() {
   return (
     <main className="flex items-center justify-center">
       <div className="w-[400px] h-[250px] rounded-xl bg-white shadow-lg flex items-center flex-col justify-start gap-6">
-        <h1 className="font-bold text-2xl">Forget Password</h1>
+        <div className="flex items-center justify-between gap-4">
+          <h1 className="font-bold text-2xl">Forget Password</h1>
+          <button
+            onClick={() => {
+              router.back();
+            }}
+            className="flex gap-2 border-[2px] py-3 px-4 rounded-md"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="size-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3"
+              />
+            </svg>
+            Back
+          </button>
+        </div>
         <input
+          required
           value={email}
           onChange={(e) => {
             setEmail(e.target.value);
