@@ -20,6 +20,7 @@ export default function EmployeeDetails({ id }) {
     indexOfLastItem
   );
   const totalPages = Math.ceil(employees.length / rowsPerPage);
+  const [userEmail, setUserEmail] = useState("");
 
   useEffect(() => {
     const fetchEmployees = async () => {
@@ -31,11 +32,12 @@ export default function EmployeeDetails({ id }) {
             Authorization: `Bearer ${token}`,
           },
         });
+        console.log(res);
 
         const filteredEmployees =
-          res.data.data.find((item) => item._id === id)?.employees || [];
+          res?.data?.data?.find((item) => item._id === id)?.employees || [];
         setEmployees(filteredEmployees);
-        console.log(filteredEmployees);
+        setUserEmail(res?.data?.data[0]?.email);
       } catch (error) {
         console.error("Error fetching employees:", error);
       } finally {
@@ -46,16 +48,6 @@ export default function EmployeeDetails({ id }) {
     fetchEmployees();
   }, [id]);
 
-  const handleDepartmentChange = (e) => {
-    setDepartment(e.target.value);
-  };
-
-  const Filtered_Department = paginatedEmployees.filter((item) =>
-    department
-      ? item.professional_details.department === department
-      : paginatedEmployees
-  );
-
   return (
     <main className="p-4 w-full min-h-screen">
       <h1 className="text-[20px] font-semibold flex items-center gap-2 mt-2">
@@ -65,20 +57,7 @@ export default function EmployeeDetails({ id }) {
       <div className="children border-[#E4E7EC] w-full h-max mt-2 mb-10 border-[3px] rounded-lg flex flex-col items-center">
         <div className="headings w-[95%] h-20 mt-6 flex items-center justify-between px-2">
           <h1 className="text-[25px] font-semibold">Employee Details</h1>
-          <select
-            onChange={handleDepartmentChange}
-            className="px-6 py-3 bg-[#F6F6F6] flex items-center justify-center gap-2 appearance-auto outline-none"
-          >
-            <option value="">Select Department</option>
-            {employees?.map((employee) => (
-              <option
-                key={employee._id}
-                value={employee.professional_details.department}
-              >
-                {employee.professional_details.department}
-              </option>
-            ))}
-          </select>
+
           <button
             className="flex items-center bg-[#F6F6F6] px-3 py-2 gap-2"
             onClick={() => router.back()}
@@ -113,32 +92,27 @@ export default function EmployeeDetails({ id }) {
             </div>
           ) : (
             <>
-              <div className="headings flex text-left items-center text-[16px] font-medium bg-gray-50 h-10 border-b text-md mt-10 justify-evenly">
-                <p className="w-[10%] break-words">First Name</p>
-                <p className="w-[10%] break-words">Phone</p>
-                <p className="w-[10%] break-words">Email</p>
-                <p className="w-[10%] break-words">Gender</p>
-                <p className="w-[10%] break-words">Nationality</p>
-                <p className="w-[10%] break-words">City</p>
-                <p className="w-[10%] break-words">State</p>
-                <p className="w-[10%] break-words">User Email</p>
-                <p className="w-[10%] break-words">PC Name</p>
+              <div className="headings px-4 grid grid-cols-6 text-[16px] font-medium bg-gray-50 h-10 border-b text-md mt-10 ">
+                <p className=" ">First Name</p>
+                <p className=" ">Last Name</p>
+                <p className=" ">Email</p>
+                <p className=" ">Key</p>
+                <p className=" ">Company Email</p>
+                <p className=" ">PC Name</p>
               </div>
 
-              {Filtered_Department.map((item, index) => (
+              {paginatedEmployees?.map((item, index) => (
                 <div
                   key={index}
-                  className="Data flex text-left items-center border-b h-20 text-[14px] font-normal mt-10 justify-evenly text-[#475467]"
+                  className="Data px-4 grid grid-cols-6 border-b h-20 text-[14px] font-normal mt-10  text-[#475467]"
                 >
-                  <p className="w-[10%] break-words">{item?.firstName}</p>
-                  <p className="w-[10%] break-words">{item?.phone}</p>
-                  <p className="w-[10%] break-words">{item?.email}</p>
-                  <p className="w-[10%] break-words">{item?.gender}</p>
-                  <p className="w-[10%] break-words">{item?.nationality}</p>
-                  <p className="w-[10%] break-words">{item?.city}</p>
-                  <p className="w-[10%] break-words">{item?.state}</p>
-                  <p className="w-[10%] break-words">{item?.userEmail}</p>
-                  <button className="w-[10%] break-words py-2 text-primary flex justify-center rounded-md bg-[#39B6E833]">
+                  <p className=" ">{item?.firstName}</p>
+                  <p className=" ">{item?.lastName}</p>
+                  <p className=" ">{item?.email}</p>
+
+                  <p className=" ">{item?.key}</p>
+                  <p className=" ">{userEmail}</p>
+                  <button className="  w-[150px] h-[40px] items-center text-primary flex justify-center rounded-md bg-[#39B6E833]">
                     <Link
                       href={{
                         pathname:
