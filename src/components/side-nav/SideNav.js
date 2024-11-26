@@ -128,39 +128,38 @@ export default function SideNav() {
             PC Monitoring
           </p>
         </button>
-        {/* <button
-					className={`h-10 px-3 rounded flex flex-row  gap-3 items-center transform-gpu ease-in-out duration-500 ${
-						pathName?.includes("/dashboard/real-time-tracking") &&
-						"bg-primary bg-opacity-35"
-					}`}
-					onClick={() => {
-						if (
-							!pathName?.includes("/dashboard/real-time-tracking")
-						) {
-							router.push("/dashboard/real-time-tracking")
-						}
-					}}
-				>
-					<Image
-						src={
-							pathName?.includes("/dashboard/real-time-tracking")
-								? "/icons/real-time-tracking-blue.png"
-								: "/icons/real-time-tracking.png"
-						}
-						alt="icon"
-						height={15}
-						width={15}
-					/>
-					<p
-						className={`text-xs transform-gpu ease-in-out duration-500 ${
-							pathName?.includes("/dashboard/real-time-tracking")
-								? "text-primary"
-								: "text-gray-400"
-						}`}
-					>
-						Real-Time Tracking
-					</p>
-				</button> */}
+        <button
+          className={`h-10 px-3 rounded flex flex-row  gap-3 items-center transform-gpu ease-in-out duration-500 ${
+            pathName?.includes("/dashboard/unproductive-urls") &&
+            "bg-primary bg-opacity-35"
+          }`}
+          onClick={() => {
+            if (!pathName?.includes("/dashboard/unproductive-urls")) {
+              router.push("/dashboard/unproductive-urls");
+            }
+          }}
+        >
+          <Image
+            src={
+              pathName?.includes("/dashboard/unproductive-urls")
+                ? "/icons/pc-monitoring-blue.png"
+                : "/icons/pc-monitoring.png"
+            }
+            alt="icon"
+            height={15}
+            width={15}
+          />
+          <p
+            className={`text-xs transform-gpu ease-in-out duration-500 ${
+              pathName?.includes("/dashboard/unproductive-urls")
+                ? "text-primary"
+                : "text-gray-400"
+            }`}
+          >
+            Unproductive Urls
+          </p>
+        </button>
+
         <button
           className={`h-10 pl-3 rounded flex flex-row gap-3 items-center transform-gpu ease-in-out duration-500 ${
             pathName?.includes("/dashboard/settings") &&

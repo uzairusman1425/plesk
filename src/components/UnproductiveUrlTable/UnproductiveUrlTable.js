@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import PropTypes from "prop-types";
@@ -10,21 +11,42 @@ import {
 } from "@heroicons/react/24/solid";
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
+import axios from "axios";
 
-export default function CustomerTable({ data, setCustomerToDelete }) {
+export default function UnproductiveUrlTable() {
   const router = useRouter();
-
   const [pageNumber, setPageNumber] = useState(0);
   const [paginationStart, setPaginationStart] = useState(0);
   const [paginationEnd, setPaginationEnd] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [searchQuery, setSearchQuery] = useState("");
+  const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+  const [data, setData] = useState([]);
+  const [token, setToken] = useState("");
+
+  useEffect(() => {
+    const token = setToken(localStorage.getItem("plesk_access_token"));
+    axios
+      .get(`${API_URL}/api/users/unproductiveurl`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        setData(res?.data?.urls);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const searched_data = data?.filter((item) =>
-    item?.firstName
-      ? item.firstName.toLowerCase().includes(searchQuery.toLowerCase())
-      : paginated_data
+    item?.category
+      ? item?.category.toLowerCase().includes(searchQuery.toLowerCase())
+      : data
   );
+  console.log(token);
 
   const chunkArray = (array, chunkSize) => {
     const result = [];
@@ -57,6 +79,27 @@ export default function CustomerTable({ data, setCustomerToDelete }) {
     }
   }, [pageNumber, paginated_data?.length]);
 
+  async function handleDelete(id) {
+    try {
+      const confirmation = window.confirm(
+        "Are You Sure You Want To Delete This Url"
+      );
+      if (confirmation) {
+        const response = axios.delete(
+          `${API_URL}/api/users/delete/unproductiveurl/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log(response);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <div className="size-[95%] border border-gray-400 rounded-xl p-5 flex flex-col justify-between">
       <div className="w-full flex flex-row items-center justify-between">
@@ -68,29 +111,22 @@ export default function CustomerTable({ data, setCustomerToDelete }) {
             onChange={(e) => {
               setSearchQuery(e.target.value);
             }}
-            placeholder="Search"
+            placeholder="Search By Category"
             className="w-full outline-none"
           />
         </div>
-        <button
-          className="h-12 bg-primary rounded-lg flex flex-row items-center gap-2 px-3"
-          onClick={() => {
-            router.push("/dashboard/customer-management/add-employee");
-          }}
-        >
+        <button className="h-12 bg-primary rounded-lg flex flex-row items-center gap-2 px-3">
           <PlusCircleIcon className="size-7 text-white" />
-          <p className="text-white text-sm font-light">Add New Employee</p>
+          <p className="text-white text-sm font-light">Add New Url</p>
         </button>
       </div>
       <div className="h-[80%] w-full flex flex-col gap-8">
-        <div className="grid grid-cols-6 text-md font-semibold">
-          <p>Employee First Name</p>
-          <p>Employee Last Name</p>
+        <div className="grid grid-cols-4 text-md font-semibold">
+          <p>Url</p>
+          <p>Category</p>
 
-          <p>PC_Name</p>
+          <p>Keywords</p>
 
-          <p>Email</p>
-          <p>Key</p>
           <div className="w-full text-center">
             <p>Action</p>
           </div>
@@ -98,35 +134,20 @@ export default function CustomerTable({ data, setCustomerToDelete }) {
         <div className="flex-1 flex flex-col gap-7 overflow-y-auto scrollbar-none">
           {paginated_data[pageNumber]?.map((item, key) => {
             return (
-              <div className="grid grid-cols-6 text-xs" key={key}>
-                <p className="truncate pr-5">{item?.firstName}</p>
-                <p className="truncate pr-5">{item?.lastName}</p>
+              <div className="grid grid-cols-4 text-xs" key={key}>
+                <p className="truncate pr-5">{item?.url}</p>
+                <p className="truncate pr-5">{item?.category}</p>
 
                 <div>
                   <p className="p-1 rounded bg-secondary bg-opacity-50 font-light size-fit">
-                    {item?.pc_name}
+                    {item?.keywords?.join(",")}
                   </p>
                 </div>
-                <p className="pr-5">{item?.email}</p>
-                <p className="pr-5">{item?.key}</p>
+
                 <div className="w-full flex flex-row items-center justify-center gap-5">
                   <button
                     onClick={() => {
-                      router?.push(
-                        `/dashboard/customer-management/edit-employee/${item?._id}`
-                      );
-                    }}
-                  >
-                    <Image
-                      src={"/icons/edit.png"}
-                      alt="edit"
-                      height={17.5}
-                      width={17.5}
-                    />
-                  </button>
-                  <button
-                    onClick={() => {
-                      setCustomerToDelete(item?._id);
+                      handleDelete(item?._id);
                     }}
                   >
                     <Image
@@ -240,8 +261,3 @@ export default function CustomerTable({ data, setCustomerToDelete }) {
     </div>
   );
 }
-
-CustomerTable.propTypes = {
-  data: PropTypes.array.isRequired,
-  setCustomerToDelete: PropTypes.func.isRequired,
-};
