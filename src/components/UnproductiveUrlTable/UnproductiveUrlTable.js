@@ -12,6 +12,7 @@ import {
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 export default function UnproductiveUrlTable() {
   const router = useRouter();
@@ -23,30 +24,51 @@ export default function UnproductiveUrlTable() {
   const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
   const [data, setData] = useState([]);
   const [token, setToken] = useState("");
+  const [modalVisible, setModalVisible] = useState(false);
+  const [items, setItems] = useState({
+    url: "",
+    category: "",
+    keywords: "",
+  });
 
   useEffect(() => {
-    const token = setToken(localStorage.getItem("plesk_access_token"));
-    axios
-      .get(`${API_URL}/api/users/unproductiveurl`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        setData(res?.data?.urls);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const storedToken = localStorage.getItem("plesk_access_token");
+    if (storedToken) {
+      setToken(storedToken);
+    } else {
+      console.error("No token found in localStorage");
+    }
   }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${API_URL}/api/users/unproductiveurl`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      console.log("Fetched Data:", response.data);
+      setData(response?.data?.urls);
+    } catch (error) {
+      if (error.response) {
+        console.error("API Response Error:", error.response.data);
+      } else if (error.request) {
+        console.error("No Response Received:", error.request);
+      } else {
+        console.error("Request Setup Error:", error.message);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (token) {
+      fetchData();
+    }
+  }, [token]);
 
   const searched_data = data?.filter((item) =>
     item?.category
       ? item?.category.toLowerCase().includes(searchQuery.toLowerCase())
       : data
   );
-  console.log(token);
 
   const chunkArray = (array, chunkSize) => {
     const result = [];
@@ -93,10 +115,46 @@ export default function UnproductiveUrlTable() {
             },
           }
         );
-        console.log(response);
+        toast.success(response?.data?.message || "Url Deleted Successfully");
+        fetchData();
       }
     } catch (error) {
-      console.log(error);
+      toast.error("Cannot Delete Try Again");
+    }
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    try {
+      if (token) {
+        const response = await axios.post(
+          `${API_URL}/api/users/create/unproductiveurl`,
+          items,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        // Use the correct response structure
+        if (response?.status === 200) {
+          toast.success(response?.data?.message || "URL created successfully!");
+          setItems({
+            url: "",
+            category: "",
+            keywords: "",
+          });
+          setModalVisible(false);
+          fetchData();
+        }
+      }
+    } catch (error) {
+      // Handle the error properly
+      const errorMessage =
+        error?.response?.data?.message || "An error occurred!";
+      toast.error(errorMessage);
+      console.error("Error:", error);
     }
   }
 
@@ -115,7 +173,12 @@ export default function UnproductiveUrlTable() {
             className="w-full outline-none"
           />
         </div>
-        <button className="h-12 bg-primary rounded-lg flex flex-row items-center gap-2 px-3">
+        <button
+          onClick={() => {
+            setModalVisible(true);
+          }}
+          className="h-12 bg-primary rounded-lg flex flex-row items-center gap-2 px-3"
+        >
           <PlusCircleIcon className="size-7 text-white" />
           <p className="text-white text-sm font-light">Add New Url</p>
         </button>
@@ -258,6 +321,61 @@ export default function UnproductiveUrlTable() {
           </button>
         </div>
       </div>
+      {modalVisible && (
+        <div className="modal-overlay absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
+          <div className="w-[80%] md:w-1/3 bg-white rounded-lg p-4">
+            <h2 className="text-lg font-bold">Add New Url</h2>
+            <form onSubmit={handleSubmit} className="flex flex-col gap-3 mt-4 ">
+              <div className="flex gap-2 items-center">
+                <p className="text-sm font-semibold">Keywords:</p>
+                <input
+                  value={items.keywords}
+                  onChange={(e) => {
+                    setItems({ ...items, keywords: e.target.value });
+                  }}
+                  className="text-sm w-[70%] border border-gray-400 h-8 rounded-3xl "
+                  type="text"
+                />
+              </div>
+              <div className="flex gap-2 items-center">
+                <p className="text-sm font-semibold">Category:</p>
+                <input
+                  className="text-sm w-[70%] border border-gray-400 h-8 rounded-3xl "
+                  type="text"
+                  value={items.category}
+                  onChange={(e) => {
+                    setItems({ ...items, category: e.target.value });
+                  }}
+                />
+              </div>
+              <div className="flex gap-2 items-center">
+                <p className="text-sm font-semibold">Url:</p>
+                <input
+                  className="text-sm w-[70%] border border-gray-400 h-8 rounded-3xl "
+                  type="text"
+                  value={items.url}
+                  onChange={(e) => {
+                    setItems({ ...items, url: e.target.value });
+                  }}
+                />
+              </div>
+              <button
+                type="submit"
+                className="mt-4 px-4 py-2 bg-primary text-white rounded"
+              >
+                Add
+              </button>
+              <button
+                type="button"
+                className="mt-4 px-4 py-2 bg-white font-bold text-primary border border-primary  rounded"
+                onClick={() => setModalVisible(false)}
+              >
+                Close
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
