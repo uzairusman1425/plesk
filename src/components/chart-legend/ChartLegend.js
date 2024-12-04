@@ -3,7 +3,7 @@ import { colors } from "@/utils/constants";
 
 export default function ChartLegend({ list }) {
   return (
-    <div className="w-full grid grid-cols-3 gap-3">
+    <div className="w-full grid grid-cols-3 gap-2">
       {colors?.map((item, key) => {
         if (key < list?.length) {
           return (
