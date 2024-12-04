@@ -97,8 +97,8 @@ export default function ActivityLogTable({ data, email }) {
           <div className="h-6 w-32 rounded border flex items-center justify-center" />
         </div>
         <div className="w-[1px] min-h-full bg-gray-300" />
-        <div className="flex-1 flex flex-col gap-2 items-center">
-          <div className="h-6 w-36 rounded border flex items-center justify-center">
+        <div className="w-[300px] flex flex-col gap-2 items-center">
+          <div className="h-6 w-36 rounded  border flex items-center justify-center">
             <p className="text-xs">User</p>
           </div>
           <div className="h-6 w-full rounded border flex items-center justify-center px-1">
@@ -108,7 +108,7 @@ export default function ActivityLogTable({ data, email }) {
         <div className="w-[1px] min-h-full bg-gray-300" />
         {/* New Active Window Column after User */}
         <div className="flex justify-center">
-          <div className="h-6 w-48 rounded border flex items-center justify-center">
+          <div className="h-6 w-[400px] rounded border flex items-center justify-center">
             <p className="text-xs">Active Window</p>
           </div>
         </div>
@@ -120,14 +120,14 @@ export default function ActivityLogTable({ data, email }) {
         </div>
         <div className="w-[1px] min-h-full bg-gray-300" />
         <div className="flex flex-col gap-2 items-center">
-          <div className="h-6 w-24 rounded border flex items-center justify-center">
+          <div className="h-6 w-22  rounded border flex items-center justify-center">
             <p className="text-xs">Executable</p>
           </div>
           <div className="h-6 w-24 rounded border flex items-center justify-center" />
         </div>
-        <div className="w-[1px] min-h-full bg-gray-300" />
-        <div className="flex justify-center">
-          <div className="h-6 w-24 rounded border flex items-center justify-center">
+        <div className="w-[1px] min-h-full bg-gray-300 " />
+        <div className="flex justify-center ">
+          <div className="h-6 w-30 rounded border flex items-center justify-center">
             <p className="text-xs">Information</p>
           </div>
         </div>
@@ -155,15 +155,15 @@ export default function ActivityLogTable({ data, email }) {
               <p className="text-xs truncate">{item?.pc_name}</p>
             </div>
             <div className="w-[1px]" />
-            <div className="flex-1 flex justify-center">
+            <div className="w-[300px]  flex justify-center">
               <p className="text-xs truncate max-w-52">{email}</p>
             </div>
             <div className="w-[1px]" />
-            <div className="w-48 flex justify-center">
+            <div className="w-[400px] flex justify-center">
               <p className="text-xs truncate">{item?.active_window || "-"}</p>{" "}
               {/* Bigger div for Active Window */}
             </div>
-            <div className="w-20 flex justify-center">
+            <div className="w-28 flex justify-center">
               <p className="text-xs truncate">
                 {`${Math.floor(item?.time_spent / 3600)}h ${Math.floor(
                   item?.time_spent / 60

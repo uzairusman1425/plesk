@@ -20,12 +20,6 @@ export default function PendingClassificationsChart({
             pending classifications
           </p>
         </div>
-        <div>
-          <select className="px-6 py-3 bg-[#F6F6F6] flex items-center justify-center gap-2 appearance-auto outline-none">
-            <option value="">Select Department</option>
-            <option value="Developer">Developer</option>
-          </select>
-        </div>
       </div>
       <div className="h-[380px] w-full flex flex-col border-2 border-dashed">
         <div className="h-12 w-full grid grid-cols-4 place-items-center border-b border-dashed">
