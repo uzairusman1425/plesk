@@ -127,6 +127,7 @@ export default function SignIn() {
             }}
           />
           <button
+            type="button"
             className="absolute right-2 top-3"
             onClick={() => {
               setShowPassword(!showPassword);
