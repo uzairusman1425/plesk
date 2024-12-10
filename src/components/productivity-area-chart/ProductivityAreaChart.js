@@ -74,7 +74,7 @@ const ProductivityChart = ({ data }) => {
     <div
       style={{
         width: "100%",
-        height: "400px",
+        height: "450px",
         margin: "0 auto",
         padding: "20px",
       }}
